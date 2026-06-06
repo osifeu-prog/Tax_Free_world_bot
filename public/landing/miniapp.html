@@ -4,51 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>מחשבון חיסכון TON</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f5f5f5; margin: 0; padding: 16px; color: #222; }
-        .container { max-width: 400px; margin: 0 auto; background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
-        h1 { text-align: center; color: #0088CC; }
-        .slider-group { margin-bottom: 20px; }
-        label { display: block; font-weight: bold; margin-bottom: 6px; }
-        input[type=range] { width: 100%; }
-        .value { display: inline-block; background: #f0f0f0; padding: 2px 8px; border-radius: 8px; margin-right: 8px; }
-        .card { background: #f9f9f9; border-radius: 10px; padding: 12px; margin: 8px 0; display: flex; justify-content: space-between; }
-        .card.ton { background: #d4edda; font-weight: bold; }
-        .savings { margin-top: 16px; font-size: 1.1em; }
-        .savings strong { color: #008000; }
-        .note { text-align: center; margin-top: 12px; color: #666; font-size: 0.85em; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f4f8; margin: 0; padding: 12px; color: #1a1a1a; }
+        .container { max-width: 420px; margin: 0 auto; background: white; border-radius: 20px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        h1 { text-align: center; color: #0088CC; font-size: 1.5em; margin-bottom: 0; }
+        .subtitle { text-align: center; color: #666; font-size: 0.9em; margin-bottom: 20px; }
+        .slider-group { margin-bottom: 18px; }
+        label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.95em; }
+        input[type=range] { width: 100%; accent-color: #0088CC; }
+        .value { background: #e8f4fd; padding: 4px 12px; border-radius: 20px; font-weight: bold; color: #0088CC; }
+        canvas { margin: 20px 0; }
+        .cards { display: flex; gap: 10px; margin-top: 16px; }
+        .card { flex: 1; background: #f9f9f9; border-radius: 12px; padding: 12px; text-align: center; }
+        .card.ton { background: #d4edda; border: 2px solid #28a745; }
+        .card .label { font-size: 0.85em; color: #555; }
+        .card .fee { font-size: 1.3em; font-weight: bold; margin-top: 4px; }
+        .savings { background: #fff8e1; border-radius: 12px; padding: 12px; margin-top: 16px; text-align: center; }
+        .savings strong { color: #e67e00; font-size: 1.2em; }
+        .share-btn { display: block; background: #0088CC; color: white; text-align: center; padding: 12px; border-radius: 30px; text-decoration: none; font-weight: bold; margin-top: 16px; }
+        .note { text-align: center; color: #999; font-size: 0.8em; margin-top: 12px; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>💰 מחשבון TON</h1>
+        <p class="subtitle">גלה כמה כסף תוכל לחסוך השנה</p>
         <div class="slider-group">
             <label>סכום להעברה ()</label>
-            <input type="range" id="amount" min="50" max="5000" value="500" step="10">
+            <input type="range" id="amount" min="50" max="15000" value="500" step="10">
             <span class="value"><span id="amountVal">500</span> </span>
         </div>
         <div class="slider-group">
             <label>העברות בחודש</label>
-            <input type="range" id="txCount" min="1" max="50" value="10" step="1">
+            <input type="range" id="txCount" min="1" max="30" value="10" step="1">
             <span class="value"><span id="txCountVal">10</span></span>
         </div>
-        <div id="results">
-            <div class="card"><span>🔴 ביט</span> <span id="bitFee">0</span> </div>
-            <div class="card"><span>🟠 פייבוקס</span> <span id="payboxFee">0</span> </div>
-            <div class="card ton"><span>🟢 TON</span> <span id="tonFee">0</span>  ✅</div>
+        <canvas id="chart" height="200"></canvas>
+        <div class="cards">
+            <div class="card"><div class="label">🔴 ביט</div><div class="fee" id="bitFee">0</div><div class="label">להעברה</div></div>
+            <div class="card"><div class="label">🟠 פייבוקס</div><div class="fee" id="payboxFee">0</div><div class="label">להעברה</div></div>
+            <div class="card ton"><div class="label">🟢 TON</div><div class="fee" id="tonFee">0</div><div class="label">להעברה ✅</div></div>
         </div>
         <div class="savings">
-            <div>💰 חיסכון שנתי לעומת ביט: <strong id="saveBit">0</strong> </div>
-            <div>💰 חיסכון שנתי לעומת פייבוקס: <strong id="savePaybox">0</strong> </div>
+            💰 <b>חיסכון שנתי:</b> <strong id="saveBit">0</strong>  לעומת ביט<br>
+            💰 <b>חיסכון שנתי:</b> <strong id="savePaybox">0</strong>  לעומת פייבוקס
         </div>
+        <a class="share-btn" href="https://t.me/Tax_Free_world_bot?start=landing">📤 שלח לחבר וגם הוא יחסוך!</a>
         <div class="note">ℹ️ הבוט חינוכי, לא ייעוץ פיננסי.</div>
     </div>
     <script>
-        const amountInput = document.getElementById('amount');
-        const txInput = document.getElementById('txCount');
+        let chart;
+        const ctx = document.getElementById('chart').getContext('2d');
+        function createChart(bit, paybox, ton) {
+            if (chart) chart.destroy();
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['ביט', 'פייבוקס', 'TON'],
+                    datasets: [{
+                        data: [bit, paybox, ton],
+                        backgroundColor: ['#dc3545', '#fd7e14', '#28a745'],
+                        borderRadius: 8,
+                        barThickness: 40
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: 'עמלה ()' } }
+                    }
+                }
+            });
+        }
+
         function calc() {
-            const a = parseFloat(amountInput.value);
-            const t = parseInt(txInput.value);
+            const a = parseFloat(document.getElementById('amount').value);
+            const t = parseInt(document.getElementById('txCount').value);
             document.getElementById('amountVal').textContent = a;
             document.getElementById('txCountVal').textContent = t;
             const bit = a * 0.015;
@@ -57,13 +90,13 @@
             document.getElementById('bitFee').textContent = bit.toFixed(2);
             document.getElementById('payboxFee').textContent = paybox.toFixed(2);
             document.getElementById('tonFee').textContent = ton.toFixed(2);
-            const saveB = Math.round((bit - ton) * t * 12);
-            const saveP = Math.round((paybox - ton) * t * 12);
-            document.getElementById('saveBit').textContent = saveB.toLocaleString();
-            document.getElementById('savePaybox').textContent = saveP.toLocaleString();
+            document.getElementById('saveBit').textContent = Math.round((bit - ton) * t * 12).toLocaleString();
+            document.getElementById('savePaybox').textContent = Math.round((paybox - ton) * t * 12).toLocaleString();
+            createChart(bit, paybox, ton);
         }
-        amountInput.addEventListener('input', calc);
-        txInput.addEventListener('input', calc);
+
+        document.getElementById('amount').addEventListener('input', calc);
+        document.getElementById('txCount').addEventListener('input', calc);
         calc();
     </script>
 </body>
