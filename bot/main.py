@@ -40,6 +40,7 @@ async def set_default_commands():
         BotCommand(command="ref", description="🔗 קוד הפניה"),
         BotCommand(command="contact", description="📬 צור קשר"),
         BotCommand(command="id", description="🆔 זיהוי"),
+        BotCommand(command="mydata", description="🧠 הזיכרון שלי"),
         BotCommand(command="daily", description="📈 סיכום יומי"),
         BotCommand(command="help", description="ℹ️ עזרה"),
     ]
@@ -100,3 +101,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+

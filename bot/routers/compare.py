@@ -2,6 +2,7 @@
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
 from bot.services.calculator import build_comparison
+from bot.services.memory_service import save_user_memory
 from bot.keyboards.inline import presets_menu, back_to_main, share_result
 from bot.messages.he import MESSAGES
 
@@ -21,7 +22,7 @@ async def cmd_compare(msg: Message):
         await msg.answer(MESSAGES["compare_usage"], parse_mode="HTML", reply_markup=presets_menu())
         return
     text = build_comparison(amount, tx_per_month)
-    await msg.answer(text, parse_mode="HTML", reply_markup=share_result(amount, tx_per_month))
+    await msg.answer(text, parse_mode='HTML', reply_markup=share_result(amount, tx_per_month)); await save_user_memory(msg.from_user.id, 'compare', f'{amount} {tx_per_month}', text)
 
 @router.callback_query(F.data == "compare_prompt")
 async def compare_prompt(call: CallbackQuery):
@@ -50,3 +51,4 @@ async def handle_preset(call: CallbackQuery):
     text = build_comparison(amount, tx)
     await call.message.edit_text(text, parse_mode="HTML", reply_markup=share_result(amount, tx))
     await call.answer()
+
