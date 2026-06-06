@@ -13,21 +13,18 @@ from .stats import router as stats_router
 from .tip import router as tip_router
 from .faq import router as faq_router
 from .budget import router as budget_router
+from .crypto import router as crypto_router
+from .cbdc import router as cbdc_router
+from .decentral import router as decentral_router
+from .socio import router as socio_router
+from .anti import router as anti_router
+from .edu import router as edu_router
 
 routers = [
-    start_router,
-    compare_router,
-    why_router,
-    wallet_router,
-    business_router,
-    help_router,
-    id_router,
-    contact_router,
-    export_router,
-    miniapp_router,
-    ref_router,
-    stats_router,
-    tip_router,
-    faq_router,
-    budget_router,
+    start_router, compare_router, why_router, wallet_router,
+    business_router, help_router, id_router, contact_router,
+    export_router, miniapp_router, ref_router, stats_router,
+    tip_router, faq_router, budget_router,
+    crypto_router, cbdc_router, decentral_router,
+    socio_router, anti_router, edu_router,
 ]
