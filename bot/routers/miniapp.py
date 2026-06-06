@@ -11,3 +11,4 @@ async def cmd_miniapp(msg: Message):
     ])
     await msg.answer("לחץ כדי לפתוח את המחשבון בתוך טלגרם:", reply_markup=kb)
 
+

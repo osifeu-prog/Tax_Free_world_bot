@@ -58,7 +58,19 @@ for topic in ["crypto", "cbdc", "decentral", "socio", "anti", "edu", "faq"]:
         await call.message.edit_text(MESSAGES[t], parse_mode="HTML", reply_markup=back_to_main())
         await call.answer()
 
-# --- לוח מובילים, סטטיסטיקות, טיפ, עזרה ---
+
+@router.callback_query(F.data == "donate")
+async def show_donate(call: CallbackQuery):
+    await call.message.edit_text(
+        "❤️ <b>תמכו בפרויקט</b>\n\n"
+        "הבוט הזה חינמי ומטרתו להוריד את יוקר המחיה בישראל.\n"
+        "אם בא לך לתמוך, שלח TON לכתובת:\n"
+        "<code>UQCd7XHWGj06cBLlWW_DZUN3TWMGr_oWoVy0G0LkC14gQklj</code>\n\n"
+        "תודה! 💚",
+        parse_mode="HTML",
+        reply_markup=back_to_main()
+    )
+    await call.answer()# --- לוח מובילים, סטטיסטיקות, טיפ, עזרה ---
 @router.callback_query(F.data == "top")
 async def show_top(call: CallbackQuery):
     leaders = await get_top_referrers(5)
@@ -125,3 +137,4 @@ async def show_expenses(call: CallbackQuery):
     lines.append(f"\n💰 <b>סה\"כ חיסכון: {total:,.2f} בשנה</b>")
     await call.message.edit_text("\n".join(lines), parse_mode="HTML", reply_markup=back_to_main())
     await call.answer()
+

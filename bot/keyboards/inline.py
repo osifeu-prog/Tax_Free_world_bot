@@ -1,7 +1,6 @@
 ﻿from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 
 def main_menu():
-    """תפריט ראשי  4 קטגוריות בלבד"""
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="💰 חיסכון ועמלות", callback_data="menu_savings")],
         [InlineKeyboardButton(text="🏠 ניהול כלכלת הבית", callback_data="menu_household")],
@@ -13,8 +12,6 @@ def back_to_main():
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="🔙 חזרה לתפריט הראשי", callback_data="start")]
     ])
-
-# --- תפריטי משנה ---
 
 def savings_menu():
     return InlineKeyboardMarkup(inline_keyboard=[
@@ -54,12 +51,11 @@ def community_menu():
         [InlineKeyboardButton(text="🏆 לוח מובילים", callback_data="top")],
         [InlineKeyboardButton(text="📊 סטטיסטיקות", callback_data="stats")],
         [InlineKeyboardButton(text="💡 טיפ יומי", callback_data="tip")],
+        [InlineKeyboardButton(text="❤️ תרומה לפרויקט", callback_data="donate")],
         [InlineKeyboardButton(text="📬 צור קשר", callback_data="contact")],
         [InlineKeyboardButton(text="ℹ️ עזרה", callback_data="help")],
         [InlineKeyboardButton(text="🔙 חזרה", callback_data="start")],
     ])
-
-# --- מקשים נפוצים ---
 
 def presets_menu():
     return InlineKeyboardMarkup(inline_keyboard=[
