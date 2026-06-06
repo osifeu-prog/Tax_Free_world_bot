@@ -48,4 +48,11 @@ class UserExpense(Base):
     notes = Column(String(200))
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
-
+class UserMemory(Base):
+    __tablename__ = "user_memory"
+    id = Column(Integer, primary_key=True)
+    telegram_id = Column(BigInteger, index=True)
+    last_command = Column(String(50))
+    last_params = Column(String(200))
+    last_result = Column(String(500))
+    updated_at = Column(DateTime, default=datetime.datetime.utcnow)
