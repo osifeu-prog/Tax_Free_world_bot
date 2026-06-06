@@ -1,5 +1,5 @@
 ﻿from aiogram import Router, F
-from aiogram.types import Message, CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import Message, CallbackQuery, ReplyKeyboardMarkup, KeyboardButton
 from aiogram.filters import Command, CommandObject
 from bot.keyboards.inline import main_menu, back_to_main, savings_menu, household_menu, academy_menu, community_menu
 from bot.messages.he import MESSAGES
@@ -8,6 +8,15 @@ from bot.services.profile_service import get_or_create_profile, get_total_saving
 import random
 
 router = Router()
+
+reply_kb = ReplyKeyboardMarkup(
+    keyboard=[
+        [KeyboardButton(text="💰 חיסכון"), KeyboardButton(text="🏠 כלכלת הבית")],
+        [KeyboardButton(text="📚 אקדמיה"), KeyboardButton(text="👥 קהילה")],
+        [KeyboardButton(text="📱 מחשבון ויזואלי"), KeyboardButton(text="📈 סיכום יומי")],
+    ],
+    resize_keyboard=True
+)
 
 def greet(name):
     return MESSAGES["start"].replace("{user}", name)
@@ -22,6 +31,8 @@ async def cmd_start(msg: Message, command: CommandObject):
     else:
         text = greet(name)
     await msg.answer(text, parse_mode="HTML", reply_markup=main_menu())
+    # שליחת מקלדת קבועה
+    await msg.answer("ניווט מהיר:", reply_markup=reply_kb)
 
 @router.callback_query(F.data == "start")
 async def back_to_main_cb(call: CallbackQuery):
@@ -122,7 +133,7 @@ async def show_expenses(call: CallbackQuery):
 @router.callback_query(F.data == "donate")
 async def show_donate(call: CallbackQuery):
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="💚 הצטרף לקבוצת התורמים", url="https://t.me/+1ANn25HeVBoxNmRk")],
+        [InlineKeyboardButton(text="💚 הצטרף לקבוצת התורמים", url="https://t.me/+HIzvM8sEgh1kNWY0")],
         [InlineKeyboardButton(text="🔙 חזרה", callback_data="start")],
     ])
     await call.message.edit_text(
@@ -139,12 +150,11 @@ async def show_donate(call: CallbackQuery):
 @router.callback_query(F.data == "contact")
 async def show_contact(call: CallbackQuery):
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="📩 שלח הודעה לאוסיף", url="https://t.me/+1ANn25HeVBoxNmRk")],
+        [InlineKeyboardButton(text="📩 שלח הודעה ל-SPARK", url="https://t.me/+1ANn25HeVBoxNmRk")],
         [InlineKeyboardButton(text="🔙 חזרה", callback_data="start")],
     ])
     await call.message.edit_text(
-        "📬 <b>צור קשר</b>\n\n"
-        "אפשר לפנות אליי ישירות:",
+        "📬 <b>צור קשר</b>\n\nאפשר לפנות אלינו ישירות:",
         parse_mode="HTML",
         reply_markup=kb
     )
