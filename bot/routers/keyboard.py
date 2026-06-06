@@ -1,17 +1,12 @@
 ﻿from aiogram import Router, F
-from aiogram.types import Message, ReplyKeyboardRemove
+from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 from aiogram.filters import Command
-from bot.keyboards.inline import savings_menu, household_menu, academy_menu, community_menu, main_menu
+from bot.keyboards.inline import savings_menu, household_menu, academy_menu, community_menu
 from bot.messages.he import MESSAGES
+from bot.routers.daily import daily_handler
 
 router = Router()
 
-# תפריט מקלדת  /keyboard להצגה, /hide להסרה
-@router.message(Command("keyboard"))
-async def show_keyboard(msg: Message):
-    await msg.answer("בחר פעולה:", reply_markup=reply_kb)  # reply_kb יובא מ-main? נגדיר פה
-
-# נשתמש ב-reply_kb מוגדר מקומית
 reply_kb = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text="💰 חיסכון"), KeyboardButton(text="🏠 כלכלת הבית")],
@@ -20,6 +15,10 @@ reply_kb = ReplyKeyboardMarkup(
     ],
     resize_keyboard=True
 )
+
+@router.message(Command("keyboard"))
+async def show_keyboard(msg: Message):
+    await msg.answer("בחר פעולה:", reply_markup=reply_kb)
 
 @router.message(F.text == "💰 חיסכון")
 async def btn_savings(msg: Message):
@@ -39,8 +38,6 @@ async def btn_community(msg: Message):
 
 @router.message(F.text == "📈 סיכום יומי")
 async def btn_daily(msg: Message):
-    # נשתמש בhandler של daily
-    from bot.routers.daily import daily_handler
     await daily_handler(msg)
 
 @router.message(Command("hide"))
