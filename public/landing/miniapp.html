@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>מחשבון חיסכון TON</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f5f5f5; margin: 0; padding: 16px; color: #222; }
+        .container { max-width: 400px; margin: 0 auto; background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+        h1 { text-align: center; color: #0088CC; }
+        .slider-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 6px; }
+        input[type=range] { width: 100%; }
+        .value { display: inline-block; background: #f0f0f0; padding: 2px 8px; border-radius: 8px; margin-right: 8px; }
+        .card { background: #f9f9f9; border-radius: 10px; padding: 12px; margin: 8px 0; display: flex; justify-content: space-between; }
+        .card.ton { background: #d4edda; font-weight: bold; }
+        .savings { margin-top: 16px; font-size: 1.1em; }
+        .savings strong { color: #008000; }
+        .note { text-align: center; margin-top: 12px; color: #666; font-size: 0.85em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 מחשבון TON</h1>
+        <div class="slider-group">
+            <label>סכום להעברה ()</label>
+            <input type="range" id="amount" min="50" max="5000" value="500" step="10">
+            <span class="value"><span id="amountVal">500</span> </span>
+        </div>
+        <div class="slider-group">
+            <label>העברות בחודש</label>
+            <input type="range" id="txCount" min="1" max="50" value="10" step="1">
+            <span class="value"><span id="txCountVal">10</span></span>
+        </div>
+        <div id="results">
+            <div class="card"><span>🔴 ביט</span> <span id="bitFee">0</span> </div>
+            <div class="card"><span>🟠 פייבוקס</span> <span id="payboxFee">0</span> </div>
+            <div class="card ton"><span>🟢 TON</span> <span id="tonFee">0</span>  ✅</div>
+        </div>
+        <div class="savings">
+            <div>💰 חיסכון שנתי לעומת ביט: <strong id="saveBit">0</strong> </div>
+            <div>💰 חיסכון שנתי לעומת פייבוקס: <strong id="savePaybox">0</strong> </div>
+        </div>
+        <div class="note">ℹ️ הבוט חינוכי, לא ייעוץ פיננסי.</div>
+    </div>
+    <script>
+        const amountInput = document.getElementById('amount');
+        const txInput = document.getElementById('txCount');
+        function calc() {
+            const a = parseFloat(amountInput.value);
+            const t = parseInt(txInput.value);
+            document.getElementById('amountVal').textContent = a;
+            document.getElementById('txCountVal').textContent = t;
+            const bit = a * 0.015;
+            const paybox = a * 0.018 + 0.5;
+            const ton = a * 0.001;
+            document.getElementById('bitFee').textContent = bit.toFixed(2);
+            document.getElementById('payboxFee').textContent = paybox.toFixed(2);
+            document.getElementById('tonFee').textContent = ton.toFixed(2);
+            const saveB = Math.round((bit - ton) * t * 12);
+            const saveP = Math.round((paybox - ton) * t * 12);
+            document.getElementById('saveBit').textContent = saveB.toLocaleString();
+            document.getElementById('savePaybox').textContent = saveP.toLocaleString();
+        }
+        amountInput.addEventListener('input', calc);
+        txInput.addEventListener('input', calc);
+        calc();
+    </script>
+</body>
+</html>

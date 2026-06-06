@@ -25,7 +25,6 @@ async def init_db():
 
 async def on_startup(app: web.Application):
     await init_db()
-    # הגדרת Webhook
     public_domain = os.environ.get("RAILWAY_PUBLIC_DOMAIN")
     if public_domain:
         webhook_url = f"https://{public_domain}{WEBHOOK_PATH}"
@@ -55,15 +54,20 @@ async def health_handler(request):
 app = web.Application()
 app.router.add_post(WEBHOOK_PATH, webhook_handler)
 app.router.add_get(HEALTH_PATH, health_handler)
+
+# טיפול בקבצים סטטיים  הגשת public/
+static_path = os.path.join(os.path.dirname(__file__), "..", "public")
+if os.path.isdir(static_path):
+    app.router.add_static('/landing/', path=os.path.join(static_path, 'landing'), show_index=True)
+    logger.info(f"Static files served from {static_path}/landing")
+
 app.on_startup.append(on_startup)
 app.on_shutdown.append(on_shutdown)
 
 if __name__ == "__main__":
     if os.environ.get("RAILWAY_PUBLIC_DOMAIN"):
-        # Railway  הפעל שרת Webhook
         web.run_app(app, host="0.0.0.0", port=8080)
     else:
-        # מקומי  Polling
         asyncio.run(init_db())
         logger.info("Bot started. Polling...")
         asyncio.run(dp.start_polling(bot))
