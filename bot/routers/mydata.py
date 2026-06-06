@@ -10,14 +10,14 @@ router = Router()
 async def cmd_mydata(msg: Message):
     mem = await get_user_memory(msg.from_user.id)
     if not mem:
-        await msg.answer("אין לך נתונים שמורים עדיין. בצע חישוב או הוסף הוצאה.")
+        await msg.answer("אין עדיין נתונים שמורים. התחל ב-/compare.")
         return
     text = (
-        f"🧠 <b>הזיכרון שלי</b>\n"
+        f"📋 <b>הנתונים שלי</b>\n"
         f"━━━━━━━━━━━━━━━━\n"
-        f"📌 פקודה אחרונה: <code>{mem.last_command}</code>\n"
-        f"📌 פרמטרים: {mem.last_params}\n"
-        f"📌 תוצאה:\n{mem.last_result}\n"
-        f"🕒 עודכן: {mem.updated_at.strftime('%d/%m/%Y %H:%M')}"
+        f"🕹 הפקודה האחרונה: <code>{mem.last_command}</code>\n"
+        f"📥 פרמטרים: {mem.last_params}\n"
+        f"📤 תוצאה:\n{mem.last_result}\n"
+        f"🕒 עדכון אחרון: {mem.updated_at.strftime('%d/%m/%Y %H:%M')}"
     )
     await msg.answer(text, parse_mode="HTML", reply_markup=back_to_main())

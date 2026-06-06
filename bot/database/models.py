@@ -48,3 +48,4 @@ class UserExpense(Base):
     notes = Column(String(200))
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
+

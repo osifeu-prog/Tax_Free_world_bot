@@ -1,4 +1,4 @@
-﻿from sqlalchemy import select, delete, func
+﻿from sqlalchemy import select, delete, func, func
 from bot.database.models import UserProfile, UserExpense
 from bot.database.session import async_session
 
@@ -89,4 +89,5 @@ async def get_total_savings_sum() -> float:
             select(func.sum(UserExpense.potential_ton_savings))
         )
         return result.scalar() or 0.0
+
 
