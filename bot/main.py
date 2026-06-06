@@ -32,6 +32,11 @@ async def start_http():
     app = web.Application()
     app.router.add_get(HEALTH_PATH, health_handler)
 
+# serve root landing page
+async def index_handler(request):
+    return web.FileResponse(os.path.join(os.path.dirname(__file__), "..", "public", "index.html"))
+app.router.add_get("/", index_handler)
+
     # Static files
     static_path = os.path.join(os.path.dirname(__file__), "..", "public")
     if os.path.isdir(static_path):
@@ -56,3 +61,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+

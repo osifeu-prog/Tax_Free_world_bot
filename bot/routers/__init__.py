@@ -12,6 +12,7 @@ from .ref import router as ref_router
 from .stats import router as stats_router
 from .tip import router as tip_router
 from .faq import router as faq_router
+from .budget import router as budget_router
 
 routers = [
     start_router,
@@ -28,4 +29,5 @@ routers = [
     stats_router,
     tip_router,
     faq_router,
+    budget_router,
 ]
