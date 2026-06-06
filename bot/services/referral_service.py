@@ -28,5 +28,10 @@ async def get_top_referrers(limit=5):
     async with async_session() as session:
         result = await session.execute(select(Referral).order_by(Referral.clicks.desc()).limit(limit))
         refs = result.scalars().all()
-        lines = [f"{i}. <code>{r.code}</code>  {r.clicks} מצטרפים" for i, r in enumerate(refs, 1)]
-        return "\n".join(lines) if lines else "אין עדיין."
+        if not refs:
+            return "אין עדיין."
+        lines = []
+        for i, r in enumerate(refs, 1):
+            crown = "🌟 " if r.clicks >= 5 else ""
+            lines.append(f"{i}. {crown}<code>{r.code}</code>  {r.clicks} מצטרפים")
+        return "\n".join(lines)
