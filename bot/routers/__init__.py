@@ -20,6 +20,8 @@ from .socio import router as socio_router
 from .anti import router as anti_router
 from .edu import router as edu_router
 from .profile import router as profile_router
+from .keyboard import router as keyboard_router
+from .daily import router as daily_router
 
 routers = [
     start_router, compare_router, why_router, wallet_router,
@@ -28,5 +30,5 @@ routers = [
     tip_router, faq_router, budget_router,
     crypto_router, cbdc_router, decentral_router,
     socio_router, anti_router, edu_router,
-    profile_router,
+    profile_router, keyboard_router, daily_router,
 ]

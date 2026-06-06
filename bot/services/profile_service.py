@@ -75,3 +75,17 @@ async def delete_expense(telegram_id: int, expense_id: int) -> bool:
         )
         await session.commit()
         return result.rowcount > 0
+
+async def get_total_users_with_expenses() -> int:
+    async with async_session() as session:
+        result = await session.execute(
+            select(func.count(func.distinct(UserExpense.telegram_id)))
+        )
+        return result.scalar() or 0
+
+async def get_total_savings_sum() -> float:
+    async with async_session() as session:
+        result = await session.execute(
+            select(func.sum(UserExpense.potential_ton_savings))
+        )
+        return result.scalar() or 0.0
