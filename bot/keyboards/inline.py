@@ -11,6 +11,7 @@ def start_menu():
         [InlineKeyboardButton(text="🔗 הקוד שלי להפצה", callback_data="my_ref")],
         [InlineKeyboardButton(text="💡 טיפ יומי", callback_data="tip")],
         [InlineKeyboardButton(text="🏆 לוח מובילים", callback_data="top")],
+        [InlineKeyboardButton(text="📊 סטטיסטיקות", callback_data="stats")],
         [InlineKeyboardButton(text="📬 צור קשר", callback_data="contact")],
         [InlineKeyboardButton(text="ℹ️ עזרה", callback_data="help")],
     ])

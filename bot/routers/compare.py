@@ -1,5 +1,5 @@
 ﻿from aiogram import Router, F
-from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
 from bot.services.calculator import build_comparison
 from bot.keyboards.inline import presets_menu, back_to_start, share_result
@@ -37,7 +37,6 @@ async def show_presets(call: CallbackQuery):
     await call.message.edit_text("בחר תרחיש מוכן:", reply_markup=presets_menu())
     await call.answer()
 
-# תרחישים
 preset_map = {
     "preset_2500_1": (2500, 1),
     "preset_10000_2": (10000, 2),
