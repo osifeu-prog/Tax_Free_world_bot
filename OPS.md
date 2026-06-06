@@ -1,28 +1,20 @@
-﻿# OPS Guide  TON Israel Bot
+﻿# 🛠️ TON Israel  OPS
 
-## כללי עבודה
-- כל שינוי בקבצים יתבצע **אך ורק דרך PowerShell** (Set-Content, Add-Content וכו').
-- לפני כל שינוי מוודאים שהבוט לא רץ (אלא אם מדובר בעדכון גרסה חמה).
-- שומרים גיבוי של `.env` ו-`data.db` טרם מיגרציות.
-- כל פיצ'ר חדש  מוסיפים `router` ייעודי ומעדכנים את `bot/routers/__init__.py`.
+## 🕘 לוח זמנים יומי
+1. `cd D:\PROJ\TON-Israel`  
+2. `.\venv\Scripts\Activate.ps1`  
+3. `python bot/main.py` (או שרץ ב-Railway)  
+4. `.\test_bot.ps1`  21 בדיקות אוטומטיות  
+5. `git pull && git push`  סנכרון  
 
-## סביבת עבודה
-- PowerShell בתיקייה `D:\PROJ\TON-Israel`, מופעל venv: `.\.venv\Scripts\Activate.ps1`
-- הרצה: `python bot/main.py`
+## גיבוי
+- `data.db`  שמור.  
+- `.env`  **לעולם לא בגיט!**  
+- תיקייה: `D:\PROJ\TON-Israel-backup`  
 
-## מבנה הפרויקט
-- `bot/`  קוד הבוט.
-- `bot/routers/`  כל פיצ'ר ממומש כנתב נפרד.
-- `bot/services/`  לוגיקה טהורה (חישובים).
-- `bot/keyboards/`  מקלדות Inline.
-- `bot/messages/`  טקסטים בעברית.
-- `bot/database/`  מודלים ו-Session (SQLite).
-- `bot/utils/`  לוגים.
+## Redis (מחובר!)
+- Redis פועל ב-Railway, `redis_service.py` מוכן.  
 
-## פקודות שימושיות
-- `python bot/main.py`  הרצת הבוט.
-- `pip freeze > requirements.txt`  שמירת תלויות (אם הותקנו חדשות).
-
-## פתרון בעיות
-- שגיאת ModuleNotFoundError: וודא שקבצי `__init__.py` קיימים בתיקיות הנכונות.
-- שגיאות Pydantic: בדוק את `.env`  במיוחד ADMIN_IDS כרשימה `[224223270]`.
+## הפצה
+- `@Tax_Free_world_bot`  
+- דף נחיתה: `https://taxfreeworldbot-production.up.railway.app`  

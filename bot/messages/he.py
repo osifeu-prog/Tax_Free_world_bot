@@ -193,8 +193,8 @@ CBDC = מרכזי, מפוקח, יציב
 
 אם תרצה/י לשתף פעולה, להזמין שירותים או סתם לשאול שאלה  אפשר לפנות אליי ישירות:
 
-👤 <b>Osif Ungar</b>
-📩 <a href="https://t.me/OsifUngar">@OsifUngar</a>
+👤 <b>SPARK מערכות</b>
+📩 <a href="https://t.me/+1ANn25HeVBoxNmRk">@SPARK_Systems</a>
 
 אשמח לשמוע ממך!''',
     "calc_help": '''🧮 <b>איך המחשבון עובד?</b>

@@ -7,7 +7,7 @@ router = Router()
 @router.message(Command("contact"))
 async def cmd_contact(msg: Message):
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="📩 שלח הודעה לאוסיף", url="https://t.me/OsifUngar")],
+        [InlineKeyboardButton(text="📩 שלח הודעה לאוסיף", url="https://t.me/+1ANn25HeVBoxNmRk")],
     ])
     await msg.answer(
         "📬 <b>צור קשר</b>\n\nאפשר לפנות אליי ישירות:",

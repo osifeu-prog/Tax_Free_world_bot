@@ -122,7 +122,7 @@ async def show_expenses(call: CallbackQuery):
 @router.callback_query(F.data == "donate")
 async def show_donate(call: CallbackQuery):
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="💚 הצטרף לקבוצת התורמים", url="https://t.me/+HIzvM8sEgh1kNWY0")],
+        [InlineKeyboardButton(text="💚 הצטרף לקבוצת התורמים", url="https://t.me/+1ANn25HeVBoxNmRk")],
         [InlineKeyboardButton(text="🔙 חזרה", callback_data="start")],
     ])
     await call.message.edit_text(
@@ -139,7 +139,7 @@ async def show_donate(call: CallbackQuery):
 @router.callback_query(F.data == "contact")
 async def show_contact(call: CallbackQuery):
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="📩 שלח הודעה לאוסיף", url="https://t.me/OsifUngar")],
+        [InlineKeyboardButton(text="📩 שלח הודעה לאוסיף", url="https://t.me/+1ANn25HeVBoxNmRk")],
         [InlineKeyboardButton(text="🔙 חזרה", callback_data="start")],
     ])
     await call.message.edit_text(
