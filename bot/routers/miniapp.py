@@ -7,6 +7,7 @@ router = Router()
 @router.message(Command("miniapp"))
 async def cmd_miniapp(msg: Message):
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="📱 פתח מחשבון ויזואלי", web_app=WebAppInfo(url="https://your-domain.com/landing/miniapp.html"))]
+        [InlineKeyboardButton(text="📱 פתח מחשבון ויזואלי", web_app=WebAppInfo(url="https://taxfreeworldbot-production.up.railway.app/landing/miniapp.html"))]
     ])
     await msg.answer("לחץ כדי לפתוח את המחשבון בתוך טלגרם:", reply_markup=kb)
+
