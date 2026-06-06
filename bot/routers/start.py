@@ -1,5 +1,5 @@
 ﻿from aiogram import Router, F
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.filters import Command, CommandObject
 from bot.keyboards.inline import main_menu, back_to_main, savings_menu, household_menu, academy_menu, community_menu
 from bot.messages.he import MESSAGES
@@ -23,14 +23,12 @@ async def cmd_start(msg: Message, command: CommandObject):
         text = greet(name)
     await msg.answer(text, parse_mode="HTML", reply_markup=main_menu())
 
-# --- ניווט לתפריט ראשי ---
 @router.callback_query(F.data == "start")
 async def back_to_main_cb(call: CallbackQuery):
     name = call.from_user.first_name
     await call.message.edit_text(greet(name), parse_mode="HTML", reply_markup=main_menu())
     await call.answer()
 
-# --- תפריטי משנה ---
 @router.callback_query(F.data == "menu_savings")
 async def show_savings(call: CallbackQuery):
     await call.message.edit_text("💰 <b>חיסכון ועמלות  בחר:</b>", parse_mode="HTML", reply_markup=savings_menu())
@@ -51,26 +49,12 @@ async def show_community(call: CallbackQuery):
     await call.message.edit_text("👥 <b>קהילה וכלים  בחר:</b>", parse_mode="HTML", reply_markup=community_menu())
     await call.answer()
 
-# --- נושאי אקדמיה ---
 for topic in ["crypto", "cbdc", "decentral", "socio", "anti", "edu", "faq"]:
     @router.callback_query(F.data == topic)
     async def topic_handler(call: CallbackQuery, t=topic):
         await call.message.edit_text(MESSAGES[t], parse_mode="HTML", reply_markup=back_to_main())
         await call.answer()
 
-
-@router.callback_query(F.data == "donate")
-async def show_donate(call: CallbackQuery):
-    await call.message.edit_text(
-        "❤️ <b>תמכו בפרויקט</b>\n\n"
-        "הבוט הזה חינמי ומטרתו להוריד את יוקר המחיה בישראל.\n"
-        "אם בא לך לתמוך, שלח TON לכתובת:\n"
-        "<code>UQCd7XHWGj06cBLlWW_DZUN3TWMGr_oWoVy0G0LkC14gQklj</code>\n\n"
-        "תודה! 💚",
-        parse_mode="HTML",
-        reply_markup=back_to_main()
-    )
-    await call.answer()# --- לוח מובילים, סטטיסטיקות, טיפ, עזרה ---
 @router.callback_query(F.data == "top")
 async def show_top(call: CallbackQuery):
     leaders = await get_top_referrers(5)
@@ -96,7 +80,6 @@ async def show_help(call: CallbackQuery):
     await call.message.edit_text(MESSAGES["help"], parse_mode="HTML", reply_markup=back_to_main())
     await call.answer()
 
-# --- מחשבון תקציב ---
 @router.callback_query(F.data == "budget_prompt")
 async def budget_prompt(call: CallbackQuery):
     await call.message.edit_text(
@@ -106,7 +89,6 @@ async def budget_prompt(call: CallbackQuery):
     )
     await call.answer()
 
-# --- פרופיל ---
 @router.callback_query(F.data == "profile")
 async def show_profile(call: CallbackQuery):
     profile = await get_or_create_profile(call.from_user.id)
@@ -122,7 +104,6 @@ async def show_profile(call: CallbackQuery):
     await call.message.edit_text(info, parse_mode="HTML", reply_markup=back_to_main())
     await call.answer()
 
-# --- הוצאות ---
 @router.callback_query(F.data == "expenses")
 async def show_expenses(call: CallbackQuery):
     exps = await get_expenses(call.from_user.id)
@@ -138,3 +119,33 @@ async def show_expenses(call: CallbackQuery):
     await call.message.edit_text("\n".join(lines), parse_mode="HTML", reply_markup=back_to_main())
     await call.answer()
 
+@router.callback_query(F.data == "donate")
+async def show_donate(call: CallbackQuery):
+    kb = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="💚 הצטרף לקבוצת התורמים", url="https://t.me/+HIzvM8sEgh1kNWY0")],
+        [InlineKeyboardButton(text="🔙 חזרה", callback_data="start")],
+    ])
+    await call.message.edit_text(
+        "❤️ <b>תמכו בפרויקט</b>\n\n"
+        "הבוט הזה חינמי ומטרתו להוריד את יוקר המחיה בישראל.\n"
+        "אם בא לך לתמוך, שלח TON לכתובת:\n"
+        "<code>UQCd7XHWGj06cBLlWW_DZUN3TWMGr_oWoVy0G0LkC14gQklj</code>\n\n"
+        "לאחר התרומה, הצטרף לקבוצת התורמים:",
+        parse_mode="HTML",
+        reply_markup=kb
+    )
+    await call.answer()
+
+@router.callback_query(F.data == "contact")
+async def show_contact(call: CallbackQuery):
+    kb = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="📩 שלח הודעה לאוסיף", url="https://t.me/OsifUngar")],
+        [InlineKeyboardButton(text="🔙 חזרה", callback_data="start")],
+    ])
+    await call.message.edit_text(
+        "📬 <b>צור קשר</b>\n\n"
+        "אפשר לפנות אליי ישירות:",
+        parse_mode="HTML",
+        reply_markup=kb
+    )
+    await call.answer()

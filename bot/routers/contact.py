@@ -1,17 +1,16 @@
-﻿from aiogram import Router, F
-from aiogram.types import Message, CallbackQuery
+﻿from aiogram import Router
 from aiogram.filters import Command
-from bot.keyboards.inline import back_to_main
-from bot.messages.he import MESSAGES
+from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
 router = Router()
 
 @router.message(Command("contact"))
 async def cmd_contact(msg: Message):
-    await msg.answer(MESSAGES["contact"], parse_mode="HTML", reply_markup=back_to_main())
-
-@router.callback_query(F.data == "contact")
-async def show_contact(call: CallbackQuery):
-    await call.message.edit_text(MESSAGES["contact"], parse_mode="HTML", reply_markup=back_to_main())
-    await call.answer()
-
+    kb = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="📩 שלח הודעה לאוסיף", url="https://t.me/OsifUngar")],
+    ])
+    await msg.answer(
+        "📬 <b>צור קשר</b>\n\nאפשר לפנות אליי ישירות:",
+        parse_mode="HTML",
+        reply_markup=kb
+    )
