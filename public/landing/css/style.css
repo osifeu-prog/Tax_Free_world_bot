@@ -1,0 +1,18 @@
+﻿* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; color: #222; line-height:1.6; }
+header { background: linear-gradient(135deg, #0088CC, #00A3E0); color: white; text-align: center; padding: 2rem; }
+header h1 span { color: #FFD700; }
+header p { font-size: 1.2rem; margin-top:0.5rem; }
+main { max-width: 700px; margin: 2rem auto; padding: 0 1rem; }
+.calculator, .benefits { background: white; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+.input-group { margin-bottom: 1.5rem; }
+label { display: block; font-weight: bold; margin-bottom: 0.5rem; }
+input[type=range] { width: 100%; }
+.results .card { background: #f0f0f0; border-radius: 8px; padding: 1rem; margin: 0.5rem 0; display: flex; justify-content: space-between; }
+.card.ton { background: #d4edda; font-weight: bold; }
+.savings { margin-top: 1rem; font-size: 1.1rem; }
+.btn { display: inline-block; margin-top: 1.5rem; background: #0088CC; color: white; padding: 0.8rem 2rem; border-radius: 30px; text-decoration: none; font-weight: bold; transition: background 0.3s; }
+.btn:hover { background: #005f8a; }
+.benefits ul { list-style: none; }
+.benefits li { padding: 0.5rem 0; font-size: 1.1rem; }
+.disclaimer { margin-top: 1rem; color: #666; font-size: 0.9rem; }

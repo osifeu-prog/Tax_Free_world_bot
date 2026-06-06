@@ -1,0 +1,8 @@
+﻿version: '3.8'
+services:
+  bot:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - ./data.db:/app/data.db

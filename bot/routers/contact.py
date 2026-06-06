@@ -1,0 +1,11 @@
+﻿from aiogram import Router, F
+from aiogram.types import CallbackQuery
+from bot.keyboards.inline import back_to_start
+from bot.messages.he import MESSAGES
+
+router = Router()
+
+@router.callback_query(F.data == "contact")
+async def show_contact(call: CallbackQuery):
+    await call.message.edit_text(MESSAGES["contact"], parse_mode="HTML", reply_markup=back_to_start())
+    await call.answer()

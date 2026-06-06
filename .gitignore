@@ -1,0 +1,23 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.log
+
+# Virtual environment
+venv/
+
+# Environment variables (מכיל טוקן!)
+.env
+
+# Database
+*.db
+
+# ייצוא
+exports/
+
+# IDE
+.vscode/
+.idea/
+
+# Docker
+docker-compose.override.yml

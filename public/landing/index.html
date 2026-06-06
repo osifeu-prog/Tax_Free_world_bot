@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TON Israel  לחסוך עמלות, לעבור ל-TON</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>💰 <span>TON</span> Israel</h1>
+        <p>מערכת תשלומים פתוחה, זולה, ומהירה  ישירות מהבוט שלך.</p>
+    </header>
+    <main>
+        <section class="calculator">
+            <h2>📊 מחשבון חיסכון בעמלות</h2>
+            <div class="input-group">
+                <label for="amount">💰 סכום להעברה ()</label>
+                <input type="range" id="amount" min="50" max="5000" value="500" step="10">
+                <span id="amountValue">500</span> 
+            </div>
+            <div class="input-group">
+                <label for="txCount">📅 מספר העברות בחודש</label>
+                <input type="range" id="txCount" min="1" max="50" value="10" step="1">
+                <span id="txCountValue">10</span>
+            </div>
+            <div id="results" class="results">
+                <div class="card bit"><span>🔴 ביט</span> <span id="bitFee">7.50</span>  להעברה</div>
+                <div class="card paybox"><span>🟠 פייבוקס</span> <span id="payboxFee">9.50</span>  להעברה</div>
+                <div class="card ton"><span>🟢 TON</span> <span id="tonFee">0.50</span>  להעברה</div>
+                <div class="savings">
+                    <span>💰 חיסכון שנתי לעומת ביט: </span><strong id="saveBit">840</strong> 
+                    <br>
+                    <span>💰 חיסכון שנתי לעומת פייבוקס: </span><strong id="savePaybox">1,080</strong> 
+                </div>
+            </div>
+            <a href="https://t.me/Tax_Free_world_bot?start=landing" class="btn">📩 שלח לי את המספרים בבוט</a>
+        </section>
+        <section class="benefits">
+            <h2>✅ למה לעבור ל-TON?</h2>
+            <ul>
+                <li>⚡ עמלות נמוכות פי 15</li>
+                <li>🌍 גלובלי  שלח וקבל מכל מקום</li>
+                <li>🔒 בטוח  מבוסס בלוקצ'יין</li>
+                <li>🤖 API פתוח  בנה כלים משלך</li>
+            </ul>
+            <p class="disclaimer">ℹ️ הבוט חינוכי, לא ייעוץ פיננסי.</p>
+        </section>
+    </main>
+    <script src="js/script.js"></script>
+</body>
+</html>
