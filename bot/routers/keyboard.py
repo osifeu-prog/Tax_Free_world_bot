@@ -7,6 +7,7 @@ from bot.routers.daily import daily_handler
 
 router = Router()
 
+# מקלדת משותפת
 reply_kb = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text="💰 חיסכון"), KeyboardButton(text="🏠 כלכלת הבית")],
