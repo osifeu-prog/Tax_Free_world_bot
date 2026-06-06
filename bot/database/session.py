@@ -2,17 +2,11 @@
 from bot.config import settings
 
 db_url = settings.database_url
-if db_url.startswith("postgresql://"):
-    db_url = db_url.replace("postgresql://", "postgresql+asyncpg://", 1)
-elif db_url.startswith("postgres://"):
-    db_url = db_url.replace("postgres://", "postgresql+asyncpg://", 1)
+if not db_url.startswith("sqlite"):
+    # ברירת מחדל: SQLite (אם Railway לא נתן PostgreSQL)
+    db_url = "sqlite+aiosqlite:///./data.db"
 
-engine = create_async_engine(
-    db_url,
-    echo=False,
-    pool_size=10 if "postgresql" in db_url else None,
-    max_overflow=20 if "postgresql" in db_url else None
-)
+engine = create_async_engine(db_url, echo=False)
 async_session = async_sessionmaker(engine, expire_on_commit=False)
 
 async def get_db():
