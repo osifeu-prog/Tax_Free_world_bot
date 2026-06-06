@@ -2,7 +2,7 @@
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
 from bot.services.calculator import build_comparison
-from bot.keyboards.inline import presets_menu, back_to_start, share_result
+from bot.keyboards.inline import presets_menu, back_to_main, share_result
 from bot.messages.he import MESSAGES
 
 router = Router()
@@ -32,17 +32,17 @@ async def compare_prompt(call: CallbackQuery):
     )
     await call.answer()
 
-@router.callback_query(F.data == "presets")
-async def show_presets(call: CallbackQuery):
-    await call.message.edit_text("בחר תרחיש מוכן:", reply_markup=presets_menu())
-    await call.answer()
-
 preset_map = {
     "preset_2500_1": (2500, 1),
     "preset_10000_2": (10000, 2),
     "preset_3000_4": (3000, 4),
     "preset_5000_3": (5000, 3),
 }
+
+@router.callback_query(F.data == "presets")
+async def show_presets(call: CallbackQuery):
+    await call.message.edit_text("בחר תרחיש מוכן:", reply_markup=presets_menu())
+    await call.answer()
 
 @router.callback_query(F.data.in_(preset_map.keys()))
 async def handle_preset(call: CallbackQuery):

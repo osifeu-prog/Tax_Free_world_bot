@@ -1,24 +1,39 @@
 ﻿from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 
-def start_menu():
+def main_menu():
+    """תפריט ראשי  4 קטגוריות בלבד"""
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="💰 חיסכון ועמלות", callback_data="menu_savings")],
+        [InlineKeyboardButton(text="🏠 ניהול כלכלת הבית", callback_data="menu_household")],
+        [InlineKeyboardButton(text="📚 אקדמיה  ללמוד", callback_data="menu_academy")],
+        [InlineKeyboardButton(text="👥 קהילה וכלים", callback_data="menu_community")],
+    ])
+
+def back_to_main():
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="🔙 חזרה לתפריט הראשי", callback_data="start")]
+    ])
+
+# --- תפריטי משנה ---
+
+def savings_menu():
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="💸 מחשבון עמלות", callback_data="compare_prompt")],
         [InlineKeyboardButton(text="📊 תרחישים מהירים", callback_data="presets")],
-        [InlineKeyboardButton(text="🏠 מחשבון תקציב", callback_data="budget_prompt")],
         [InlineKeyboardButton(text="👛 איך פותחים ארנק", callback_data="wallet")],
+        [InlineKeyboardButton(text="🔍 למה TON?", callback_data="why")],
         [InlineKeyboardButton(text="📱 מחשבון ויזואלי", web_app=WebAppInfo(url="https://taxfreeworldbot-production.up.railway.app/landing/miniapp.html"))],
-        [InlineKeyboardButton(text="📚 אקדמיה  ללמוד", callback_data="academy")],
-        [InlineKeyboardButton(text="🔗 הקוד שלי להפצה", callback_data="my_ref")],
-        [InlineKeyboardButton(text="💡 טיפ יומי", callback_data="tip")],
-        [InlineKeyboardButton(text="🏆 לוח מובילים", callback_data="top")],
-        [InlineKeyboardButton(text="📊 סטטיסטיקות", callback_data="stats")],
-        [InlineKeyboardButton(text="📬 צור קשר", callback_data="contact")],
-        [InlineKeyboardButton(text="ℹ️ עזרה", callback_data="help")],
+        [InlineKeyboardButton(text="🔙 חזרה", callback_data="start")],
     ])
 
-def back_to_start():
+def household_menu():
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🔙 חזרה לתפריט", callback_data="start")]
+        [InlineKeyboardButton(text="📊 מחשבון תקציב", callback_data="budget_prompt")],
+        [InlineKeyboardButton(text="👤 הפרופיל שלי", callback_data="profile")],
+        [InlineKeyboardButton(text="➕ הוסף הוצאה", callback_data="addexpense")],
+        [InlineKeyboardButton(text="📋 ההוצאות שלי", callback_data="expenses")],
+        [InlineKeyboardButton(text="💰 עדכן הכנסה", callback_data="setincome")],
+        [InlineKeyboardButton(text="🔙 חזרה", callback_data="start")],
     ])
 
 def academy_menu():
@@ -32,6 +47,19 @@ def academy_menu():
         [InlineKeyboardButton(text="❓ שאלות נפוצות", callback_data="faq")],
         [InlineKeyboardButton(text="🔙 חזרה", callback_data="start")],
     ])
+
+def community_menu():
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="🔗 הקוד שלי להפצה", callback_data="my_ref")],
+        [InlineKeyboardButton(text="🏆 לוח מובילים", callback_data="top")],
+        [InlineKeyboardButton(text="📊 סטטיסטיקות", callback_data="stats")],
+        [InlineKeyboardButton(text="💡 טיפ יומי", callback_data="tip")],
+        [InlineKeyboardButton(text="📬 צור קשר", callback_data="contact")],
+        [InlineKeyboardButton(text="ℹ️ עזרה", callback_data="help")],
+        [InlineKeyboardButton(text="🔙 חזרה", callback_data="start")],
+    ])
+
+# --- מקשים נפוצים ---
 
 def presets_menu():
     return InlineKeyboardMarkup(inline_keyboard=[
