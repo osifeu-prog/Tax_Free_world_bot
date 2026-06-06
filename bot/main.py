@@ -1,5 +1,6 @@
 ﻿import asyncio
 import os
+import logging
 from aiogram import Bot, Dispatcher
 from aiogram.types import Update
 from aiohttp import web
@@ -41,11 +42,12 @@ async def on_shutdown(app: web.Application):
 async def webhook_handler(request):
     try:
         data = await request.json()
+        logger.info(f"Update received: {data.get('update_id')}")
         update = Update(**data)
         await dp.feed_webhook_update(bot, update)
         return web.Response(status=200)
     except Exception as e:
-        logger.error(f"Webhook error: {e}")
+        logger.error(f"Webhook error: {e}", exc_info=True)
         return web.Response(status=500)
 
 async def health_handler(request):
@@ -55,7 +57,6 @@ app = web.Application()
 app.router.add_post(WEBHOOK_PATH, webhook_handler)
 app.router.add_get(HEALTH_PATH, health_handler)
 
-# טיפול בקבצים סטטיים  הגשת public/
 static_path = os.path.join(os.path.dirname(__file__), "..", "public")
 if os.path.isdir(static_path):
     app.router.add_static('/landing/', path=os.path.join(static_path, 'landing'), show_index=True)

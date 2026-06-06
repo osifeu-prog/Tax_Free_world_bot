@@ -10,6 +10,8 @@ from .export import router as export_router
 from .miniapp import router as miniapp_router
 from .ref import router as ref_router
 from .stats import router as stats_router
+from .tip import router as tip_router
+from .faq import router as faq_router
 
 routers = [
     start_router,
@@ -24,4 +26,6 @@ routers = [
     miniapp_router,
     ref_router,
     stats_router,
+    tip_router,
+    faq_router,
 ]
