@@ -28,3 +28,19 @@ async def cmd_addgroup(msg: Message):
         session.add(group)
         await session.commit()
         await msg.answer(f"✅ קבוצה {title} נוספה.")
+@router.message(Command("groups"))
+async def cmd_groups(msg: Message):
+    async with async_session() as session:
+        stmt = select(Admin).where(Admin.telegram_id == msg.from_user.id)
+        admin = (await session.execute(stmt)).scalar_one_or_none()
+        if not admin:
+            await msg.answer("רק מנהלים מורשים.")
+            return
+    async with async_session() as session:
+        result = await session.execute(select(BotGroup))
+        groups = result.scalars().all()
+        if not groups:
+            await msg.answer("אין קבוצות במערכת.")
+            return
+        lst = "\n".join(f"{g.chat_id} | {g.title}" for g in groups)
+        await msg.answer(f"📋 <b>קבוצות:</b>\n{lst}", parse_mode="HTML")
