@@ -166,3 +166,45 @@ app.include_router(email_auth.router, prefix="/api")
 
 from bot.routers import admin_groups
 dp.include_router(admin_groups.router)
+
+# email_registration_direct
+
+# ---- Email Registration (direct) ----
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from passlib.context import CryptContext
+from bot.database.models import User
+from bot.database.session import async_session
+from sqlalchemy import select
+import asyncio
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+class RegisterRequest(BaseModel):
+    email: str
+    password: str
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+@app.post("/api/auth/register")
+async def register(data: RegisterRequest):
+    async with async_session() as session:
+        stmt = select(User).where(User.email == data.email)
+        existing = (await session.execute(stmt)).scalar_one_or_none()
+        if existing:
+            raise HTTPException(400, "Email already registered")
+        user = User(email=data.email, password_hash=pwd_context.hash(data.password), language="he")
+        session.add(user)
+        await session.commit()
+        return {"status": "ok", "user_id": user.id}
+
+@app.post("/api/auth/login")
+async def login(data: LoginRequest):
+    async with async_session() as session:
+        stmt = select(User).where(User.email == data.email)
+        user = (await session.execute(stmt)).scalar_one_or_none()
+        if not user or not pwd_context.verify(data.password, user.password_hash):
+            raise HTTPException(401, "Invalid credentials")
+        return {"status": "ok", "user_id": user.id}
