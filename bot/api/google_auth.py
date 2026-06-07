@@ -1,4 +1,4 @@
-﻿from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 from pydantic import BaseModel
@@ -8,7 +8,7 @@ from bot.utils.auth import create_access_token
 from sqlalchemy import select
 
 router = APIRouter()
-GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+GOOGLE_CLIENT_ID = "123456789-xxxxxx.apps.googleusercontent.com"
 
 class GoogleAuthRequest(BaseModel):
     credential: str
