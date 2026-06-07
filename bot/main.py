@@ -93,20 +93,13 @@ async def set_default_commands():
 async def init_db():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-        # מיגרציה  הוספת עמודות email (SQLite תומך רק ב‑ADD COLUMN)
-        try:
-            from sqlalchemy import text
-            await conn.execute(text("ALTER TABLE users ADD COLUMN email VARCHAR(255)"))
-        except Exception:
-            pass
-        try:
-            await conn.execute(text("ALTER TABLE users ADD COLUMN google_id VARCHAR(255)"))
-        except Exception:
-            pass
-        try:
-            await conn.execute(text("ALTER TABLE users ADD COLUMN password_hash VARCHAR(255)"))
-        except Exception:
-            pass
+        # הוסף עמודות email (SQLite לא תומך ב‑IF NOT EXISTS)
+        from sqlalchemy import text
+        for col, dtype in [("email", "VARCHAR(255)"), ("google_id", "VARCHAR(255)"), ("password_hash", "VARCHAR(255)")]:
+            try:
+                await conn.execute(text(f"ALTER TABLE users ADD COLUMN {col} {dtype}"))
+            except Exception:
+                pass
     logger.info("Database initialized.")
 
 async def health_handler(request):
