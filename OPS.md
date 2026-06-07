@@ -1,20 +1,14 @@
-﻿# 🛠️ TON Israel  OPS (מעודכן)
-
-## 🕘 לוח זמנים יומי
-1. `cd D:\PROJ\TON-Israel`
-2. `.\venv\Scripts\Activate.ps1`
-3. `python bot/main.py` (או Railway)
-4. `.\test_bot.ps1`  21 בדיקות
-5. `git pull && git push`
+﻿# 🛠️ TON Israel  תפעול
 
 ## 🔐 אדמין
-- `/admin`  כניסה לאזור ניהול (רק לך)
-- `/debug`  סטטוס מערכת (DB, Redis, uptime)
+- `/admin`  תפריט ניהול (לאדמין בלבד)
+- `/export`  ייצוא לוגים (אדמין)
+- IDs: 224223270, 8789977826
 
-## גיבוי
-- `data.db`
-- `D:\PROJ\TON-Israel-backup`
+## 🚀 פריסה
+1. `git push`  דחוף ל-Git, Railway יבנה אוטומטית.
+2. בדיקות: `.\test_bot.ps1`
 
-## הפצה
-- בוט: `@Tax_Free_world_bot`
-- דף: `https://taxfreeworldbot-production.up.railway.app`
+## 📦 גיבוי
+- `data.db`  מסד נתונים
+- `D:\PROJ\TON-Israel-backup`  גיבוי מלא

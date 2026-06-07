@@ -1,6 +1,6 @@
 ﻿import asyncio, os
 from aiogram import Bot, Dispatcher
-from aiogram.types import BotCommand, BotCommandScopeDefault, ReplyKeyboardMarkup, KeyboardButton, WebAppInfo, MenuButtonWebApp
+from aiogram.types import BotCommand, BotCommandScopeDefault, WebAppInfo, MenuButtonWebApp
 from aiohttp import web
 from bot.config import settings
 from bot.utils.logger import logger
