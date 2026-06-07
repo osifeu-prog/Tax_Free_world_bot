@@ -1,9 +1,4 @@
 ﻿Write-Host "Checking SQLite DB..."
-if (Test-Path "data.db") {
-    $dbSize = (Get-Item "data.db").Length
-    Write-Host "✅ data.db exists ($dbSize bytes)"
-} else {
-    Write-Host "❌ data.db not found!"
-}
+if (Test-Path "data.db") { Write-Host "✅ data.db exists" } else { Write-Host "❌ data.db missing" }
 Write-Host "Checking Redis..."
-python -c "import os, asyncio, redis.asyncio; r = redis.from_url(os.environ.get('REDIS_URL','redis://localhost:6379')); asyncio.run(r.ping()); print('✅ Redis ping OK')"
+python -c "import os,redis.asyncio,asyncio; r=redis.from_url(os.getenv('REDIS_URL','redis://localhost:6379')); asyncio.run(r.ping()); print('✅ Redis OK')"

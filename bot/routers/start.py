@@ -23,15 +23,15 @@ def greet(name):
 
 @router.message(Command("start"))
 async def cmd_start(msg: Message, command: CommandObject):
+    await register_user(msg.from_user.id)
     name = msg.from_user.first_name
     args = command.args
     if args and args.startswith("ref"):
         code = args[3:]
         text = MESSAGES["ref_landing"].format(referrer=code, start_message=greet(name))
+        await msg.answer(text, parse_mode="HTML", reply_markup=main_menu())
     else:
-        text = greet(name)
-    await register_user(msg.from_user.id)
-    await msg.answer(text, parse_mode='HTML', reply_markup=main_menu())
+        await msg.answer(greet(name), parse_mode="HTML", reply_markup=main_menu())
     await msg.answer("ניווט מהיר:", reply_markup=reply_kb)
 
 @router.callback_query(F.data == "start")
@@ -60,7 +60,9 @@ async def show_community(call: CallbackQuery):
     await call.message.edit_text("👥 <b>קהילה וכלים  בחר:</b>", parse_mode="HTML", reply_markup=community_menu())
     await call.answer()
 
-for topic in ["crypto", "cbdc", "decentral", "socio", "anti", "edu", "faq", "ask", "feedback", "communities", "roadmap"]:
+# Generic topic callbacks (exclude ask/feedback/roadmap/communities)
+TOPICS = ["crypto", "cbdc", "decentral", "socio", "anti", "edu", "faq", "academy_nft", "academy_dao", "academy_extended"]
+for topic in TOPICS:
     @router.callback_query(F.data == topic)
     async def topic_handler(call: CallbackQuery, t=topic):
         await call.message.edit_text(MESSAGES[t], parse_mode="HTML", reply_markup=back_to_main())
@@ -132,7 +134,6 @@ async def show_expenses(call: CallbackQuery):
 
 @router.callback_query(F.data == "donate")
 async def show_donate(call: CallbackQuery):
-    # שימוש בפקודת /donate
     from bot.routers.donate import cmd_donate
     await cmd_donate(call.message, None)
     await call.answer()
@@ -150,6 +151,24 @@ async def show_contact(call: CallbackQuery):
     )
     await call.answer()
 
+# --- Callbacks for ask and feedback (show instructions) ---
+@router.callback_query(F.data == "ask")
+async def prompt_ask(call: CallbackQuery):
+    await call.message.edit_text(MESSAGES["ask_prompt"], parse_mode="HTML", reply_markup=back_to_main())
+    await call.answer()
 
+@router.callback_query(F.data == "feedback")
+async def prompt_feedback(call: CallbackQuery):
+    await call.message.edit_text(MESSAGES["feedback_prompt"], parse_mode="HTML", reply_markup=back_to_main())
+    await call.answer()
 
+# --- Roadmap, Communities ---
+@router.callback_query(F.data == "roadmap")
+async def show_roadmap(call: CallbackQuery):
+    await call.message.edit_text(MESSAGES["roadmap"], parse_mode="HTML", reply_markup=back_to_main())
+    await call.answer()
 
+@router.callback_query(F.data == "communities")
+async def show_communities(call: CallbackQuery):
+    await call.message.edit_text(MESSAGES["communities"], parse_mode="HTML", reply_markup=back_to_main())
+    await call.answer()

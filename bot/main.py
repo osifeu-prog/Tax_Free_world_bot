@@ -51,6 +51,7 @@ async def set_default_commands():
         BotCommand(command="hide", description="🙈 הסתר מקלדת"),
         BotCommand(command="donate", description="❤️ תרומה לפרויקט"),
         BotCommand(command="feedback", description="📝 דיווח תקלה/רעיון"),
+        BotCommand(command="gift", description="🎁 מתנה למצטרפים"),
         BotCommand(command="ask", description="🤖 שאל שאלה"),
         BotCommand(command="export", description="📤 ייצוא לוגים"),
     ]
@@ -118,6 +119,7 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 
 
