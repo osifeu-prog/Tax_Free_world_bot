@@ -30,6 +30,8 @@ from .academy_extended import router as academy_ext_router
 from .feedback import router as feedback_router
 from .ask import router as ask_router
 from .gift import router as gift_router
+from .quiz import router as quiz_router
+from .admin_rbac import router as admin_rbac_router
 
 routers = [
     start_router, compare_router, why_router, wallet_router,
@@ -42,4 +44,5 @@ routers = [
     mydata_router, admin_router, debug_router,
     donate_router, academy_ext_router,
     feedback_router, ask_router, gift_router,
+    quiz_router, admin_rbac_router,
 ]
