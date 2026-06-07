@@ -1,9 +1,31 @@
-﻿# -*- coding: utf-8 -*-
+﻿import asyncio
+# -*- coding: utf-8 -*-
 import asyncio, random
 from datetime import date
 from aiogram import Router
+
+async def check_user(uid):
+    from bot.database.session import engine
+    from sqlalchemy import text
+    async with engine.connect() as c:
+        r = await c.execute(text("SELECT id FROM users WHERE telegram_id = :uid"), {"uid": uid})
+        return r.fetchone() is not None
 from aiogram.filters import Command
+
+async def check_user(uid):
+    from bot.database.session import engine
+    from sqlalchemy import text
+    async with engine.connect() as c:
+        r = await c.execute(text("SELECT id FROM users WHERE telegram_id = :uid"), {"uid": uid})
+        return r.fetchone() is not None
 from aiogram.types import Message
+
+async def check_user(uid):
+    from bot.database.session import engine
+    from sqlalchemy import text
+    async with engine.connect() as c:
+        r = await c.execute(text("SELECT id FROM users WHERE telegram_id = :uid"), {"uid": uid})
+        return r.fetchone() is not None
 from bot.services.points_service import add_points, get_user
 from bot.database.session import async_session
 from bot.database.models import User
@@ -15,7 +37,7 @@ PRIZES = [(0, "כלום... נסה שוב!"), (10, "10 נקודות!"), (20, "20 
 @router.message(Command("gift"))
 async def cmd_gift(msg: Message):
     user = await get_user(msg.from_user.id)
-    if not user:
+    if not await check_user(msg.from_user.id):
         await msg.answer("תחילה עליך לשלוח /start כדי להירשם.")
         return
     today = date.today().isoformat()
@@ -47,4 +69,5 @@ async def cmd_gift(msg: Message):
         u = await session.get(User, user.id)
         u.last_gift_date = today
         await session.commit()
+
 
