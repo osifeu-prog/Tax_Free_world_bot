@@ -6,14 +6,14 @@ class Base(DeclarativeBase):
     pass
 
 class User(Base):
-    points = Column(Integer, default=0)
-    last_gift_date = Column(String)
-    gift_shares_today = Column(Integer, default=0)
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
     telegram_id = Column(BigInteger, unique=True, index=True)
     language = Column(String(2), default="he")
     is_business = Column(Boolean, default=False)
+    points = Column(Integer, default=0)
+    last_gift_date = Column(String)
+    gift_shares_today = Column(Integer, default=0)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
 class CommandLog(Base):
@@ -60,5 +60,9 @@ class UserMemory(Base):
     last_result = Column(String(500))
     updated_at = Column(DateTime, default=datetime.datetime.utcnow)
 
-
-
+class Admin(Base):
+    __tablename__ = "admins"
+    id = Column(Integer, primary_key=True)
+    telegram_id = Column(BigInteger, unique=True, index=True)
+    role = Column(String(50))
+    password_hash = Column(String(200))
