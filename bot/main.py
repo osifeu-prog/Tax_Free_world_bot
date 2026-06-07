@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
-import asyncio, os
+import asyncio, os, pkgutil, importlib
 from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand, BotCommandScopeDefault, WebAppInfo, MenuButtonWebApp
 from aiohttp import web
@@ -8,14 +8,19 @@ from bot.api.email_routes import register, login
 from bot.utils.logger import logger
 from bot.database.models import Base
 from bot.database.session import engine
-from bot.routers import routers
+import bot.routers as routers_pkg
 
 HEALTH_PATH = "/health"
 
 bot = Bot(token=settings.bot_token)
 dp = Dispatcher()
-for router in routers:
-    dp.include_router(router)
+
+# ייבוא דינמי של כל הראוטרים
+for importer, modname, ispkg in pkgutil.iter_modules(routers_pkg.__path__):
+    module = importlib.import_module(f"bot.routers.{modname}")
+    if hasattr(module, 'router'):
+        dp.include_router(module.router)
+        logger.debug(f"Router {modname} loaded")
 
 async def set_default_commands():
     commands = [
