@@ -1,5 +1,5 @@
 ﻿from aiogram import Router, F
-from aiogram.types import Message, CallbackQuery, ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import Message, CallbackQuery, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.filters import Command, CommandObject
 from bot.keyboards.inline import main_menu, back_to_main, savings_menu, household_menu, academy_menu, community_menu
 from bot.messages.he import MESSAGES
@@ -31,7 +31,6 @@ async def cmd_start(msg: Message, command: CommandObject):
     else:
         text = greet(name)
     await msg.answer(text, parse_mode="HTML", reply_markup=main_menu())
-    # שליחת מקלדת קבועה
     await msg.answer("ניווט מהיר:", reply_markup=reply_kb)
 
 @router.callback_query(F.data == "start")
