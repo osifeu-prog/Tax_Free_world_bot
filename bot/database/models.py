@@ -60,9 +60,17 @@ class UserMemory(Base):
     last_result = Column(String(500))
     updated_at = Column(DateTime, default=datetime.datetime.utcnow)
 
+
+class AdminRequest(Base):
+    __tablename__ = "admin_requests"
+    id = Column(Integer, primary_key=True)
+    telegram_id = Column(BigInteger)
+    status = Column(String(20), default="pending")  # pending/approved/rejected
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
 class Admin(Base):
     __tablename__ = "admins"
     id = Column(Integer, primary_key=True)
     telegram_id = Column(BigInteger, unique=True, index=True)
     role = Column(String(50))
     password_hash = Column(String(200))
+

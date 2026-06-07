@@ -60,6 +60,7 @@ async def set_default_commands():
         BotCommand(command="addadmin", description="➕ הוסף מנהל"),
         BotCommand(command="login", description="🔑 התחבר"),
         BotCommand(command="setpassword", description="🔒 שנה סיסמה"),
+        BotCommand(command="requestadmin", description="📥 בקש הרשאת ניהול"),
         BotCommand(command="removeadmin", description="➖ הסר מנהל"),
         BotCommand(command="quiz", description="❓ חידון"),
     ]
@@ -125,3 +126,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
