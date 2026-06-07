@@ -8,5 +8,5 @@ T "Wallet" "/wallet"; T "Why" "/why"; T "Business" "/business"; T "Crypto" "/cry
 T "Decentral" "/decentral"; T "Socio" "/socio"; T "Anti" "/anti"; T "Edu" "/edu"; T "FAQ" "/faq"
 T "Tip" "/tip"; T "Stats" "/stats"; T "Top" "/top"; T "Ref" "/ref"; T "Contact" "/contact"; T "ID" "/id"
 T "Daily" "/daily"; T "MyData" "/mydata"; T "Help" "/help"; T "Admin" "/admin"; T "Debug" "/debug"
-T "Miniapp" "/miniapp"; T "Keyboard" "/keyboard"; T "Hide" "/hide"; T "Export" "/export"
+T "Miniapp" "/miniapp"; T "Keyboard" "/keyboard"; T "Hide" "/hide"; T "Export" "/export"; T "Donate" "/donate"
 Write-Host "`nTotal: $($p+$f) | Passed: $p | Failed: $f"

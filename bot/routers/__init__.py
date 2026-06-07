@@ -25,6 +25,7 @@ from .daily import router as daily_router
 from .mydata import router as mydata_router
 from .admin import router as admin_router
 from .debug import router as debug_router
+from .donate import router as donate_router
 
 routers = [
     start_router, compare_router, why_router, wallet_router,
@@ -35,4 +36,5 @@ routers = [
     socio_router, anti_router, edu_router,
     profile_router, keyboard_router, daily_router,
     mydata_router, admin_router, debug_router,
+    donate_router,
 ]

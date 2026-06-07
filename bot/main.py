@@ -49,6 +49,7 @@ async def set_default_commands():
         BotCommand(command="miniapp", description="📱 מחשבון ויזואלי"),
         BotCommand(command="keyboard", description="⌨️ מקלדת"),
         BotCommand(command="hide", description="🙈 הסתר מקלדת"),
+        BotCommand(command="donate", description="❤️ תרומה לפרויקט"),
         BotCommand(command="export", description="📤 ייצוא לוגים"),
     ]
     await bot.set_my_commands(commands, scope=BotCommandScopeDefault())
@@ -97,3 +98,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+

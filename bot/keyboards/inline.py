@@ -1,7 +1,6 @@
 ﻿from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 
 def main_menu():
-    """תפריט ראשי  נגיש ועשיר"""
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="💰 חיסכון ועמלות", callback_data="menu_savings")],
         [InlineKeyboardButton(text="🏠 ניהול כלכלת הבית", callback_data="menu_household")],

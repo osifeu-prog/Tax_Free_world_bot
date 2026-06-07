@@ -131,19 +131,9 @@ async def show_expenses(call: CallbackQuery):
 
 @router.callback_query(F.data == "donate")
 async def show_donate(call: CallbackQuery):
-    kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="💚 הצטרף לקבוצת התורמים", url="https://t.me/+HIzvM8sEgh1kNWY0")],
-        [InlineKeyboardButton(text="🔙 חזרה", callback_data="start")],
-    ])
-    await call.message.edit_text(
-        "❤️ <b>תמכו בפרויקט</b>\n\n"
-        "הבוט הזה חינמי ומטרתו להוריד את יוקר המחיה בישראל.\n"
-        "אם בא לך לתמוך, שלח TON לכתובת:\n"
-        "<code>UQCd7XHWGj06cBLlWW_DZUN3TWMGr_oWoVy0G0LkC14gQklj</code>\n\n"
-        "לאחר התרומה, הצטרף לקבוצת התורמים:",
-        parse_mode="HTML",
-        reply_markup=kb
-    )
+    # שימוש בפקודת /donate
+    from bot.routers.donate import cmd_donate
+    await cmd_donate(call.message, None)
     await call.answer()
 
 @router.callback_query(F.data == "contact")
