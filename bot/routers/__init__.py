@@ -34,6 +34,7 @@ from .quiz import router as quiz_router
 from .admin_rbac import router as admin_rbac_router
 from .request_admin import router as request_admin_router
 from .ai_router import router as ai_router
+from .household import router as household_router
 
 routers = [
     start_router, compare_router, why_router, wallet_router,
@@ -47,5 +48,5 @@ routers = [
     donate_router, academy_ext_router,
     feedback_router, ask_router, gift_router,
     quiz_router, admin_rbac_router, request_admin_router,
-    ai_router,
+    ai_router, household_router,
 ]

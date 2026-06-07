@@ -56,6 +56,8 @@ async def set_default_commands():
         BotCommand(command="export", description="📤 ייצוא לוגים"),
         BotCommand(command="donate", description="❤️ תרומה לפרויקט"),
         BotCommand(command="feedback", description="📝 דיווח תקלה/רעיון"),
+        BotCommand(command="architecture", description="🏗️ תרשים זרימה של המערכת"),
+        BotCommand(command="household", description="🏠 דשבורד כלכלת הבית"),
         BotCommand(command="ai", description="🤖 שאל את הבינה המלאכותית"),
         BotCommand(command="ask", description="🤖 שאל שאלה"),
         BotCommand(command="addadmin", description="➕ הוסף מנהל"),
@@ -127,5 +129,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 
