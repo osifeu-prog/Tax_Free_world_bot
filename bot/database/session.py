@@ -1,16 +1,13 @@
-﻿# -*- coding: utf-8 -*-
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
+﻿from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from bot.config import settings
 
-db_url = settings.database_url
-if not db_url.startswith("sqlite"):
-    # ברירת מחדל: SQLite (אם Railway לא נתן PostgreSQL)
-    db_url = "sqlite+aiosqlite:///./data.db"
+# אם DATABASE_URL חיצוני (PostgreSQL), השתמש בו; אחרת SQLite מקומי
+import os
+db_url = os.environ.get("DATABASE_URL")
+if db_url:
+    db_url = db_url.replace("postgresql://", "postgresql+asyncpg://")
+else:
+    db_url = settings.database_url
 
 engine = create_async_engine(db_url, echo=False)
 async_session = async_sessionmaker(engine, expire_on_commit=False)
-
-async def get_db():
-    async with async_session() as session:
-        yield session
-
