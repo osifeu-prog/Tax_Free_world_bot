@@ -23,11 +23,15 @@ async def verify_password(telegram_id: int, password: str) -> bool:
     return bcrypt.checkpw(password.encode(), admin.password_hash.encode())
 
 async def set_password(telegram_id: int, old_password: str, new_password: str) -> bool:
-    if not await verify_password(telegram_id, old_password):
+    admin = await get_admin(telegram_id)
+    if not admin:
+        return False
+    if not bcrypt.checkpw(old_password.encode(), admin.password_hash.encode()):
         return False
     async with async_session() as session:
-        admin = await session.get(Admin, telegram_id)
-        admin.password_hash = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt()).decode()
+        # reload admin within the session
+        admin_obj = await session.get(Admin, admin.id)
+        admin_obj.password_hash = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt()).decode()
         await session.commit()
         return True
 
