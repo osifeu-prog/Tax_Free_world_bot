@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
-import asyncio, os, json, pkgutil, importlib
+import asyncio, os, pkgutil, importlib
 from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand, BotCommandScopeDefault, WebAppInfo, MenuButtonWebApp
 from aiohttp import web
@@ -93,15 +93,6 @@ async def set_default_commands():
 async def init_db():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-        # מיגרציה  הוספת עמודות חסרות (רק אם PostgreSQL)
-        if 'postgresql' in str(engine.url):
-            from sqlalchemy import text
-            try:
-                await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS email VARCHAR(255) UNIQUE"))
-                await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS google_id VARCHAR(255) UNIQUE"))
-                await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash VARCHAR(255)"))
-            except Exception:
-                pass
     logger.info("Database initialized.")
 
 async def health_handler(request):
@@ -142,21 +133,6 @@ async def api_last_compare(request):
 async def debug_routers(request):
     return web.json_response({"loaded_routers": loaded_routers})
 
-
-async def migrate_db_handler(request):
-    SECRET = "super_secret_migrate_2026"
-    if request.headers.get("X-Migrate-Secret") != SECRET:
-        return web.json_response({"error": "unauthorized"}, status=403)
-    from sqlalchemy import text
-    try:
-        async with engine.begin() as conn:
-            await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS email VARCHAR(255) UNIQUE"))
-            await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS google_id VARCHAR(255) UNIQUE"))
-            await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash VARCHAR(255)"))
-        return web.json_response({"status": "migration completed"})
-    except Exception as e:
-        return web.json_response({"error": str(e)}, status=500)
-
 async def start_polling():
     await bot.delete_webhook(drop_pending_updates=True)
     await set_default_commands()
@@ -168,7 +144,8 @@ async def start_http():
     app.router.add_post("/api/auth/register", register)
     app.router.add_post("/api/auth/login", login)
     app.router.add_get(HEALTH_PATH, health_handler)
-        app.router.add_get("/", index_handler)
+    app.router.add_get('/migrate_email', migrate_email)
+    app.router.add_get("/", index_handler)
     app.router.add_get("/api/profile", api_profile)
     app.router.add_get("/api/last-compare", api_last_compare)
     app.router.add_get('/debug/routers', debug_routers)
@@ -189,7 +166,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-
-
 
