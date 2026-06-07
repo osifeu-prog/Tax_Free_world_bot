@@ -15,12 +15,16 @@ HEALTH_PATH = "/health"
 bot = Bot(token=settings.bot_token)
 dp = Dispatcher()
 
-# ייבוא דינמי של כל הראוטרים
+loaded_routers = []
 for importer, modname, ispkg in pkgutil.iter_modules(routers_pkg.__path__):
-    module = importlib.import_module(f"bot.routers.{modname}")
-    if hasattr(module, 'router'):
-        dp.include_router(module.router)
-        logger.debug(f"Router {modname} loaded")
+    try:
+        module = importlib.import_module(f"bot.routers.{modname}")
+        if hasattr(module, 'router'):
+            dp.include_router(module.router)
+            loaded_routers.append(modname)
+            logger.info(f"✅ Router {modname} loaded")
+    except Exception as e:
+        logger.error(f"❌ Failed to load router {modname}: {e}")
 
 async def set_default_commands():
     commands = [
@@ -91,6 +95,9 @@ async def init_db():
     logger.info("Database initialized.")
 
 async def health_handler(request):
+
+async def debug_routers(request):
+    return web.json_response({"loaded_routers": loaded_routers})
     return web.Response(text="OK")
 
 async def index_handler(request):
@@ -135,6 +142,7 @@ async def start_http():
     app = web.Application()
     app.router.add_post("/api/auth/register", register)
     app.router.add_post("/api/auth/login", login)
+    app.router.add_get('/debug/routers', debug_routers)
     app.router.add_get(HEALTH_PATH, health_handler)
     app.router.add_get("/", index_handler)
     app.router.add_get("/api/profile", api_profile)
@@ -156,3 +164,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
