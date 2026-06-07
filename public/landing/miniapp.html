@@ -102,29 +102,32 @@
             createChart(bit, paybox, ton);
         }
 
-        // טעינת פרופיל מה-API
         async function loadProfile() {
             const tg = window.Telegram?.WebApp;
             const userId = tg?.initDataUnsafe?.user?.id || new URLSearchParams(window.location.search).get('user_id') || '224223270';
             try {
+                // טעינת נתוני פרופיל
                 const resp = await fetch(`/api/profile?user_id=${userId}`);
                 const data = await resp.json();
                 if (data.monthly_income) {
                     document.getElementById('profileBox').style.display = 'block';
                     document.getElementById('profileIncome').textContent = data.monthly_income.toLocaleString();
                     document.getElementById('profileSavings').textContent = data.total_savings.toLocaleString();
-                    // עדכון הסליידרים לנתוני המשתמש
-                    document.getElementById('amount').value = Math.min(data.monthly_income || 500, 15000);
-                    document.getElementById('txCount').value = data.expenses?.length || 10;
-                    calc();
                 }
+                // טעינת החישוב האחרון
+                const resp2 = await fetch(`/api/last-compare?user_id=${userId}`);
+                const last = await resp2.json();
+                if (last.amount) {
+                    document.getElementById('amount').value = last.amount;
+                    document.getElementById('txCount').value = last.tx;
+                }
+                calc();
             } catch(e) {}
         }
 
         document.getElementById('amount').addEventListener('input', calc);
         document.getElementById('txCount').addEventListener('input', calc);
         loadProfile();
-        calc();
     </script>
 </body>
 </html>

@@ -92,6 +92,21 @@ async def api_profile(request):
         "expenses": [{"id": e.id, "category": e.category, "amount": e.amount, "frequency": e.frequency, "ton_savings": e.potential_ton_savings} for e in expenses]
     })
 
+
+
+async def api_last_compare(request):
+    user_id = request.query.get("user_id")
+    if not user_id:
+        return web.json_response({"error": "missing user_id"}, status=400)
+    from bot.services.memory_service import get_user_memory
+    mem = await get_user_memory(int(user_id))
+    if mem and mem.last_command == "compare":
+        parts = mem.last_params.split()
+        amount = float(parts[0]) if parts else 500
+        tx = int(parts[1]) if len(parts) > 1 else 10
+    else:
+        amount, tx = 500, 10
+    return web.json_response({"amount": amount, "tx": tx})
 async def start_polling():
     await bot.delete_webhook(drop_pending_updates=True)
     await set_default_commands()
@@ -103,6 +118,7 @@ async def start_http():
     app.router.add_get(HEALTH_PATH, health_handler)
     app.router.add_get("/", index_handler)
     app.router.add_get("/api/profile", api_profile)
+    app.router.add_get("/api/last-compare", api_last_compare)
     static_path = os.path.join(os.path.dirname(__file__), "..", "public")
     if os.path.isdir(static_path):
         app.router.add_static('/landing/', path=os.path.join(static_path, 'landing'), show_index=True)
@@ -120,3 +136,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
