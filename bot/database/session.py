@@ -2,10 +2,8 @@
 from bot.config import settings
 import os
 
-# השתמש ב‑DATABASE_URL מהסביבה (אם קיים), אחרת fallback ל‑settings
 db_url = os.environ.get("DATABASE_URL")
 if db_url:
-    # PostgreSQL → asyncpg
     db_url = db_url.replace("postgresql://", "postgresql+asyncpg://")
 else:
     db_url = settings.database_url
