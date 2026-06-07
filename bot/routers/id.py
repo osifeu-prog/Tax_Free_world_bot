@@ -1,4 +1,5 @@
-﻿from aiogram import Router
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 
@@ -12,3 +13,4 @@ async def cmd_id(msg: Message):
     if chat.id != user.id:
         lines.append(f"💬 <b>הקבוצה/ערוץ</b>: <code>{chat.id}</code>")
     await msg.answer("\n".join(lines), parse_mode="HTML")
+

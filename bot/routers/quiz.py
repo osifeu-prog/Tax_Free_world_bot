@@ -1,4 +1,5 @@
-﻿import random
+﻿# -*- coding: utf-8 -*-
+import random
 from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
@@ -19,3 +20,4 @@ async def cmd_quiz(msg: Message):
     # שמירת התשובה הנכונה ב-state
     # (בגרסה פשוטה, נשתמש במעקב הודעה)
     # למימוש מלא יש צורך ב-FSM  נשאיר לגרסה הבאה
+

@@ -1,4 +1,5 @@
-﻿from aiogram import Router, F
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
 from bot.keyboards.inline import back_to_main
@@ -14,4 +15,5 @@ async def cmd_faq(msg: Message):
 async def cb_faq(call: CallbackQuery):
     await call.message.edit_text(MESSAGES["faq"], parse_mode="HTML", reply_markup=back_to_main())
     await call.answer()
+
 

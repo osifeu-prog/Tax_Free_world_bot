@@ -1,4 +1,5 @@
-﻿import sqlite3
+﻿# -*- coding: utf-8 -*-
+import sqlite3
 
 DB_PATH = "data.db"
 
@@ -33,3 +34,4 @@ try:
     conn.close()
 except Exception as e:
     print(f"❌ Error: {e}")
+

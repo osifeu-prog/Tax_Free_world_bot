@@ -1,4 +1,5 @@
-﻿from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
+﻿# -*- coding: utf-8 -*-
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from bot.config import settings
 
 db_url = settings.database_url
@@ -12,3 +13,4 @@ async_session = async_sessionmaker(engine, expire_on_commit=False)
 async def get_db():
     async with async_session() as session:
         yield session
+

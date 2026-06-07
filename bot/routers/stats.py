@@ -1,4 +1,5 @@
-﻿from aiogram import Router, F
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
 from bot.keyboards.inline import back_to_main
@@ -16,3 +17,4 @@ async def cmd_stats(msg: Message):
 async def cmd_top(msg: Message):
     leaders = await get_top_referrers(5)
     await msg.answer(MESSAGES["top_refs"].format(leaders=leaders), parse_mode="HTML", reply_markup=back_to_main())
+

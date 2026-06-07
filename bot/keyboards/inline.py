@@ -1,4 +1,5 @@
-﻿from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
+﻿# -*- coding: utf-8 -*-
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 
 def main_menu():
     return InlineKeyboardMarkup(inline_keyboard=[
@@ -82,3 +83,4 @@ def share_result(amount, tx):
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="📤 שתף את התוצאה", switch_inline_query=f"חסכתי {amount} בעמלות עם TON!")]
     ])
+

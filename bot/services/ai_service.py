@@ -1,4 +1,5 @@
-﻿import os
+﻿# -*- coding: utf-8 -*-
+import os
 import google.generativeai as genai
 from groq import AsyncGroq
 
@@ -43,3 +44,4 @@ async def ask_ai(question: str) -> str:
         except:
             return "שגיאה בפנייה ל-AI. נסה שוב מאוחר יותר."
     return "שירות ה-AI אינו זמין. הגדר GEMINI_API_KEY או GROQ_API_KEY."
+

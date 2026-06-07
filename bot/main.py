@@ -1,3 +1,4 @@
+﻿# -*- coding: utf-8 -*-
 import asyncio, os
 from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand, BotCommandScopeDefault, WebAppInfo, MenuButtonWebApp
@@ -211,4 +212,5 @@ async def login(data: LoginRequest):
         if not user or not pwd_context.verify(data.password, user.password_hash):
             raise HTTPException(401, "Invalid credentials")
         return {"status": "ok", "user_id": user.id}
+
 

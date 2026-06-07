@@ -1,4 +1,5 @@
-﻿# bot/routers/admin_groups.py
+﻿# -*- coding: utf-8 -*-
+# bot/routers/admin_groups.py
 from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message
@@ -44,3 +45,4 @@ async def cmd_groups(msg: Message):
             return
         lst = "\n".join(f"{g.chat_id} | {g.title}" for g in groups)
         await msg.answer(f"📋 <b>קבוצות:</b>\n{lst}", parse_mode="HTML")
+

@@ -1,4 +1,5 @@
-﻿from aiogram import Router
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 from bot.config import settings
@@ -59,3 +60,4 @@ async def cmd_removeadmin(msg: Message):
     user_id = int(parts[1])
     await remove_admin(user_id)
     await msg.answer(f"✅ המנהל {user_id} הוסר.")
+

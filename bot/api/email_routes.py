@@ -1,4 +1,5 @@
-﻿from aiohttp import web
+﻿# -*- coding: utf-8 -*-
+from aiohttp import web
 import json
 from passlib.context import CryptContext
 from bot.database.models import User
@@ -38,3 +39,4 @@ async def login(request):
             return web.json_response({"error": "Invalid credentials"}, status=401)
         token = create_access_token({"sub": str(user.id), "email": email})
         return web.json_response({"access_token": token, "user_id": user.id})
+

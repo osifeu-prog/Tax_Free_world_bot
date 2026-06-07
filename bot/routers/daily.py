@@ -1,4 +1,5 @@
-﻿from aiogram import Router
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 from bot.services.referral_service import get_ref_stats, get_top_referrers
@@ -29,3 +30,4 @@ async def daily_handler(msg: Message):
 @router.message(Command("daily"))
 async def cmd_daily(msg: Message):
     await daily_handler(msg)
+

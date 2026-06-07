@@ -1,4 +1,5 @@
-﻿BUDGET_CATEGORIES = {
+﻿# -*- coding: utf-8 -*-
+BUDGET_CATEGORIES = {
     "שכירות/משכנתא": 0.30,
     "חשבונות": 0.10,
     "מזון": 0.20,
@@ -23,3 +24,4 @@ def budget_message(income: float):
         msg += f"📌 {cat}: {amount:,}\n"
     msg += "\n💡 <i>העבר את התשלומים שלך ל-TON וחסוך בעמלות!</i>"
     return msg
+

@@ -1,4 +1,5 @@
-﻿from aiogram import Router, F
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery, FSInputFile
 from bot.config import settings
@@ -33,3 +34,4 @@ async def handle_export(call: CallbackQuery):
         f.write(csv_data)
     await call.message.answer_document(FSInputFile(file_path), caption="📋 ייצוא לוגים (1000 אחרונים)")
     await call.answer()
+

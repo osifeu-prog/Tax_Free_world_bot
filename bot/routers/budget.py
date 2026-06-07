@@ -1,4 +1,5 @@
-﻿from aiogram import Router
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 from bot.services.budget import budget_message
@@ -17,3 +18,4 @@ async def cmd_budget(msg: Message):
         await msg.answer("הכנסה לא תקינה. דוגמה: /budget 12000")
         return
     await msg.answer(budget_message(income), parse_mode="HTML")
+

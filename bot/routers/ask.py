@@ -1,4 +1,5 @@
-﻿from aiogram import Router
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 from bot.messages.he import MESSAGES
@@ -36,3 +37,4 @@ async def cmd_ask(msg: Message):
             await msg.answer(f"🔍 מצאתי תשובה:\nהשתמש בפקודה {response}")
             return
     await msg.answer("לא מצאתי תשובה מדויקת.\nשלח /feedback ונשמח לעזור!")
+

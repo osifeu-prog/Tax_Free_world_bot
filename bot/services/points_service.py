@@ -1,4 +1,5 @@
-﻿from sqlalchemy import select
+﻿# -*- coding: utf-8 -*-
+from sqlalchemy import select
 from bot.database.models import User
 from bot.database.session import async_session
 
@@ -29,3 +30,4 @@ async def get_top_points(limit=5):
             select(User.telegram_id, User.points).order_by(User.points.desc()).limit(limit)
         )
         return [(row.telegram_id, row.points) for row in result if row.points]
+

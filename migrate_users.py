@@ -1,4 +1,5 @@
-﻿import asyncio
+﻿# -*- coding: utf-8 -*-
+import asyncio
 from sqlalchemy import text
 from bot.database.session import async_session
 
@@ -12,3 +13,4 @@ async def migrate():
         print("Migration completed: columns added if missing")
 
 asyncio.run(migrate())
+

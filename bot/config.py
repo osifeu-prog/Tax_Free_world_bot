@@ -1,3 +1,4 @@
+﻿# -*- coding: utf-8 -*-
 from pydantic_settings import BaseSettings
 from typing import Optional
 
@@ -19,3 +20,4 @@ settings = Settings()
 def get_admin_ids():
     raw = settings.admin_ids or ''
     return [int(x.strip()) for x in raw.split(',') if x.strip()]
+

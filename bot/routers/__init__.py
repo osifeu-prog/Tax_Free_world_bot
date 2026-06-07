@@ -1,4 +1,5 @@
-﻿from .start import router as start_router
+﻿# -*- coding: utf-8 -*-
+from .start import router as start_router
 from .why import router as why_router
 from .wallet import router as wallet_router
 from .business import router as business_router
@@ -50,3 +51,4 @@ routers = [
     quiz_router, admin_rbac_router, request_admin_router,
     ai_router, household_router,
 ]
+

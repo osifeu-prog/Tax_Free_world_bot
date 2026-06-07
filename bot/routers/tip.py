@@ -1,4 +1,5 @@
-﻿import random
+﻿# -*- coding: utf-8 -*-
+import random
 from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
@@ -17,4 +18,5 @@ async def cb_tip(call: CallbackQuery):
     tip_text = random.choice(MESSAGES["tips"])
     await call.message.edit_text(MESSAGES["tip"].format(tip_text=tip_text), parse_mode="HTML", reply_markup=back_to_main())
     await call.answer()
+
 

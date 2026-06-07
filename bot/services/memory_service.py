@@ -1,4 +1,5 @@
-﻿from sqlalchemy import select
+﻿# -*- coding: utf-8 -*-
+from sqlalchemy import select
 from bot.database.models import UserMemory
 from bot.database.session import async_session
 import datetime
@@ -22,3 +23,4 @@ async def get_user_memory(telegram_id: int):
             select(UserMemory).where(UserMemory.telegram_id == telegram_id)
         )
         return result.scalar_one_or_none()
+

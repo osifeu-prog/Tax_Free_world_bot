@@ -1,4 +1,5 @@
-﻿from aiogram import Router, F
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.filters import Command, CommandObject
 from bot.keyboards.inline import main_menu, back_to_main, savings_menu, household_menu, academy_menu, community_menu
@@ -184,4 +185,5 @@ async def show_gift(call: CallbackQuery):
     # We need a fake message object  using call.message for simplicity
     await cmd_gift(call.message)
     await call.answer()
+
 

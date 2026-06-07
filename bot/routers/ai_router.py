@@ -1,4 +1,5 @@
-﻿from aiogram import Router
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 from bot.services.ai_service import ask_ai
@@ -54,3 +55,4 @@ async def cmd_whyus(msg: Message):
 @router.message(Command("familyguide"))
 async def cmd_familyguide(msg: Message):
     await msg.answer(MESSAGES["familyguide"], parse_mode="HTML")
+

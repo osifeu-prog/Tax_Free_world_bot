@@ -1,4 +1,5 @@
-﻿import asyncio
+﻿# -*- coding: utf-8 -*-
+import asyncio
 from logging.config import fileConfig
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
@@ -37,3 +38,4 @@ if context.is_offline_mode():
     run_migrations_offline()
 else:
     run_migrations_online()
+

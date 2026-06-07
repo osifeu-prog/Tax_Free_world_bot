@@ -1,3 +1,4 @@
+﻿# -*- coding: utf-8 -*-
 """initial
 
 Revision ID: ff80e10a472b
@@ -55,3 +56,4 @@ def downgrade() -> None:
     op.drop_table('referrals')
     op.drop_table('command_logs')
     # ### end Alembic commands ###
+

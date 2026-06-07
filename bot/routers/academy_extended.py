@@ -1,4 +1,5 @@
-﻿from aiogram import Router
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 from bot.messages.he import MESSAGES
@@ -17,3 +18,4 @@ async def cmd_academy_nft(msg: Message):
 @router.message(Command("academy_dao"))
 async def cmd_academy_dao(msg: Message):
     await msg.answer(MESSAGES["academy_dao"], parse_mode="HTML", reply_markup=back_to_main())
+

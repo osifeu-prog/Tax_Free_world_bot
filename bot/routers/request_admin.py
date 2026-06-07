@@ -1,4 +1,5 @@
-﻿from aiogram import Router
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from sqlalchemy import select
@@ -97,3 +98,4 @@ async def reject_request(call: CallbackQuery):
     await call.bot.send_message(req.telegram_id, "❌ בקשתך להרשאת ניהול נדחתה.")
     await call.message.edit_text(f"❌ בקשה #{req_id} נדחתה.")
     await call.answer("נדחה.")
+

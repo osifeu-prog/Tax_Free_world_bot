@@ -1,4 +1,5 @@
-﻿import asyncio, os
+﻿# -*- coding: utf-8 -*-
+import asyncio, os
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy import text
 
@@ -29,3 +30,4 @@ async def main():
     await engine.dispose()
 
 asyncio.run(main())
+

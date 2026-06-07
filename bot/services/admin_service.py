@@ -1,4 +1,5 @@
-﻿from sqlalchemy import select, delete
+﻿# -*- coding: utf-8 -*-
+from sqlalchemy import select, delete
 from bot.database.session import async_session
 from bot.database.models import Admin
 import bcrypt
@@ -39,3 +40,4 @@ async def remove_admin(telegram_id: int):
     async with async_session() as session:
         await session.execute(delete(Admin).where(Admin.telegram_id == telegram_id))
         await session.commit()
+

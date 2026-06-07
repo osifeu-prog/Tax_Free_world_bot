@@ -1,4 +1,5 @@
-﻿from aiogram import Router, F
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router, F
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
@@ -116,3 +117,4 @@ async def cmd_delexpense(msg: Message):
         await msg.answer("✅ ההוצאה נמחקה.", reply_markup=back_to_main())
     else:
         await msg.answer("⛔ לא נמצאה הוצאה או שאין הרשאה.", reply_markup=back_to_main())
+

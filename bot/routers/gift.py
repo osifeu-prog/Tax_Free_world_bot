@@ -1,4 +1,5 @@
-﻿import asyncio, random
+﻿# -*- coding: utf-8 -*-
+import asyncio, random
 from datetime import date
 from aiogram import Router
 from aiogram.filters import Command
@@ -46,3 +47,4 @@ async def cmd_gift(msg: Message):
         u = await session.get(User, user.id)
         u.last_gift_date = today
         await session.commit()
+

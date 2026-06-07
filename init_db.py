@@ -1,4 +1,5 @@
-﻿import asyncio
+﻿# -*- coding: utf-8 -*-
+import asyncio
 from bot.database.session import engine
 from bot.database.models import Base
 
@@ -8,3 +9,4 @@ async def main():
     print("✅ DB initialized")
 
 asyncio.run(main())
+

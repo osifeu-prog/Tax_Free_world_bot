@@ -1,4 +1,5 @@
-﻿import asyncio, os, random, string
+﻿# -*- coding: utf-8 -*-
+import asyncio, os, random, string
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy import text
 
@@ -40,3 +41,4 @@ async def main():
         print("✅ Demo data seeded successfully")
 
 asyncio.run(main())
+

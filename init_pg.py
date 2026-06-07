@@ -1,4 +1,5 @@
-﻿import asyncio, os
+﻿# -*- coding: utf-8 -*-
+import asyncio, os
 from sqlalchemy.ext.asyncio import create_async_engine
 from bot.database.models import Base
 
@@ -21,3 +22,4 @@ async def main():
     await engine.dispose()
 
 asyncio.run(main())
+

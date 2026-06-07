@@ -1,4 +1,5 @@
-﻿from aiogram import Router, F
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
 from bot.services.calculator import build_comparison
@@ -54,3 +55,4 @@ async def handle_preset(call: CallbackQuery):
     text = build_comparison(amount, tx)
     await call.message.edit_text(text, parse_mode="HTML", reply_markup=share_result(amount, tx))
     await call.answer()
+

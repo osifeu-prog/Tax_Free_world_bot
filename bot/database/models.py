@@ -1,4 +1,5 @@
-﻿from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Float, DateTime, Boolean
+﻿# -*- coding: utf-8 -*-
+from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Float, DateTime, Boolean
 from sqlalchemy.orm import DeclarativeBase
 import datetime
 
@@ -120,3 +121,4 @@ class BotGroup(Base):
     id = Column(Integer, primary_key=True, index=True)
     chat_id = Column(BigInteger, unique=True, nullable=False)
     title = Column(String, nullable=True)
+

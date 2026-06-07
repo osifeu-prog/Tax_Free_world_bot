@@ -1,4 +1,5 @@
-﻿from aiogram import Router
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 from bot.services.memory_service import get_user_memory
@@ -21,3 +22,4 @@ async def cmd_mydata(msg: Message):
         f"🕒 עדכון אחרון: {mem.updated_at.strftime('%d/%m/%Y %H:%M')}"
     )
     await msg.answer(text, parse_mode="HTML", reply_markup=back_to_main())
+

@@ -1,4 +1,5 @@
-﻿FEES = {
+﻿# -*- coding: utf-8 -*-
+FEES = {
     "ביט":     {"percent": 0.015, "fixed": 0.0},
     "פייבוקס": {"percent": 0.018, "fixed": 0.5},
     "TON":     {"percent": 0.001, "fixed": 0.0},
@@ -30,3 +31,4 @@ def build_comparison(amount, tx_per_month):
         f"• החיסכון השנתי הוא <b>הכסף שנשאר בכיס שלך</b>.\n\n"
         f"📲 <i>כדי להתחיל לחסוך, פתח ארנק TON דרך /wallet</i>"
     )
+

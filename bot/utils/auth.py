@@ -1,4 +1,5 @@
-﻿from datetime import datetime, timedelta
+﻿# -*- coding: utf-8 -*-
+from datetime import datetime, timedelta
 from jose import JWTError, jwt
 
 SECRET_KEY = "change-me-in-production-2026"
@@ -12,3 +13,4 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
 
 def verify_token(token: str):
     return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+

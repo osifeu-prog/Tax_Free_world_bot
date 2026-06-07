@@ -1,4 +1,5 @@
-﻿from aiogram import Router, F
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
 from bot.services.profile_service import get_or_create_profile, get_total_savings, get_expenses
@@ -157,3 +158,4 @@ async def cmd_chore(msg: Message):
                 return
             lst = "\n".join(f"{'✅' if c.done else '⬜'} {c.title}" for c in chores)
             await msg.answer(f"📋 <b>מטלות:</b>\n{lst}", parse_mode="HTML")
+

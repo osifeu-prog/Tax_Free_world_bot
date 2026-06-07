@@ -1,4 +1,5 @@
-﻿import random, string
+﻿# -*- coding: utf-8 -*-
+import random, string
 from sqlalchemy import select, func
 from bot.database.models import Referral, User, CommandLog
 from bot.database.session import async_session
@@ -49,3 +50,4 @@ async def log_command(user_id: int, command: str, params: str = ""):
         log = CommandLog(user_id=user_id, command=command, params=params)
         session.add(log)
         await session.commit()
+

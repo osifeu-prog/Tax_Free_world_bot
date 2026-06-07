@@ -1,4 +1,5 @@
-﻿from aiogram import Router
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 from bot.config import settings
@@ -20,3 +21,4 @@ async def cmd_feedback(msg: Message):
         parse_mode="HTML"
     )
     await msg.answer("✅ <b>הדיווח נשלח!</b> תודה על תרומתך.")
+

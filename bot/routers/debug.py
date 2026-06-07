@@ -1,4 +1,5 @@
-﻿from aiogram import Router
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 from bot.config import settings
@@ -33,3 +34,4 @@ async def check_redis():
         return True
     except:
         return False
+

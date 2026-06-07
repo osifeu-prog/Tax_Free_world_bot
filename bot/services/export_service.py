@@ -1,4 +1,5 @@
-﻿import csv, io
+﻿# -*- coding: utf-8 -*-
+import csv, io
 from sqlalchemy import select
 from bot.database.session import async_session
 from bot.database.models import CommandLog
@@ -13,3 +14,4 @@ async def export_logs_csv():
     for log in logs:
         writer.writerow([log.id, log.user_id, log.command, log.params, log.timestamp.isoformat()])
     return output.getvalue()
+

@@ -1,4 +1,5 @@
-﻿from aiogram import Router
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -14,3 +15,4 @@ async def cmd_contact(msg: Message):
         parse_mode="HTML",
         reply_markup=kb
     )
+

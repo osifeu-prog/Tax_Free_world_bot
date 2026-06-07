@@ -1,4 +1,5 @@
-﻿from aiogram import Router, F
+﻿# -*- coding: utf-8 -*-
+from aiogram import Router, F
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 from aiogram.filters import Command
 from bot.keyboards.inline import savings_menu, household_menu, academy_menu, community_menu
@@ -52,3 +53,4 @@ async def btn_help(msg: Message):
 @router.message(Command("hide"))
 async def hide_keyboard(msg: Message):
     await msg.answer("המקלדת הוסתרה.", reply_markup=ReplyKeyboardRemove())
+

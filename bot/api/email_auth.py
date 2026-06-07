@@ -1,4 +1,5 @@
-﻿from fastapi import APIRouter, HTTPException
+﻿# -*- coding: utf-8 -*-
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from passlib.context import CryptContext
 from bot.database.models import User
@@ -39,3 +40,4 @@ async def login(data: LoginRequest):
             raise HTTPException(401, "Invalid credentials")
         token = create_access_token({"sub": str(user.id), "email": data.email})
         return {"access_token": token, "user_id": user.id}
+
