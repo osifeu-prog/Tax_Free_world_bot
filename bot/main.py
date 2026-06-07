@@ -24,6 +24,7 @@ async def set_default_commands():
         BotCommand(command="expenses", description="📋 הוצאות"),
         BotCommand(command="addexpense", description="➕ הוסף הוצאה"),
         BotCommand(command="setincome", description="💰 עדכן הכנסה"),
+        BotCommand(command="delexpense", description="🗑️ מחק הוצאה"),
         BotCommand(command="wallet", description="👛 ארנק TON"),
         BotCommand(command="why", description="🔍 למה TON?"),
         BotCommand(command="business", description="🏢 לעסקים"),
@@ -40,14 +41,17 @@ async def set_default_commands():
         BotCommand(command="ref", description="🔗 קוד הפניה"),
         BotCommand(command="contact", description="📬 צור קשר"),
         BotCommand(command="id", description="🆔 זיהוי"),
-        BotCommand(command="mydata", description="🧠 הזיכרון שלי"),
+        BotCommand(command="daily", description="📈 סיכום יומי"),
+        BotCommand(command="mydata", description="📋 הנתונים שלי"),
+        BotCommand(command="help", description="ℹ️ עזרה"),
         BotCommand(command="admin", description="🔐 אדמין"),
         BotCommand(command="debug", description="🔧 סטטוס מערכת"),
-        BotCommand(command="daily", description="📈 סיכום יומי"),
-        BotCommand(command="help", description="ℹ️ עזרה"),
+        BotCommand(command="miniapp", description="📱 מחשבון ויזואלי"),
+        BotCommand(command="keyboard", description="⌨️ מקלדת"),
+        BotCommand(command="hide", description="🙈 הסתר מקלדת"),
+        BotCommand(command="export", description="📤 ייצוא לוגים"),
     ]
     await bot.set_my_commands(commands, scope=BotCommandScopeDefault())
-    # Bot Menu  כפתור WebApp
     await bot.set_chat_menu_button(
         menu_button=MenuButtonWebApp(
             text="📱 מחשבון ויזואלי",
@@ -59,16 +63,6 @@ async def init_db():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     logger.info("Database initialized.")
-
-# Reply Keyboard  נשלח רק לפי בקשה
-reply_kb = ReplyKeyboardMarkup(
-    keyboard=[
-        [KeyboardButton(text="💰 חיסכון"), KeyboardButton(text="🏠 כלכלת הבית")],
-        [KeyboardButton(text="📚 אקדמיה"), KeyboardButton(text="👥 קהילה")],
-        [KeyboardButton(text="📱 מחשבון ויזואלי"), KeyboardButton(text="📈 סיכום יומי")],
-    ],
-    resize_keyboard=True
-)
 
 async def health_handler(request):
     return web.Response(text="OK")
@@ -103,5 +97,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-
