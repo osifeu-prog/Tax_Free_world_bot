@@ -6,10 +6,12 @@
 $ErrorActionPreference = "Continue"
 $pass = 0; $fail = 0
 
+# פונקציית עזר לשליחת פקודה וקבלת התגובה
 function Test-Reply {
     param($Name, $Command, $ExpectedContains)
     Write-Host -NoNewline "$Name... "
     try {
+        # שליחת הפקודה
         $body = @{chat_id=$ChatId; text=$Command} | ConvertTo-Json
         $resp = Invoke-RestMethod -Uri "$Base/bot$Token/sendMessage" -Method Post -Body $body -ContentType "application/json"
         if (-not $resp.ok) {
@@ -17,11 +19,15 @@ function Test-Reply {
             $script:fail++
             return
         }
-        $msgId = $resp.result.message_id
-        # קריאת ההודעה בחזרה
-        Start-Sleep -Seconds 2
-        $resp2 = Invoke-RestMethod -Uri "$Base/bot$Token/getMessages?chat_id=$ChatId&message_ids=$msgId"
-        $text = $resp2.result.messages[0].text
+        # קריאת העדכונים האחרונים
+        Start-Sleep -Seconds 3
+        $updates = Invoke-RestMethod -Uri "$Base/bot$Token/getUpdates?offset=-5"
+        $text = ""
+        foreach ($update in $updates.result) {
+            if ($update.message.chat.id -eq $ChatId -and $update.message.text) {
+                $text = $update.message.text
+            }
+        }
         if ($text -match $ExpectedContains) {
             Write-Host "✅"
             $script:pass++
@@ -67,7 +73,7 @@ Test-Reply "Donate" "/donate" "תרומה"
 Test-Reply "AcademyExtended" "/academy_extended" "ביזוריות"
 Test-Reply "AcademyNFT" "/academy_nft" "NFT"
 Test-Reply "AcademyDAO" "/academy_dao" "DAO"
-Test-Reply "Feedback" "/feedback בדיקה" "שלח"
+Test-Reply "Feedback" "/feedback תיקון" "שלח"
 Test-Reply "Ask" "/ask איך לחסוך" "תשובה"
 Test-Reply "Gift" "/gift" "נקודות"
 
