@@ -1,5 +1,22 @@
 ﻿MESSAGES = {
     
+    
+    "communities": '''🌐 <b>הקהילות שלנו</b>
+
+🔹 <a href='https://www.facebook.com/share/g/18Btgug5S2/'>קבוצת פייסבוק 1</a>
+🔹 <a href='https://www.facebook.com/share/g/1BAEgyoNQS/'>קבוצת פייסבוק 2</a>
+🔹 <a href='https://www.facebook.com/share/g/1CXinrqUF5/'>קבוצת פייסבוק 3</a>
+🔹 <a href='https://chat.whatsapp.com/K7AExcyFVLRAjRkKlhSbez'>וואטסאפ 1</a>
+🔹 <a href='https://chat.whatsapp.com/HAbRBZ7WE4pGu7IKvdHIxu'>וואטסאפ 2</a>
+🔹 <a href='https://t.me/thegraetshow'>טלגרם  The Great Show</a>
+🔹 <a href='https://t.me/+o3-ZzDExauxmYzg0'>טלגרם  קבוצה נוספת</a>
+🔹 <a href='https://www.instagram.com/ktzvika?igsh=cDR2NDB5N2VlNzRi'>אינסטגרם</a>
+🔹 <a href='https://www.facebook.com/groups/585781210162055/?ref=share&mibextid=NSMWBT'>קבוצת פייסבוק נוספת</a>
+
+🌍 <b>האתר והאפליקציה המלאה:</b>
+🔹 <a href='https://slh-nft.com'>slh-nft.com</a>
+
+📌 <b>בחר פעולה:</b>''',
     "roadmap": '''🗺️ <b>מפת הדרכים  TON Israel</b>
 
 🔮 <b>החזון העתידי של המערכת:</b>
@@ -290,5 +307,6 @@ CBDC = מרכזי, מפוקח, יציב
 ת: /contact
 '''
 }
+
 
 

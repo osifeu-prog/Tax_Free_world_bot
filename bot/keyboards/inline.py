@@ -6,6 +6,7 @@ def main_menu():
         [InlineKeyboardButton(text="🏠 ניהול כלכלת הבית", callback_data="menu_household")],
         [InlineKeyboardButton(text="📚 אקדמיה  ללמוד", callback_data="menu_academy")],
         [InlineKeyboardButton(text="👥 קהילה וכלים", callback_data="menu_community")],
+        [InlineKeyboardButton(text="🌐 קהילות", callback_data="communities")],
         [InlineKeyboardButton(text="📱 מחשבון ויזואלי", web_app=WebAppInfo(url="https://taxfreeworldbot-production.up.railway.app/landing/miniapp.html"))],
         [InlineKeyboardButton(text="❤️ תרומה לפרויקט", callback_data="donate")],
         [InlineKeyboardButton(text="🗺️ מפת דרכים", callback_data="roadmap")],
