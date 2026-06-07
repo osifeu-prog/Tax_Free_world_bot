@@ -154,3 +154,8 @@ if __name__ == "__main__":
 
 
 
+
+from bot.api import google_auth, email_auth
+app.include_router(google_auth.router, prefix="/api")
+app.include_router(email_auth.router, prefix="/api")
+
