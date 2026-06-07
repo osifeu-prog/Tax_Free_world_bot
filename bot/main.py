@@ -34,6 +34,9 @@ async def set_default_commands():
         BotCommand(command="socio", description="🌿 סוציוקרטיה"),
         BotCommand(command="anti", description="🛡️ טכנולוגיות נגד שחיתות"),
         BotCommand(command="edu", description="🎓 חינוך וכלכלה"),
+        BotCommand(command="academy_extended", description="📚 ביזוריות, NFT, כלכלה חכמה"),
+        BotCommand(command="academy_nft", description="🧩 NFTזהות"),
+        BotCommand(command="academy_dao", description="🏛️ DAO  ארגון מבוזר"),
         BotCommand(command="faq", description="❓ שאלות נפוצות"),
         BotCommand(command="tip", description="💡 טיפ יומי"),
         BotCommand(command="stats", description="📊 סטטיסטיקות"),
@@ -43,17 +46,17 @@ async def set_default_commands():
         BotCommand(command="id", description="🆔 זיהוי"),
         BotCommand(command="daily", description="📈 סיכום יומי"),
         BotCommand(command="mydata", description="📋 הנתונים שלי"),
+        BotCommand(command="gift", description="🎁 מתנה יומית"),
         BotCommand(command="help", description="ℹ️ עזרה"),
         BotCommand(command="admin", description="🔐 אדמין"),
         BotCommand(command="debug", description="🔧 סטטוס מערכת"),
         BotCommand(command="miniapp", description="📱 מחשבון ויזואלי"),
         BotCommand(command="keyboard", description="⌨️ מקלדת"),
         BotCommand(command="hide", description="🙈 הסתר מקלדת"),
+        BotCommand(command="export", description="📤 ייצוא לוגים"),
         BotCommand(command="donate", description="❤️ תרומה לפרויקט"),
         BotCommand(command="feedback", description="📝 דיווח תקלה/רעיון"),
-        BotCommand(command="gift", description="🎁 מתנה למצטרפים"),
         BotCommand(command="ask", description="🤖 שאל שאלה"),
-        BotCommand(command="export", description="📤 ייצוא לוגים"),
     ]
     await bot.set_my_commands(commands, scope=BotCommandScopeDefault())
     await bot.set_chat_menu_button(
@@ -74,8 +77,6 @@ async def health_handler(request):
 async def index_handler(request):
     return web.FileResponse(os.path.join(os.path.dirname(__file__), "..", "public", "index.html"))
 
-
-# API  נתוני פרופיל למיני-אפ
 async def api_profile(request):
     user_id = request.query.get("user_id")
     if not user_id:
@@ -119,7 +120,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-
-
-

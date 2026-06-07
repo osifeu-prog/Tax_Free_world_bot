@@ -4,6 +4,8 @@ from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 from bot.services.points_service import add_points, get_user
+from bot.database.session import async_session
+from bot.database.models import User
 
 router = Router()
 
@@ -11,14 +13,13 @@ PRIZES = [(0, "כלום... נסה שוב!"), (10, "10 נקודות!"), (20, "20 
 
 @router.message(Command("gift"))
 async def cmd_gift(msg: Message):
-    user = await get_user(msg.from_user.id)  # <- תוקן
+    user = await get_user(msg.from_user.id)
     if not user:
         await msg.answer("תחילה עליך לשלוח /start כדי להירשם.")
         return
     today = date.today().isoformat()
     if user.last_gift_date == today:
         if user.gift_shares_today >= 5:
-            # איפוס וניסיון נוסף
             async with async_session() as session:
                 u = await session.get(User, user.id)
                 u.gift_shares_today = 0
@@ -41,7 +42,6 @@ async def cmd_gift(msg: Message):
         result = f"😕 {text}"
     await asyncio.sleep(3)
     await msg.answer(result)
-    # עדכון תאריך אחרון
     async with async_session() as session:
         u = await session.get(User, user.id)
         u.last_gift_date = today
