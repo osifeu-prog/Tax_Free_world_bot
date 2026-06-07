@@ -60,7 +60,7 @@ async def show_community(call: CallbackQuery):
     await call.message.edit_text("👥 <b>קהילה וכלים  בחר:</b>", parse_mode="HTML", reply_markup=community_menu())
     await call.answer()
 
-for topic in ["crypto", "cbdc", "decentral", "socio", "anti", "edu", "faq", "ask", "feedback"]:
+for topic in ["crypto", "cbdc", "decentral", "socio", "anti", "edu", "faq", "ask", "feedback", "roadmap"]:
     @router.callback_query(F.data == topic)
     async def topic_handler(call: CallbackQuery, t=topic):
         await call.message.edit_text(MESSAGES[t], parse_mode="HTML", reply_markup=back_to_main())
@@ -149,5 +149,6 @@ async def show_contact(call: CallbackQuery):
         reply_markup=kb
     )
     await call.answer()
+
 
 
