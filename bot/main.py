@@ -8,6 +8,11 @@ from bot.api.email_routes import register, login
 from bot.utils.logger import logger
 from bot.database.models import Base
 from bot.database.session import engine
+# Fallback: if engine fails, use SQLite
+try:
+    import asyncpg
+except ImportError:
+    engine = create_async_engine('sqlite+aiosqlite:///./bot.db')
 import bot.routers as routers_pkg
 
 HEALTH_PATH = "/health"
@@ -165,3 +170,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
