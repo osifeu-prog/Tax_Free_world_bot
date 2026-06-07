@@ -1,4 +1,4 @@
-﻿import asyncio, os
+import asyncio, os
 from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand, BotCommandScopeDefault, WebAppInfo, MenuButtonWebApp
 from aiohttp import web
@@ -17,63 +17,63 @@ for router in routers:
 
 async def set_default_commands():
     commands = [
-        BotCommand(command="start", description="🚀 דף הבית"),
-        BotCommand(command="compare", description="💸 מחשבון עמלות"),
-        BotCommand(command="budget", description="📊 מחשבון תקציב"),
-        BotCommand(command="profile", description="👤 פרופיל כלכלי"),
-        BotCommand(command="expenses", description="📋 הוצאות"),
-        BotCommand(command="addexpense", description="➕ הוסף הוצאה"),
-        BotCommand(command="setincome", description="💰 עדכן הכנסה"),
-        BotCommand(command="delexpense", description="🗑️ מחק הוצאה"),
-        BotCommand(command="wallet", description="👛 ארנק TON"),
-        BotCommand(command="why", description="🔍 למה TON?"),
-        BotCommand(command="business", description="🏢 לעסקים"),
-        BotCommand(command="crypto", description="🪙 מה זה קריפטו"),
-        BotCommand(command="cbdc", description="🏦 מה זה CBDC"),
-        BotCommand(command="decentral", description="🔓 ביזור מול ריכוזיות"),
-        BotCommand(command="socio", description="🌿 סוציוקרטיה"),
-        BotCommand(command="anti", description="🛡️ טכנולוגיות נגד שחיתות"),
-        BotCommand(command="edu", description="🎓 חינוך וכלכלה"),
-        BotCommand(command="academy_extended", description="📚 ביזוריות, NFT, כלכלה חכמה"),
-        BotCommand(command="academy_nft", description="🧩 NFTזהות"),
-        BotCommand(command="academy_dao", description="🏛️ DAO  ארגון מבוזר"),
-        BotCommand(command="faq", description="❓ שאלות נפוצות"),
-        BotCommand(command="tip", description="💡 טיפ יומי"),
-        BotCommand(command="stats", description="📊 סטטיסטיקות"),
-        BotCommand(command="top", description="🏆 לוח מובילים"),
-        BotCommand(command="ref", description="🔗 קוד הפניה"),
-        BotCommand(command="contact", description="📬 צור קשר"),
-        BotCommand(command="id", description="🆔 זיהוי"),
-        BotCommand(command="daily", description="📈 סיכום יומי"),
-        BotCommand(command="mydata", description="📋 הנתונים שלי"),
-        BotCommand(command="gift", description="🎁 מתנה יומית"),
-        BotCommand(command="help", description="ℹ️ עזרה"),
-        BotCommand(command="admin", description="🔐 אדמין"),
-        BotCommand(command="debug", description="🔧 סטטוס מערכת"),
-        BotCommand(command="miniapp", description="📱 מחשבון ויזואלי"),
-        BotCommand(command="keyboard", description="⌨️ מקלדת"),
-        BotCommand(command="hide", description="🙈 הסתר מקלדת"),
-        BotCommand(command="export", description="📤 ייצוא לוגים"),
-        BotCommand(command="donate", description="❤️ תרומה לפרויקט"),
-        BotCommand(command="feedback", description="📝 דיווח תקלה/רעיון"),
-        BotCommand(command="whyus", description="⭐ למה לבחור בנו?"),
-        BotCommand(command="familyguide", description="👨👩👧👦 מדריך למשפחות"),
-        BotCommand(command="menu", description="🗺️ מפת האתר"),
-        BotCommand(command="architecture", description="🏗️ תרשים זרימה של המערכת"),
-        BotCommand(command="household", description="🏠 דשבורד כלכלת הבית"),
-        BotCommand(command="ai", description="🤖 שאל את הבינה המלאכותית"),
-        BotCommand(command="ask", description="🤖 שאל שאלה"),
-        BotCommand(command="addadmin", description="➕ הוסף מנהל"),
-        BotCommand(command="login", description="🔑 התחבר"),
-        BotCommand(command="setpassword", description="🔒 שנה סיסמה"),
-        BotCommand(command="requestadmin", description="📥 בקש הרשאת ניהול"),
-        BotCommand(command="removeadmin", description="➖ הסר מנהל"),
-        BotCommand(command="quiz", description="❓ חידון"),
+        BotCommand(command="start", description="?? ?? ????"),
+        BotCommand(command="compare", description="?? ?????? ?????"),
+        BotCommand(command="budget", description="?? ?????? ?????"),
+        BotCommand(command="profile", description="?? ?????? ?????"),
+        BotCommand(command="expenses", description="?? ??????"),
+        BotCommand(command="addexpense", description="? ???? ?????"),
+        BotCommand(command="setincome", description="?? ???? ?????"),
+        BotCommand(command="delexpense", description="??? ??? ?????"),
+        BotCommand(command="wallet", description="?? ???? TON"),
+        BotCommand(command="why", description="?? ??? TON?"),
+        BotCommand(command="business", description="?? ??????"),
+        BotCommand(command="crypto", description="?? ?? ?? ??????"),
+        BotCommand(command="cbdc", description="?? ?? ?? CBDC"),
+        BotCommand(command="decentral", description="?? ????? ??? ????????"),
+        BotCommand(command="socio", description="?? ??????????"),
+        BotCommand(command="anti", description="??? ?????????? ??? ??????"),
+        BotCommand(command="edu", description="?? ????? ??????"),
+        BotCommand(command="academy_extended", description="?? ????????, NFT, ????? ????"),
+        BotCommand(command="academy_nft", description="?? NFT????"),
+        BotCommand(command="academy_dao", description="??? DAO  ????? ?????"),
+        BotCommand(command="faq", description="? ????? ??????"),
+        BotCommand(command="tip", description="?? ??? ????"),
+        BotCommand(command="stats", description="?? ??????????"),
+        BotCommand(command="top", description="?? ??? ???????"),
+        BotCommand(command="ref", description="?? ??? ?????"),
+        BotCommand(command="contact", description="?? ??? ???"),
+        BotCommand(command="id", description="?? ?????"),
+        BotCommand(command="daily", description="?? ????? ????"),
+        BotCommand(command="mydata", description="?? ??????? ???"),
+        BotCommand(command="gift", description="?? ???? ?????"),
+        BotCommand(command="help", description="?? ????"),
+        BotCommand(command="admin", description="?? ?????"),
+        BotCommand(command="debug", description="?? ????? ?????"),
+        BotCommand(command="miniapp", description="?? ?????? ???????"),
+        BotCommand(command="keyboard", description="?? ?????"),
+        BotCommand(command="hide", description="?? ???? ?????"),
+        BotCommand(command="export", description="?? ????? ?????"),
+        BotCommand(command="donate", description="?? ????? ???????"),
+        BotCommand(command="feedback", description="?? ????? ????/?????"),
+        BotCommand(command="whyus", description="? ??? ????? ????"),
+        BotCommand(command="familyguide", description="???????? ????? ???????"),
+        BotCommand(command="menu", description="??? ??? ????"),
+        BotCommand(command="architecture", description="??? ????? ????? ?? ??????"),
+        BotCommand(command="household", description="?? ?????? ????? ????"),
+        BotCommand(command="ai", description="?? ??? ?? ????? ?????????"),
+        BotCommand(command="ask", description="?? ??? ????"),
+        BotCommand(command="addadmin", description="? ???? ????"),
+        BotCommand(command="login", description="?? ?????"),
+        BotCommand(command="setpassword", description="?? ??? ?????"),
+        BotCommand(command="requestadmin", description="?? ??? ????? ?????"),
+        BotCommand(command="removeadmin", description="? ??? ????"),
+        BotCommand(command="quiz", description="? ?????"),
     ]
     await bot.set_my_commands(commands, scope=BotCommandScopeDefault())
     await bot.set_chat_menu_button(
         menu_button=MenuButtonWebApp(
-            text="📱 מחשבון ויזואלי",
+            text="?? ?????? ???????",
             web_app=WebAppInfo(url="https://taxfreeworldbot-production.up.railway.app/landing/miniapp.html")
         )
     )
@@ -155,12 +155,11 @@ if __name__ == "__main__":
 
 
 
-from bot.api import google_auth, email_auth
-app.include_router(google_auth.router, prefix="/api")
+from bot.api import email_auth
 app.include_router(email_auth.router, prefix="/api")
 
 
-from bot.api import google_auth, email_auth
-app.include_router(google_auth.router, prefix="/api")
+from bot.api import email_auth
 app.include_router(email_auth.router, prefix="/api")
+
 
