@@ -1,12 +1,12 @@
 ﻿from aiogram import Router, F
-from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup
+from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
 from bot.keyboards.inline import back_to_main
 
 router = Router()
 
 HELP_TEXT = '''
-📖 <b>פקודות הבוט  TON Israel</b>
+📖 <b>כל הפקודות  TON Israel</b>
 
 💰 <b>חיסכון:</b>
 /start, /compare, /wallet, /why, /business
@@ -15,13 +15,16 @@ HELP_TEXT = '''
 /budget, /profile, /addexpense, /expenses, /setincome, /delexpense
 
 📚 <b>אקדמיה:</b>
-/crypto, /cbdc, /decentral, /socio, /anti, /edu, /faq
+/crypto, /cbdc, /decentral, /socio, /anti, /edu, /faq, /academy_extended, /academy_nft, /academy_dao
 
 👥 <b>קהילה:</b>
-/ref, /stats, /top, /tip, /contact, /id, /daily, /mydata
+/ref, /stats, /top, /tip, /contact, /id, /daily, /mydata, /gift
 
-🛠️ <b>ניהול:</b>
-/admin, /debug, /miniapp, /keyboard, /hide, /export
+🛠️ <b>כלים:</b>
+/miniapp, /keyboard, /hide, /ask, /feedback
+
+🔒 <b>אדמין (רק למנהלים):</b>
+/admin, /export, /debug
 '''
 
 @router.message(Command("help"))

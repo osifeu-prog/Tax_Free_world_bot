@@ -6,6 +6,7 @@ class Base(DeclarativeBase):
     pass
 
 class User(Base):
+    points = Column(Integer, default=0)
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
     telegram_id = Column(BigInteger, unique=True, index=True)
@@ -56,3 +57,4 @@ class UserMemory(Base):
     last_params = Column(String(200))
     last_result = Column(String(500))
     updated_at = Column(DateTime, default=datetime.datetime.utcnow)
+
