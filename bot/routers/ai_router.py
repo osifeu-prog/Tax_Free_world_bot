@@ -2,6 +2,7 @@
 from aiogram.filters import Command
 from aiogram.types import Message
 from bot.services.ai_service import ask_ai
+from bot.messages.he import MESSAGES
 
 router = Router()
 
@@ -35,6 +36,9 @@ async def cmd_menu(msg: Message):
 🛠️ <b>כלים:</b>
 /miniapp, /keyboard, /hide, /ask, /feedback, /help, /quiz, /ai, /architecture
 
+⭐ <b>אודות:</b>
+/whyus, /familyguide
+
 🔐 <b>הרשאות:</b>
 /requestadmin, /addadmin, /login, /setpassword, /removeadmin
 
@@ -42,3 +46,11 @@ async def cmd_menu(msg: Message):
 /admin, /export, /debug
 '''
     await msg.answer(menu_text, parse_mode="HTML")
+
+@router.message(Command("whyus"))
+async def cmd_whyus(msg: Message):
+    await msg.answer(MESSAGES["whyus"], parse_mode="HTML")
+
+@router.message(Command("familyguide"))
+async def cmd_familyguide(msg: Message):
+    await msg.answer(MESSAGES["familyguide"], parse_mode="HTML")

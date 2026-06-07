@@ -184,3 +184,4 @@ async def show_gift(call: CallbackQuery):
     # We need a fake message object  using call.message for simplicity
     await cmd_gift(call.message)
     await call.answer()
+
