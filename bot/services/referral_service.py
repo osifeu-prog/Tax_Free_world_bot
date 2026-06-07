@@ -28,10 +28,24 @@ async def get_top_referrers(limit=5):
     async with async_session() as session:
         result = await session.execute(select(Referral).order_by(Referral.clicks.desc()).limit(limit))
         refs = result.scalars().all()
-        if not refs:
-            return "אין עדיין."
-        lines = []
-        for i, r in enumerate(refs, 1):
-            crown = "🌟 " if r.clicks >= 5 else ""
-            lines.append(f"{i}. {crown}<code>{r.code}</code>  {r.clicks} מצטרפים")
-        return "\n".join(lines)
+        lines = [f"{i}. {('🌟 ' if r.clicks >= 5 else '')}<code>{r.code}</code>  {r.clicks} מצטרפים" for i, r in enumerate(refs, 1)]
+        return "\n".join(lines) if lines else "אין עדיין."
+
+# ⬇️ פונקציה חדשה  רישום משתמש
+async def register_user(telegram_id: int, language: str = "he"):
+    async with async_session() as session:
+        result = await session.execute(select(User).where(User.telegram_id == telegram_id))
+        user = result.scalar_one_or_none()
+        if not user:
+            user = User(telegram_id=telegram_id, language=language)
+            session.add(user)
+            await session.commit()
+            await session.refresh(user)
+        return user
+
+# ⬇️ פונקציה חדשה  רישום פקודה
+async def log_command(user_id: int, command: str, params: str = ""):
+    async with async_session() as session:
+        log = CommandLog(user_id=user_id, command=command, params=params)
+        session.add(log)
+        await session.commit()

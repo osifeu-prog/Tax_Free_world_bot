@@ -3,7 +3,7 @@ from aiogram.types import Message, CallbackQuery, ReplyKeyboardMarkup, KeyboardB
 from aiogram.filters import Command, CommandObject
 from bot.keyboards.inline import main_menu, back_to_main, savings_menu, household_menu, academy_menu, community_menu
 from bot.messages.he import MESSAGES
-from bot.services.referral_service import get_ref_stats, get_top_referrers
+from bot.services.referral_service import get_ref_stats, get_top_referrers, register_user
 from bot.services.profile_service import get_or_create_profile, get_total_savings, get_expenses
 import random
 
@@ -30,7 +30,8 @@ async def cmd_start(msg: Message, command: CommandObject):
         text = MESSAGES["ref_landing"].format(referrer=code, start_message=greet(name))
     else:
         text = greet(name)
-    await msg.answer(text, parse_mode="HTML", reply_markup=main_menu())
+    await register_user(msg.from_user.id)
+    await msg.answer(text, parse_mode='HTML', reply_markup=main_menu())
     await msg.answer("ניווט מהיר:", reply_markup=reply_kb)
 
 @router.callback_query(F.data == "start")
@@ -148,3 +149,4 @@ async def show_contact(call: CallbackQuery):
         reply_markup=kb
     )
     await call.answer()
+
