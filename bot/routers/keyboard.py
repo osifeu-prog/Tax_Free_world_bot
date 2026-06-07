@@ -7,12 +7,12 @@ from bot.routers.daily import daily_handler
 
 router = Router()
 
-# מקלדת משותפת
 reply_kb = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text="💰 חיסכון"), KeyboardButton(text="🏠 כלכלת הבית")],
         [KeyboardButton(text="📚 אקדמיה"), KeyboardButton(text="👥 קהילה")],
         [KeyboardButton(text="📱 מחשבון ויזואלי"), KeyboardButton(text="📈 סיכום יומי")],
+        [KeyboardButton(text="📝 פידבק"), KeyboardButton(text="ℹ️ עזרה")],
     ],
     resize_keyboard=True
 )
@@ -40,6 +40,14 @@ async def btn_community(msg: Message):
 @router.message(F.text == "📈 סיכום יומי")
 async def btn_daily(msg: Message):
     await daily_handler(msg)
+
+@router.message(F.text == "📝 פידבק")
+async def btn_feedback(msg: Message):
+    await msg.answer(MESSAGES["feedback_prompt"], parse_mode="HTML")
+
+@router.message(F.text == "ℹ️ עזרה")
+async def btn_help(msg: Message):
+    await msg.answer(MESSAGES["help"], parse_mode="HTML")
 
 @router.message(Command("hide"))
 async def hide_keyboard(msg: Message):
