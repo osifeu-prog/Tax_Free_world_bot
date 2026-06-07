@@ -10,6 +10,9 @@
         .container { max-width: 420px; margin: 0 auto; background: white; border-radius: 20px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         h1 { text-align: center; color: #0088CC; font-size: 1.5em; margin-bottom: 0; }
         .subtitle { text-align: center; color: #666; font-size: 0.9em; margin-bottom: 20px; }
+        .profile-box { background: #e8f4fd; border-radius: 12px; padding: 12px; margin-bottom: 16px; text-align: center; }
+        .profile-box .income { font-size: 1.2em; font-weight: bold; color: #0088CC; }
+        .profile-box .savings { font-size: 1em; color: #28a745; }
         .slider-group { margin-bottom: 18px; }
         label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.95em; }
         input[type=range] { width: 100%; accent-color: #0088CC; }
@@ -30,6 +33,10 @@
     <div class="container">
         <h1>💰 מחשבון TON</h1>
         <p class="subtitle">גלה כמה כסף תוכל לחסוך השנה</p>
+        <div id="profileBox" class="profile-box" style="display:none;">
+            <div class="income">הכנסה חודשית: <span id="profileIncome">0</span></div>
+            <div class="savings">חיסכון פוטנציאלי: <span id="profileSavings">0</span>/שנה</div>
+        </div>
         <div class="slider-group">
             <label>סכום להעברה ()</label>
             <input type="range" id="amount" min="50" max="15000" value="500" step="10">
@@ -95,8 +102,28 @@
             createChart(bit, paybox, ton);
         }
 
+        // טעינת פרופיל מה-API
+        async function loadProfile() {
+            const tg = window.Telegram?.WebApp;
+            const userId = tg?.initDataUnsafe?.user?.id || new URLSearchParams(window.location.search).get('user_id') || '224223270';
+            try {
+                const resp = await fetch(`/api/profile?user_id=${userId}`);
+                const data = await resp.json();
+                if (data.monthly_income) {
+                    document.getElementById('profileBox').style.display = 'block';
+                    document.getElementById('profileIncome').textContent = data.monthly_income.toLocaleString();
+                    document.getElementById('profileSavings').textContent = data.total_savings.toLocaleString();
+                    // עדכון הסליידרים לנתוני המשתמש
+                    document.getElementById('amount').value = Math.min(data.monthly_income || 500, 15000);
+                    document.getElementById('txCount').value = data.expenses?.length || 10;
+                    calc();
+                }
+            } catch(e) {}
+        }
+
         document.getElementById('amount').addEventListener('input', calc);
         document.getElementById('txCount').addEventListener('input', calc);
+        loadProfile();
         calc();
     </script>
 </body>

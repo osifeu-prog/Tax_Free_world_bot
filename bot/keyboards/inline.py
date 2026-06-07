@@ -22,6 +22,8 @@ def savings_menu():
         [InlineKeyboardButton(text="📊 תרחישים מהירים", callback_data="presets")],
         [InlineKeyboardButton(text="👛 איך פותחים ארנק", callback_data="wallet")],
         [InlineKeyboardButton(text="🔍 למה TON?", callback_data="why")],
+        [InlineKeyboardButton(text="🤖 שאל שאלה", callback_data="ask")],
+        [InlineKeyboardButton(text="📝 דיווח תקלה", callback_data="feedback")],
         [InlineKeyboardButton(text="🔙 חזרה", callback_data="start")],
     ])
 
@@ -41,9 +43,13 @@ def academy_menu():
         [InlineKeyboardButton(text="🏦 מה זה CBDC?", callback_data="cbdc")],
         [InlineKeyboardButton(text="🔓 ביזור מול ריכוזיות", callback_data="decentral")],
         [InlineKeyboardButton(text="🌿 סוציוקרטיה", callback_data="socio")],
+        [InlineKeyboardButton(text="🧩 NFTזהות", callback_data="academy_nft")],
+        [InlineKeyboardButton(text="🏛️ DAO  ארגון מבוזר", callback_data="academy_dao")],
+        [InlineKeyboardButton(text="📚 ביזוריות, כלכלה חכמה", callback_data="academy_extended")],
         [InlineKeyboardButton(text="🛡️ טכנולוגיות נגד שחיתות", callback_data="anti")],
         [InlineKeyboardButton(text="🎓 חינוך, כלכלה ורווחה", callback_data="edu")],
         [InlineKeyboardButton(text="❓ שאלות נפוצות", callback_data="faq")],
+        [InlineKeyboardButton(text="🤖 שאל שאלה", callback_data="ask")],
         [InlineKeyboardButton(text="🔙 חזרה", callback_data="start")],
     ])
 
@@ -53,6 +59,8 @@ def community_menu():
         [InlineKeyboardButton(text="🏆 לוח מובילים", callback_data="top")],
         [InlineKeyboardButton(text="📊 סטטיסטיקות", callback_data="stats")],
         [InlineKeyboardButton(text="💡 טיפ יומי", callback_data="tip")],
+        [InlineKeyboardButton(text="🤖 שאל שאלה", callback_data="ask")],
+        [InlineKeyboardButton(text="📝 דיווח תקלה", callback_data="feedback")],
         [InlineKeyboardButton(text="🔙 חזרה", callback_data="start")],
     ])
 

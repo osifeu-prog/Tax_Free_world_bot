@@ -50,6 +50,8 @@ async def set_default_commands():
         BotCommand(command="keyboard", description="⌨️ מקלדת"),
         BotCommand(command="hide", description="🙈 הסתר מקלדת"),
         BotCommand(command="donate", description="❤️ תרומה לפרויקט"),
+        BotCommand(command="feedback", description="📝 דיווח תקלה/רעיון"),
+        BotCommand(command="ask", description="🤖 שאל שאלה"),
         BotCommand(command="export", description="📤 ייצוא לוגים"),
     ]
     await bot.set_my_commands(commands, scope=BotCommandScopeDefault())
@@ -71,6 +73,23 @@ async def health_handler(request):
 async def index_handler(request):
     return web.FileResponse(os.path.join(os.path.dirname(__file__), "..", "public", "index.html"))
 
+
+# API  נתוני פרופיל למיני-אפ
+async def api_profile(request):
+    user_id = request.query.get("user_id")
+    if not user_id:
+        return web.json_response({"error": "missing user_id"}, status=400)
+    from bot.services.profile_service import get_or_create_profile, get_total_savings, get_expenses
+    profile = await get_or_create_profile(int(user_id))
+    total = await get_total_savings(int(user_id))
+    expenses = await get_expenses(int(user_id))
+    return web.json_response({
+        "user_id": int(user_id),
+        "monthly_income": profile.monthly_income,
+        "total_savings": round(total, 2),
+        "expenses": [{"id": e.id, "category": e.category, "amount": e.amount, "frequency": e.frequency, "ton_savings": e.potential_ton_savings} for e in expenses]
+    })
+
 async def start_polling():
     await bot.delete_webhook(drop_pending_updates=True)
     await set_default_commands()
@@ -81,6 +100,7 @@ async def start_http():
     app = web.Application()
     app.router.add_get(HEALTH_PATH, health_handler)
     app.router.add_get("/", index_handler)
+    app.router.add_get("/api/profile", api_profile)
     static_path = os.path.join(os.path.dirname(__file__), "..", "public")
     if os.path.isdir(static_path):
         app.router.add_static('/landing/', path=os.path.join(static_path, 'landing'), show_index=True)
@@ -98,4 +118,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+
 
