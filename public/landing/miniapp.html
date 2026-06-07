@@ -32,122 +32,47 @@
             padding: 20px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .header h1 {
-            font-size: 1.5em;
-            color: var(--primary);
-            margin-bottom: 4px;
-        }
-        .header .subtitle {
-            color: var(--text-light);
-            font-size: 0.9em;
-        }
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h1 { font-size: 1.5em; color: var(--primary); margin-bottom: 4px; }
+        .header .subtitle { color: var(--text-light); font-size: 0.9em; }
         .profile-box {
             background: var(--primary-light);
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 16px;
-            text-align: center;
-            display: none;
+            border-radius: 12px; padding: 12px; margin-bottom: 16px;
+            text-align: center; display: none;
         }
-        .profile-box .income {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        .profile-box .savings {
-            font-size: 1em;
-            color: var(--success);
-        }
-        .slider-group {
-            margin-bottom: 18px;
-        }
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 6px;
-            font-size: 0.95em;
-        }
-        input[type=range] {
-            width: 100%;
-            accent-color: var(--primary);
-        }
+        .profile-box .income { font-size: 1.2em; font-weight: bold; color: var(--primary); }
+        .profile-box .savings { font-size: 1em; color: var(--success); }
+        .slider-group { margin-bottom: 18px; }
+        label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.95em; }
+        input[type=range] { width: 100%; accent-color: var(--primary); }
         .value {
             background: var(--primary-light);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: bold;
-            color: var(--primary);
-            display: inline-block;
-            margin-right: 8px;
+            padding: 4px 12px; border-radius: 20px;
+            font-weight: bold; color: var(--primary);
+            display: inline-block; margin-right: 8px;
         }
-        canvas {
-            margin: 20px 0;
-        }
-        .cards {
-            display: flex;
-            gap: 10px;
-            margin-top: 16px;
-        }
+        canvas { margin: 20px 0; }
+        .cards { display: flex; gap: 10px; margin-top: 16px; }
         .card {
-            flex: 1;
-            background: #f9f9f9;
-            border-radius: 12px;
-            padding: 12px;
-            text-align: center;
+            flex: 1; background: #f9f9f9; border-radius: 12px;
+            padding: 12px; text-align: center;
         }
-        .card.ton {
-            background: #d4edda;
-            border: 2px solid var(--success);
-        }
-        .card .label {
-            font-size: 0.85em;
-            color: #555;
-        }
-        .card .fee {
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-top: 4px;
-        }
+        .card.ton { background: #d4edda; border: 2px solid var(--success); }
+        .card .label { font-size: 0.85em; color: #555; }
+        .card .fee { font-size: 1.3em; font-weight: bold; margin-top: 4px; }
         .savings {
-            background: #fff8e1;
-            border-radius: 12px;
-            padding: 12px;
-            margin-top: 16px;
-            text-align: center;
+            background: #fff8e1; border-radius: 12px;
+            padding: 12px; margin-top: 16px; text-align: center;
         }
-        .savings strong {
-            color: var(--warning);
-            font-size: 1.2em;
-        }
+        .savings strong { color: var(--warning); font-size: 1.2em; }
         .btn {
-            display: block;
-            background: var(--primary);
-            color: white;
-            text-align: center;
-            padding: 12px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 12px;
-            cursor: pointer;
-            border: none;
-            width: 100%;
-            font-size: 1em;
+            display: block; background: var(--primary); color: white;
+            text-align: center; padding: 12px; border-radius: 30px;
+            text-decoration: none; font-weight: bold; margin-top: 12px;
+            cursor: pointer; border: none; width: 100%; font-size: 1em;
         }
-        .btn.secondary {
-            background: #f0f0f0;
-            color: var(--text);
-        }
-        .note {
-            text-align: center;
-            color: #999;
-            font-size: 0.8em;
-            margin-top: 12px;
-        }
+        .btn.secondary { background: #f0f0f0; color: var(--text); }
+        .note { text-align: center; color: #999; font-size: 0.8em; margin-top: 12px; }
     </style>
 </head>
 <body>
@@ -205,9 +130,7 @@
                 options: {
                     responsive: true,
                     plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, title: { display: true, text: 'עמלה ()' } }
-                    }
+                    scales: { y: { beginAtZero: true, title: { display: true, text: 'עמלה ()' } } }
                 }
             });
         }
@@ -252,12 +175,21 @@
             } catch(e) { calc(); }
         }
 
+        function openTelegramLinkFallback(url) {
+            // מנסה WebApp, אחרת window.open
+            if (window.Telegram?.WebApp?.openTelegramLink) {
+                window.Telegram.WebApp.openTelegramLink(url);
+            } else {
+                window.open(url, '_blank');
+            }
+        }
+
         function openBudget() {
-            window.Telegram?.WebApp?.openTelegramLink('https://t.me/Tax_Free_world_bot?start=budget');
+            openTelegramLinkFallback('https://t.me/Tax_Free_world_bot?start=budget');
         }
 
         function showPresets() {
-            window.Telegram?.WebApp?.openTelegramLink('https://t.me/Tax_Free_world_bot?start=presets');
+            openTelegramLinkFallback('https://t.me/Tax_Free_world_bot?start=presets');
         }
 
         document.getElementById('amount').addEventListener('input', calc);
