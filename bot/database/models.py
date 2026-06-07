@@ -13,6 +13,9 @@ class Household(Base):
     code = Column(String(20), unique=True)
     creator_id = Column(BigInteger)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    email = Column(String(255), nullable=True, unique=True)
+    google_id = Column(String(255), nullable=True, unique=True)
+    password_hash = Column(String(255), nullable=True)
 
 class HouseholdMember(Base):
     __tablename__ = "household_members"
@@ -115,7 +118,7 @@ class Admin(Base):
     password_hash = Column(String(200))
 
 
-# bot/database/models.py (הוספה לסוף הקובץ)
+# bot/database/models.py (×”×•×¡×¤×” ×œ×¡×•×£ ×”×§×•×‘×¥)
 class BotGroup(Base):
     __tablename__ = "bot_groups"
     id = Column(Integer, primary_key=True, index=True)
