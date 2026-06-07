@@ -144,7 +144,6 @@ async def start_http():
     app.router.add_post("/api/auth/register", register)
     app.router.add_post("/api/auth/login", login)
     app.router.add_get(HEALTH_PATH, health_handler)
-    app.router.add_get('/migrate_email', migrate_email)
     app.router.add_get("/", index_handler)
     app.router.add_get("/api/profile", api_profile)
     app.router.add_get("/api/last-compare", api_last_compare)
@@ -166,4 +165,5 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
