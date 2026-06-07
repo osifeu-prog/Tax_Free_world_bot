@@ -15,32 +15,30 @@ async def cmd_ai(msg: Message):
     answer = await ask_ai(question[1])
     await msg.answer(answer)
 
-@router.message(Command("architecture"))
-async def cmd_architecture(msg: Message):
-    diagram = '''
-<b>🏗️ ארכיטקטורת TON Israel Bot</b>
-━━━━━━━━━━━━━━━━━━━━━━━
-משתמש ←→ Telegram Bot ←→ aiogram Dispatcher
-                ↓
-        ┌───────┴────────┐
-        │   47 Routers     │
-        │ (פקודות + FSM)   │
-        └───────┬────────┘
-                ↓
-        ┌───────┴────────┐
-        │   Services       │
-        │ (AI, Points,     │
-        │  RBAC, Profile)  │
-        └───────┬────────┘
-                ↓
-        ┌───────┴────────┐
-        │   Database       │
-        │ (PostgreSQL)     │
-        └────────────────┘
-━━━━━━━━━━━━━━━━━━━━━━━
-🧠 AI: Groq → Gemini (fallback)
-📦 Redis: מטמון
-🔐 RBAC: הרשאות מבוססות תפקידים
-📊 Analytics: /stats, /daily, /household
-    '''
-    await msg.answer(diagram, parse_mode="HTML")
+@router.message(Command("menu"))
+async def cmd_menu(msg: Message):
+    menu_text = '''
+🗺️ <b>מפת האתר  TON Israel</b>
+
+💰 <b>חיסכון:</b>
+/start, /compare, /wallet, /why, /business
+
+🏠 <b>ניהול כלכלת הבית:</b>
+/budget, /profile, /addexpense, /expenses, /setincome, /delexpense, /household
+
+📚 <b>אקדמיה:</b>
+/crypto, /cbdc, /decentral, /socio, /anti, /edu, /academy_extended, /academy_nft, /academy_dao
+
+👥 <b>קהילה:</b>
+/ref, /stats, /top, /tip, /contact, /id, /daily, /mydata, /gift
+
+🛠️ <b>כלים:</b>
+/miniapp, /keyboard, /hide, /ask, /feedback, /help, /quiz, /ai, /architecture
+
+🔐 <b>הרשאות:</b>
+/requestadmin, /addadmin, /login, /setpassword, /removeadmin
+
+🔒 <b>אדמין:</b>
+/admin, /export, /debug
+'''
+    await msg.answer(menu_text, parse_mode="HTML")

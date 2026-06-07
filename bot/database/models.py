@@ -1,10 +1,49 @@
-﻿from sqlalchemy import Column, Integer, BigInteger, String, Float, DateTime, Boolean
+﻿from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Float, DateTime, Boolean
 from sqlalchemy.orm import DeclarativeBase
 import datetime
 
 class Base(DeclarativeBase):
     pass
 
+
+class Household(Base):
+    __tablename__ = "households"
+    id = Column(Integer, primary_key=True)
+    code = Column(String(20), unique=True)
+    creator_id = Column(BigInteger)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class HouseholdMember(Base):
+    __tablename__ = "household_members"
+    id = Column(Integer, primary_key=True)
+    household_id = Column(Integer, ForeignKey("households.id"))
+    telegram_id = Column(BigInteger)
+
+class SharedExpense(Base):
+    __tablename__ = "shared_expenses"
+    id = Column(Integer, primary_key=True)
+    household_id = Column(Integer, ForeignKey("households.id"))
+    telegram_id = Column(BigInteger)
+    category = Column(String(50))
+    amount = Column(Float)
+    frequency = Column(String(20))
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class Chore(Base):
+    __tablename__ = "chores"
+    id = Column(Integer, primary_key=True)
+    household_id = Column(Integer, ForeignKey("households.id"))
+    assigned_to = Column(BigInteger)
+    title = Column(String(200))
+    done = Column(Boolean, default=False)
+
+class ShoppingListItem(Base):
+    __tablename__ = "shopping_items"
+    id = Column(Integer, primary_key=True)
+    household_id = Column(Integer, ForeignKey("households.id"))
+    added_by = Column(BigInteger)
+    item = Column(String(200))
+    bought = Column(Boolean, default=False)
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
@@ -73,4 +112,5 @@ class Admin(Base):
     telegram_id = Column(BigInteger, unique=True, index=True)
     role = Column(String(50))
     password_hash = Column(String(200))
+
 
