@@ -3,6 +3,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand, BotCommandScopeDefault, WebAppInfo, MenuButtonWebApp
 from aiohttp import web
 from bot.config import settings
+from bot.api.email_routes import register, login
 from bot.utils.logger import logger
 from bot.database.models import Base
 from bot.database.session import engine
@@ -127,6 +128,8 @@ async def start_polling():
 
 async def start_http():
     app = web.Application()
+app.router.add_post("/api/auth/register", register)
+app.router.add_post("/api/auth/login", login)
     app.router.add_get(HEALTH_PATH, health_handler)
     app.router.add_get("/", index_handler)
     app.router.add_get("/api/profile", api_profile)
@@ -208,3 +211,4 @@ async def login(data: LoginRequest):
         if not user or not pwd_context.verify(data.password, user.password_hash):
             raise HTTPException(401, "Invalid credentials")
         return {"status": "ok", "user_id": user.id}
+
