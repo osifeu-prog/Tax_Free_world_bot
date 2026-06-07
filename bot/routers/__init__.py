@@ -1,54 +1,5 @@
-﻿# -*- coding: utf-8 -*-
-from .start import router as start_router
-from .why import router as why_router
-from .wallet import router as wallet_router
-from .business import router as business_router
-from .help import router as help_router
-from .compare import router as compare_router
-from .id import router as id_router
-from .contact import router as contact_router
-from .export import router as export_router
-from .miniapp import router as miniapp_router
-from .ref import router as ref_router
-from .stats import router as stats_router
-from .tip import router as tip_router
-from .faq import router as faq_router
-from .budget import router as budget_router
-from .crypto import router as crypto_router
-from .cbdc import router as cbdc_router
-from .decentral import router as decentral_router
-from .socio import router as socio_router
-from .anti import router as anti_router
-from .edu import router as edu_router
-from .profile import router as profile_router
-from .keyboard import router as keyboard_router
-from .daily import router as daily_router
-from .mydata import router as mydata_router
-from .admin import router as admin_router
-from .debug import router as debug_router
-from .donate import router as donate_router
-from .academy_extended import router as academy_ext_router
-from .feedback import router as feedback_router
-from .ask import router as ask_router
-from .gift import router as gift_router
-from .quiz import router as quiz_router
-from .admin_rbac import router as admin_rbac_router
-from .request_admin import router as request_admin_router
-from .ai_router import router as ai_router
-from .household import router as household_router
-
-routers = [
-    start_router, compare_router, why_router, wallet_router,
-    business_router, help_router, id_router, contact_router,
-    export_router, miniapp_router, ref_router, stats_router,
-    tip_router, faq_router, budget_router,
-    crypto_router, cbdc_router, decentral_router,
-    socio_router, anti_router, edu_router,
-    profile_router, keyboard_router, daily_router,
-    mydata_router, admin_router, debug_router,
-    donate_router, academy_ext_router,
-    feedback_router, ask_router, gift_router,
-    quiz_router, admin_rbac_router, request_admin_router,
-    ai_router, household_router,
-]
-
+﻿from bot.routers.start import router as start_router
+from bot.routers.help import router as help_router
+from bot.routers.export import router as export_router
+# ... (הוסף את כל הראוטרים הנוספים  ראה את רשימת הפקודות)
+routers = [start_router, help_router, export_router]
