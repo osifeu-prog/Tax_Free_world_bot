@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 import asyncio, os, pkgutil, importlib
 from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand, BotCommandScopeDefault, WebAppInfo, MenuButtonWebApp
@@ -187,5 +187,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 

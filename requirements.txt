@@ -13,3 +13,6 @@ groq==0.18.0
 passlib==1.7.4
 python-jose[cryptography]==3.3.0
 cryptography
+
+qrcode[pil]==7.4.2
+pillow==10.4.0
