@@ -1,12 +1,11 @@
 ﻿from aiogram import Router, F
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup
 from aiogram.filters import Command
 from bot.keyboards.inline import back_to_main
-from bot.config import settings
 
 router = Router()
 
-HELP_TEXT = f'''
+HELP_TEXT = '''
 📖 <b>פקודות הבוט  TON Israel</b>
 
 💰 <b>חיסכון:</b>

@@ -9,4 +9,3 @@ router = Router()
 async def show_business(call: CallbackQuery):
     await call.message.edit_text(MESSAGES["business"], parse_mode="HTML", reply_markup=back_to_main())
     await call.answer()
-
