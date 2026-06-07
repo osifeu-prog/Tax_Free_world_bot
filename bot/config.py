@@ -1,3 +1,4 @@
+from pydantic_settings import SettingsConfigDict
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
@@ -11,5 +12,6 @@ class Settings(BaseSettings):
         env_file_encoding = "utf-8"
 
 settings = Settings()
+
 
 
