@@ -71,7 +71,7 @@ async def cmd_menu(msg: Message):
 /setpassword  שנה סיסמה (אדמין)
 
 ━━━━━━━━━━━━━━━━━━━━━━
-🔒 <b>ניהול (אדמינים)</b>
+🔒 <b>ניהול (אדמינים)</b>\n/report  דוח מלא
 /admin  לוח בקרה
 /export  ייצוא
 /debug  סטטוס
@@ -79,3 +79,4 @@ async def cmd_menu(msg: Message):
 /groups  רשימת קבוצות
 """
     await msg.answer(text, parse_mode="HTML")
+
