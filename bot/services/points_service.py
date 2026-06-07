@@ -20,7 +20,8 @@ async def get_points(telegram_id: int) -> int:
 
 async def get_user(telegram_id: int):
     async with async_session() as session:
-        return await session.get(User, telegram_id)
+        result = await session.execute(select(User).where(User.telegram_id == telegram_id))
+        return result.scalar_one_or_none()
 
 async def get_top_points(limit=5):
     async with async_session() as session:
