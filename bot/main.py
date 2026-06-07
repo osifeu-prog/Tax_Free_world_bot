@@ -1,9 +1,29 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import asyncio, os, pkgutil, importlib
 from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand, BotCommandScopeDefault, WebAppInfo, MenuButtonWebApp
 from aiohttp import web
 from bot.config import settings
+from aiogram import BaseMiddleware
+from aiogram.types import Message
+
+class AdminMiddleware(BaseMiddleware):
+    async def __call__(self, handler, event: Message, data):
+        if event.text and event.text.split()[0] in ['/addadmin', '/removeadmin', '/setpassword', '/admin', '/export', '/debug', '/approve', '/deny', '/negotiations', '/addgroup', '/groups', '/setrole']:
+            if str(event.from_user.id) not in (settings.admin_ids or ''):
+                await event.answer("? ????? ?? ????? ??????? ????.\n??? /requestadmin ???? ??????.")
+                return
+        return await handler(event, data)
+from aiogram import BaseMiddleware
+from aiogram.types import Message
+
+class AdminMiddleware(BaseMiddleware):
+    async def __call__(self, handler, event: Message, data):
+        if event.text and event.text.split()[0] in ['/addadmin', '/removeadmin', '/setpassword', '/admin', '/export', '/debug', '/approve', '/deny', '/negotiations', '/addgroup', '/groups', '/setrole']:
+            if str(event.from_user.id) not in (settings.admin_ids or ''):
+                await event.answer("? ????? ?? ????? ??????? ????.\n??? /requestadmin ???? ??????.")
+                return
+        return await handler(event, data)
 from bot.api.email_routes import register, login
 from bot.utils.logger import logger
 from bot.database.models import Base
@@ -14,8 +34,10 @@ HEALTH_PATH = "/health"
 
 bot = Bot(token=settings.bot_token)
 dp = Dispatcher()
+dp.message.middleware(AdminMiddleware())
+dp.message.middleware(AdminMiddleware())
 
-# טעינה דינמית עמידה לשגיאות
+# ????? ?????? ????? ???????
 loaded_routers = []
 for importer, modname, ispkg in pkgutil.iter_modules(routers_pkg.__path__):
     try:
@@ -23,69 +45,69 @@ for importer, modname, ispkg in pkgutil.iter_modules(routers_pkg.__path__):
         if hasattr(module, 'router'):
             dp.include_router(module.router)
             loaded_routers.append(modname)
-            logger.info(f"✅ Router {modname} loaded")
+            logger.info(f"? Router {modname} loaded")
     except Exception as e:
-        logger.error(f"❌ Failed to load router {modname}: {e}")
+        logger.error(f"? Failed to load router {modname}: {e}")
 
 async def set_default_commands():
     commands = [
-        BotCommand(command="start", description="דף הבית"),
-        BotCommand(command="compare", description="מחשבון עמלות"),
-        BotCommand(command="budget", description="מחשבון תקציב"),
-        BotCommand(command="profile", description="פרופיל כלכלי"),
-        BotCommand(command="expenses", description="צפה בהוצאות"),
-        BotCommand(command="addexpense", description="הוסף הוצאה"),
-        BotCommand(command="setincome", description="עדכן הכנסה"),
-        BotCommand(command="delexpense", description="מחק הוצאה"),
-        BotCommand(command="wallet", description="ארנק TON"),
-        BotCommand(command="why", description="למה TON?"),
-        BotCommand(command="business", description="לעסקים"),
-        BotCommand(command="crypto", description="מה זה קריפטו"),
-        BotCommand(command="cbdc", description="מה זה CBDC"),
-        BotCommand(command="decentral", description="ביזור מול ריכוזיות"),
-        BotCommand(command="socio", description="סוציוקרטיה"),
-        BotCommand(command="anti", description="טכנולוגיות נגד שחיתות"),
-        BotCommand(command="edu", description="חינוך, כלכלה, רווחה"),
-        BotCommand(command="academy_extended", description="ביזוריות, NFT, כלכלה חכמה"),
-        BotCommand(command="academy_nft", description="NFT-זהות"),
-        BotCommand(command="academy_dao", description="לימודי DAO"),
-        BotCommand(command="faq", description="שאלות נפוצות"),
-        BotCommand(command="tip", description="טיפ יומי"),
-        BotCommand(command="stats", description="סטטיסטיקות"),
-        BotCommand(command="top", description="לוח מובילים"),
-        BotCommand(command="ref", description="קוד הפניה"),
-        BotCommand(command="contact", description="צור קשר"),
-        BotCommand(command="id", description="זיהוי"),
-        BotCommand(command="daily", description="סיכום יומי"),
-        BotCommand(command="mydata", description="הנתונים שלי"),
-        BotCommand(command="gift", description="מתנה יומית"),
-        BotCommand(command="help", description="עזרה"),
-        BotCommand(command="admin", description="אזור אדמין"),
-        BotCommand(command="debug", description="סטטוס מערכת"),
-        BotCommand(command="miniapp", description="מחשבון ויזואלי"),
-        BotCommand(command="keyboard", description="מקלדת"),
-        BotCommand(command="hide", description="הסתר מקלדת"),
-        BotCommand(command="export", description="ייצוא לוגים"),
-        BotCommand(command="donate", description="תרומה"),
-        BotCommand(command="feedback", description="דיווח"),
-        BotCommand(command="whyus", description="למה אנחנו"),
-        BotCommand(command="familyguide", description="המדריך למשפחה"),
-        BotCommand(command="menu", description="תפריט ראשי"),
-        BotCommand(command="architecture", description="ארכיטקטורת המערכת"),
-        BotCommand(command="household", description="ניהול כלכלת הבית"),
-        BotCommand(command="ai", description="שאל את הבינה"),
-        BotCommand(command="ask", description="שאל שאלה"),
-        BotCommand(command="addadmin", description="הוסף מנהל"),
-        BotCommand(command="login", description="התחבר"),
-        BotCommand(command="setpassword", description="שנה סיסמה"),
-        BotCommand(command="requestadmin", description="בקש הרשאת ניהול"),
-        BotCommand(command="removeadmin", description="הסר מנהל"),
-        BotCommand(command="quiz", description="חידון"),
+        BotCommand(command="start", description="?? ????"),
+        BotCommand(command="compare", description="?????? ?????"),
+        BotCommand(command="budget", description="?????? ?????"),
+        BotCommand(command="profile", description="?????? ?????"),
+        BotCommand(command="expenses", description="??? ???????"),
+        BotCommand(command="addexpense", description="???? ?????"),
+        BotCommand(command="setincome", description="???? ?????"),
+        BotCommand(command="delexpense", description="??? ?????"),
+        BotCommand(command="wallet", description="???? TON"),
+        BotCommand(command="why", description="??? TON?"),
+        BotCommand(command="business", description="??????"),
+        BotCommand(command="crypto", description="?? ?? ??????"),
+        BotCommand(command="cbdc", description="?? ?? CBDC"),
+        BotCommand(command="decentral", description="????? ??? ????????"),
+        BotCommand(command="socio", description="??????????"),
+        BotCommand(command="anti", description="?????????? ??? ??????"),
+        BotCommand(command="edu", description="?????, ?????, ?????"),
+        BotCommand(command="academy_extended", description="????????, NFT, ????? ????"),
+        BotCommand(command="academy_nft", description="NFT-????"),
+        BotCommand(command="academy_dao", description="?????? DAO"),
+        BotCommand(command="faq", description="????? ??????"),
+        BotCommand(command="tip", description="??? ????"),
+        BotCommand(command="stats", description="??????????"),
+        BotCommand(command="top", description="??? ???????"),
+        BotCommand(command="ref", description="??? ?????"),
+        BotCommand(command="contact", description="??? ???"),
+        BotCommand(command="id", description="?????"),
+        BotCommand(command="daily", description="????? ????"),
+        BotCommand(command="mydata", description="??????? ???"),
+        BotCommand(command="gift", description="???? ?????"),
+        BotCommand(command="help", description="????"),
+        BotCommand(command="admin", description="???? ?????"),
+        BotCommand(command="debug", description="????? ?????"),
+        BotCommand(command="miniapp", description="?????? ???????"),
+        BotCommand(command="keyboard", description="?????"),
+        BotCommand(command="hide", description="???? ?????"),
+        BotCommand(command="export", description="????? ?????"),
+        BotCommand(command="donate", description="?????"),
+        BotCommand(command="feedback", description="?????"),
+        BotCommand(command="whyus", description="??? ?????"),
+        BotCommand(command="familyguide", description="?????? ??????"),
+        BotCommand(command="menu", description="????? ????"),
+        BotCommand(command="architecture", description="?????????? ??????"),
+        BotCommand(command="household", description="????? ????? ????"),
+        BotCommand(command="ai", description="??? ?? ?????"),
+        BotCommand(command="ask", description="??? ????"),
+        BotCommand(command="addadmin", description="???? ????"),
+        BotCommand(command="login", description="?????"),
+        BotCommand(command="setpassword", description="??? ?????"),
+        BotCommand(command="requestadmin", description="??? ????? ?????"),
+        BotCommand(command="removeadmin", description="??? ????"),
+        BotCommand(command="quiz", description="?????"),
     ]
     await bot.set_my_commands(commands, scope=BotCommandScopeDefault())
     await bot.set_chat_menu_button(
         menu_button=MenuButtonWebApp(
-            text="מחשבון ויזואלי",
+            text="?????? ???????",
             web_app=WebAppInfo(url="https://taxfreeworldbot-production.up.railway.app/landing/miniapp.html")
         )
     )
@@ -165,3 +187,5 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+
