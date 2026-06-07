@@ -3,37 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>מחשבון חיסכון TON</title>
+    <title>מחשבון TON  SPARK מערכות</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f4f8; margin: 0; padding: 12px; color: #1a1a1a; }
-        .container { max-width: 420px; margin: 0 auto; background: white; border-radius: 20px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-        h1 { text-align: center; color: #0088CC; font-size: 1.5em; margin-bottom: 0; }
-        .subtitle { text-align: center; color: #666; font-size: 0.9em; margin-bottom: 20px; }
-        .profile-box { background: #e8f4fd; border-radius: 12px; padding: 12px; margin-bottom: 16px; text-align: center; }
-        .profile-box .income { font-size: 1.2em; font-weight: bold; color: #0088CC; }
-        .profile-box .savings { font-size: 1em; color: #28a745; }
-        .slider-group { margin-bottom: 18px; }
-        label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.95em; }
-        input[type=range] { width: 100%; accent-color: #0088CC; }
-        .value { background: #e8f4fd; padding: 4px 12px; border-radius: 20px; font-weight: bold; color: #0088CC; }
-        canvas { margin: 20px 0; }
-        .cards { display: flex; gap: 10px; margin-top: 16px; }
-        .card { flex: 1; background: #f9f9f9; border-radius: 12px; padding: 12px; text-align: center; }
-        .card.ton { background: #d4edda; border: 2px solid #28a745; }
-        .card .label { font-size: 0.85em; color: #555; }
-        .card .fee { font-size: 1.3em; font-weight: bold; margin-top: 4px; }
-        .savings { background: #fff8e1; border-radius: 12px; padding: 12px; margin-top: 16px; text-align: center; }
-        .savings strong { color: #e67e00; font-size: 1.2em; }
-        .share-btn { display: block; background: #0088CC; color: white; text-align: center; padding: 12px; border-radius: 30px; text-decoration: none; font-weight: bold; margin-top: 16px; }
-        .note { text-align: center; color: #999; font-size: 0.8em; margin-top: 12px; }
+        :root {
+            --primary: #0088CC;
+            --primary-light: #e8f4fd;
+            --success: #28a745;
+            --warning: #e67e00;
+            --danger: #dc3545;
+            --bg: #f0f4f8;
+            --card-bg: #ffffff;
+            --text: #1a1a1a;
+            --text-light: #666;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            padding: 12px;
+            color: var(--text);
+        }
+        .container {
+            max-width: 420px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 1.5em;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .header .subtitle {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        .profile-box {
+            background: var(--primary-light);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 16px;
+            text-align: center;
+            display: none;
+        }
+        .profile-box .income {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .profile-box .savings {
+            font-size: 1em;
+            color: var(--success);
+        }
+        .slider-group {
+            margin-bottom: 18px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 0.95em;
+        }
+        input[type=range] {
+            width: 100%;
+            accent-color: var(--primary);
+        }
+        .value {
+            background: var(--primary-light);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: var(--primary);
+            display: inline-block;
+            margin-right: 8px;
+        }
+        canvas {
+            margin: 20px 0;
+        }
+        .cards {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .card {
+            flex: 1;
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+        .card.ton {
+            background: #d4edda;
+            border: 2px solid var(--success);
+        }
+        .card .label {
+            font-size: 0.85em;
+            color: #555;
+        }
+        .card .fee {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+        .savings {
+            background: #fff8e1;
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 16px;
+            text-align: center;
+        }
+        .savings strong {
+            color: var(--warning);
+            font-size: 1.2em;
+        }
+        .btn {
+            display: block;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 12px;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            font-size: 1em;
+        }
+        .btn.secondary {
+            background: #f0f0f0;
+            color: var(--text);
+        }
+        .note {
+            text-align: center;
+            color: #999;
+            font-size: 0.8em;
+            margin-top: 12px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>💰 מחשבון TON</h1>
-        <p class="subtitle">גלה כמה כסף תוכל לחסוך השנה</p>
-        <div id="profileBox" class="profile-box" style="display:none;">
+        <div class="header">
+            <h1>💰 מחשבון TON</h1>
+            <p class="subtitle">גלה כמה כסף תוכל לחסוך השנה</p>
+        </div>
+        <div id="profileBox" class="profile-box">
             <div class="income">הכנסה חודשית: <span id="profileIncome">0</span></div>
             <div class="savings">חיסכון פוטנציאלי: <span id="profileSavings">0</span>/שנה</div>
         </div>
@@ -57,12 +180,15 @@
             💰 <b>חיסכון שנתי:</b> <strong id="saveBit">0</strong>  לעומת ביט<br>
             💰 <b>חיסכון שנתי:</b> <strong id="savePaybox">0</strong>  לעומת פייבוקס
         </div>
-        <a class="share-btn" href="https://t.me/Tax_Free_world_bot?start=landing">📤 שלח לחבר וגם הוא יחסוך!</a>
+        <a id="shareBtn" class="btn" href="#">📤 שלח לחבר וגם הוא יחסוך!</a>
+        <button class="btn secondary" onclick="openBudget()">📊 פתח / נהל תקציב</button>
+        <button class="btn secondary" onclick="showPresets()">📊 תרחישים מהירים</button>
         <div class="note">ℹ️ הבוט חינוכי, לא ייעוץ פיננסי.</div>
     </div>
     <script>
         let chart;
         const ctx = document.getElementById('chart').getContext('2d');
+
         function createChart(bit, paybox, ton) {
             if (chart) chart.destroy();
             chart = new Chart(ctx, {
@@ -97,8 +223,11 @@
             document.getElementById('bitFee').textContent = bit.toFixed(2);
             document.getElementById('payboxFee').textContent = paybox.toFixed(2);
             document.getElementById('tonFee').textContent = ton.toFixed(2);
-            document.getElementById('saveBit').textContent = Math.round((bit - ton) * t * 12).toLocaleString();
-            document.getElementById('savePaybox').textContent = Math.round((paybox - ton) * t * 12).toLocaleString();
+            const saveB = Math.round((bit - ton) * t * 12);
+            const saveP = Math.round((paybox - ton) * t * 12);
+            document.getElementById('saveBit').textContent = saveB.toLocaleString();
+            document.getElementById('savePaybox').textContent = saveP.toLocaleString();
+            document.getElementById('shareBtn').href = `https://t.me/share/url?url=https://t.me/Tax_Free_world_bot&text=חסכתי ${saveB.toLocaleString()} ש"ח בעמלות עם TON!`;
             createChart(bit, paybox, ton);
         }
 
@@ -106,7 +235,6 @@
             const tg = window.Telegram?.WebApp;
             const userId = tg?.initDataUnsafe?.user?.id || new URLSearchParams(window.location.search).get('user_id') || '224223270';
             try {
-                // טעינת נתוני פרופיל
                 const resp = await fetch(`/api/profile?user_id=${userId}`);
                 const data = await resp.json();
                 if (data.monthly_income) {
@@ -114,7 +242,6 @@
                     document.getElementById('profileIncome').textContent = data.monthly_income.toLocaleString();
                     document.getElementById('profileSavings').textContent = data.total_savings.toLocaleString();
                 }
-                // טעינת החישוב האחרון
                 const resp2 = await fetch(`/api/last-compare?user_id=${userId}`);
                 const last = await resp2.json();
                 if (last.amount) {
@@ -122,7 +249,15 @@
                     document.getElementById('txCount').value = last.tx;
                 }
                 calc();
-            } catch(e) {}
+            } catch(e) { calc(); }
+        }
+
+        function openBudget() {
+            window.Telegram?.WebApp?.openTelegramLink('https://t.me/Tax_Free_world_bot?start=budget');
+        }
+
+        function showPresets() {
+            window.Telegram?.WebApp?.openTelegramLink('https://t.me/Tax_Free_world_bot?start=presets');
         }
 
         document.getElementById('amount').addEventListener('input', calc);
