@@ -1,8 +1,9 @@
-﻿from aiogram import Router
+﻿import asyncio
+import random
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 from bot.services.points_service import add_points
-import random
 
 router = Router()
 
@@ -17,9 +18,7 @@ PRIZES = [
 
 @router.message(Command("gift"))
 async def cmd_gift(msg: Message):
-    # שליחת אנימציית מכונת מזל
     dice = await msg.answer_dice(emoji="🎰")
-    # הגרלת פרס
     prize = random.choices(PRIZES, weights=[30,25,20,15,7,3], k=1)[0]
     points, text = prize
     if points > 0:
@@ -27,6 +26,5 @@ async def cmd_gift(msg: Message):
         result = f"🎁 {text}\nיש לך עכשיו {total} נקודות!"
     else:
         result = f"😕 {text}"
-    # עריכת ההודעה אחרי 3 שניות
     await asyncio.sleep(3)
     await dice.edit_text(result)

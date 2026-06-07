@@ -9,19 +9,49 @@ HELP_TEXT = '''
 📖 <b>כל הפקודות  TON Israel</b>
 
 💰 <b>חיסכון:</b>
-/start, /compare, /wallet, /why, /business
+/start  דף הבית
+/compare  מחשבון עמלות
+/wallet  ארנק TON
+/why  למה TON?
+/business  לעסקים
 
 🏠 <b>ניהול כלכלת הבית:</b>
-/budget, /profile, /addexpense, /expenses, /setincome, /delexpense
+/budget  מחשבון תקציב
+/profile  פרופיל כלכלי
+/addexpense  הוסף הוצאה
+/expenses  צפה בהוצאות
+/setincome  עדכן הכנסה
+/delexpense  מחק הוצאה
 
 📚 <b>אקדמיה:</b>
-/crypto, /cbdc, /decentral, /socio, /anti, /edu, /faq, /academy_extended, /academy_nft, /academy_dao
+/crypto  קריפטו
+/cbdc  CBDC
+/decentral  ביזור מול ריכוזיות
+/socio  סוציוקרטיה
+/anti  טכנולוגיות נגד שחיתות
+/edu  חינוך, כלכלה, רווחה
+/academy_extended  ביזוריות, NFT, כלכלה חכמה
+/academy_nft  NFT-זהות
+/academy_dao  DAO
 
 👥 <b>קהילה:</b>
-/ref, /stats, /top, /tip, /contact, /id, /daily, /mydata, /gift
+/ref  קוד הפניה
+/stats  סטטיסטיקות
+/top  לוח מובילים
+/tip  טיפ יומי
+/contact  צור קשר
+/id  זיהוי
+/daily  סיכום יומי
+/mydata  הנתונים שלי
+/gift  מכונת מזל 🎰
 
 🛠️ <b>כלים:</b>
-/miniapp, /keyboard, /hide, /ask, /feedback
+/miniapp  מחשבון ויזואלי
+/keyboard  מקלדת
+/hide  הסתר מקלדת
+/ask  שאל שאלה
+/feedback  דיווח
+/help  עזרה
 
 🔒 <b>אדמין (רק למנהלים):</b>
 /admin, /export, /debug
