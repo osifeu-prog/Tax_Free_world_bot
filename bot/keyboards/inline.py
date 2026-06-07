@@ -8,11 +8,11 @@ def main_menu():
         [InlineKeyboardButton(text="👥 קהילה וכלים", callback_data="menu_community")],
         [InlineKeyboardButton(text="🎁 מתנה יומית", callback_data="gift")],
         [InlineKeyboardButton(text="👤 פרופיל אישי", callback_data="profile")],
+        [InlineKeyboardButton(text="ℹ️ עזרה", callback_data="help")],
         [InlineKeyboardButton(text="📱 מחשבון ויזואלי", web_app=WebAppInfo(url="https://taxfreeworldbot-production.up.railway.app/landing/miniapp.html"))],
         [InlineKeyboardButton(text="🌐 קהילות", callback_data="communities")],
         [InlineKeyboardButton(text="🗺️ מפת דרכים", callback_data="roadmap")],
         [InlineKeyboardButton(text="❤️ תרומה לפרויקט", callback_data="donate")],
-        [InlineKeyboardButton(text="ℹ️ עזרה", callback_data="help")],
         [InlineKeyboardButton(text="📬 צור קשר", callback_data="contact")],
     ])
 

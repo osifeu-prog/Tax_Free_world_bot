@@ -173,3 +173,4 @@ async def show_communities(call: CallbackQuery):
     await call.message.edit_text(MESSAGES["communities"], parse_mode="HTML", reply_markup=back_to_main())
     await call.answer()
 
+
