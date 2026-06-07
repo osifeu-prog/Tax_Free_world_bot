@@ -8,11 +8,6 @@ from bot.api.email_routes import register, login
 from bot.utils.logger import logger
 from bot.database.models import Base
 from bot.database.session import engine
-# Fallback: if engine fails, use SQLite
-try:
-    import asyncpg
-except ImportError:
-    engine = create_async_engine('sqlite+aiosqlite:///./bot.db')
 import bot.routers as routers_pkg
 
 HEALTH_PATH = "/health"
@@ -98,6 +93,20 @@ async def set_default_commands():
 async def init_db():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+        # מיגרציה  הוספת עמודות email (SQLite תומך רק ב‑ADD COLUMN)
+        try:
+            from sqlalchemy import text
+            await conn.execute(text("ALTER TABLE users ADD COLUMN email VARCHAR(255)"))
+        except Exception:
+            pass
+        try:
+            await conn.execute(text("ALTER TABLE users ADD COLUMN google_id VARCHAR(255)"))
+        except Exception:
+            pass
+        try:
+            await conn.execute(text("ALTER TABLE users ADD COLUMN password_hash VARCHAR(255)"))
+        except Exception:
+            pass
     logger.info("Database initialized.")
 
 async def health_handler(request):
