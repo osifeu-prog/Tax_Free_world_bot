@@ -15,3 +15,7 @@ class Settings(BaseSettings):
     }
 
 settings = Settings()
+
+def get_admin_ids():
+    raw = settings.admin_ids or ''
+    return [int(x.strip()) for x in raw.split(',') if x.strip()]
