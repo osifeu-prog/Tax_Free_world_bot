@@ -1,4 +1,4 @@
-﻿from aiogram import Router, F
+from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message
 from bot.database.session import async_session
@@ -10,70 +10,71 @@ import json
 router = Router()
 
 def is_admin(user_id: int) -> bool:
-    return str(user_id) in (settings.admin_ids or "")
+    return str(user_id) in (json.loads(settings.admin_ids) or "")
 
 @router.message(Command("requestadmin"))
 async def cmd_requestadmin(msg: Message):
     if is_admin(msg.from_user.id):
-        await msg.answer("אתה כבר מנהל.")
+        await msg.answer("??? ??? ????.")
         return
     async with async_session() as session:
         existing = (await session.execute(select(AdminRequest).where(AdminRequest.telegram_id == msg.from_user.id, AdminRequest.status == "pending"))).scalar_one_or_none()
         if existing:
-            await msg.answer("יש לך כבר בקשה ממתינה.")
+            await msg.answer("?? ?? ??? ???? ??????.")
             return
-        req = AdminRequest(telegram_id=msg.from_user.id, username=msg.from_user.username, reason="ביקש הרשאות ניהול")
+        req = AdminRequest(telegram_id=msg.from_user.id, username=msg.from_user.username, reason="???? ?????? ?????")
         session.add(req)
         await session.commit()
-        await msg.answer("✅ בקשתך להרשאות ניהול נשלחה. המנהלים יבחנו אותה.")
-        # הודעה למנהלים (אדמינים)
-        for admin_id in json.loads(settings.admin_ids):
+        await msg.answer("? ????? ??????? ????? ?????. ??????? ????? ????.")
+        # ????? ??????? (???????)
+        for admin_id in json.loads(json.loads(settings.admin_ids)):
             try:
-                await msg.bot.send_message(admin_id, f"📩 בקשה חדשה: @{msg.from_user.username} (ID: {msg.from_user.id}) מבקש הרשאות ניהול.")
+                await msg.bot.send_message(admin_id, f"?? ???? ????: @{msg.from_user.username} (ID: {msg.from_user.id}) ???? ?????? ?????.")
             except:
                 pass
 
 @router.message(Command("approve"))
 async def cmd_approve(msg: Message):
     if not is_admin(msg.from_user.id):
-        await msg.answer("רק מנהלים מורשים.")
+        await msg.answer("?? ?????? ??????.")
         return
     parts = msg.text.split()
     if len(parts) < 2:
-        await msg.answer("השתמש: /approve <telegram_id>")
+        await msg.answer("?????: /approve <telegram_id>")
         return
     target_id = int(parts[1])
     async with async_session() as session:
         await session.execute(update(AdminRequest).where(AdminRequest.telegram_id == target_id, AdminRequest.status == "pending").values(status="approved"))
-        await session.execute(update(AdminRequest).where(AdminRequest.telegram_id == target_id).values(negotiations=AdminRequest.negotiations + "\nאושר."))
+        await session.execute(update(AdminRequest).where(AdminRequest.telegram_id == target_id).values(negotiations=AdminRequest.negotiations + "\n????."))
         await session.commit()
-        await msg.answer("✅ הבקשה אושרה. הוסף את המשתמש כ-admin עם /addadmin.")
+        await msg.answer("? ????? ?????. ???? ?? ?????? ?-admin ?? /addadmin.")
 
 @router.message(Command("deny"))
 async def cmd_deny(msg: Message):
     if not is_admin(msg.from_user.id):
-        await msg.answer("רק מנהלים מורשים.")
+        await msg.answer("?? ?????? ??????.")
         return
     parts = msg.text.split()
     if len(parts) < 2:
-        await msg.answer("השתמש: /deny <telegram_id>")
+        await msg.answer("?????: /deny <telegram_id>")
         return
     target_id = int(parts[1])
     async with async_session() as session:
         await session.execute(update(AdminRequest).where(AdminRequest.telegram_id == target_id, AdminRequest.status == "pending").values(status="denied"))
         await session.commit()
-        await msg.answer("❌ הבקשה נדחתה.")
-        await msg.bot.send_message(target_id, "בקשתך להרשאות ניהול נדחתה.")
+        await msg.answer("? ????? ?????.")
+        await msg.bot.send_message(target_id, "????? ??????? ????? ?????.")
 
 @router.message(Command("negotiations"))
 async def cmd_negotiations(msg: Message):
     if not is_admin(msg.from_user.id):
-        await msg.answer("רק מנהלים מורשים.")
+        await msg.answer("?? ?????? ??????.")
         return
     async with async_session() as session:
         reqs = (await session.execute(select(AdminRequest).where(AdminRequest.status == "pending"))).scalars().all()
         if not reqs:
-            await msg.answer("אין בקשות ממתינות.")
+            await msg.answer("??? ????? ???????.")
             return
         for req in reqs:
-            await msg.answer(f"📌 ID: {req.telegram_id} | @{req.username}\nהערות: {req.negotiations or 'אין'}")
+            await msg.answer(f"?? ID: {req.telegram_id} | @{req.username}\n?????: {req.negotiations or '???'}")
+
