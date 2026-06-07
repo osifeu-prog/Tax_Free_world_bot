@@ -9,6 +9,7 @@ from bot.utils.logger import logger
 from bot.database.models import Base
 from bot.database.session import engine
 import bot.routers as routers_pkg
+from bot.routers import menu
 
 HEALTH_PATH = "/health"
 
@@ -172,4 +173,5 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
