@@ -163,3 +163,6 @@ from bot.api import email_auth
 app.include_router(email_auth.router, prefix="/api")
 
 
+
+from bot.routers import admin_groups
+dp.include_router(admin_groups.router)

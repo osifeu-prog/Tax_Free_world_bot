@@ -114,3 +114,9 @@ class Admin(Base):
     password_hash = Column(String(200))
 
 
+# bot/database/models.py (הוספה לסוף הקובץ)
+class BotGroup(Base):
+    __tablename__ = "bot_groups"
+    id = Column(Integer, primary_key=True, index=True)
+    chat_id = Column(BigInteger, unique=True, nullable=False)
+    title = Column(String, nullable=True)
