@@ -15,6 +15,7 @@ HEALTH_PATH = "/health"
 bot = Bot(token=settings.bot_token)
 dp = Dispatcher()
 
+# טעינה דינמית עמידה לשגיאות
 loaded_routers = []
 for importer, modname, ispkg in pkgutil.iter_modules(routers_pkg.__path__):
     try:
@@ -95,9 +96,6 @@ async def init_db():
     logger.info("Database initialized.")
 
 async def health_handler(request):
-
-async def debug_routers(request):
-    return web.json_response({"loaded_routers": loaded_routers})
     return web.Response(text="OK")
 
 async def index_handler(request):
@@ -132,6 +130,9 @@ async def api_last_compare(request):
         amount, tx = 500, 10
     return web.json_response({"amount": amount, "tx": tx})
 
+async def debug_routers(request):
+    return web.json_response({"loaded_routers": loaded_routers})
+
 async def start_polling():
     await bot.delete_webhook(drop_pending_updates=True)
     await set_default_commands()
@@ -142,11 +143,11 @@ async def start_http():
     app = web.Application()
     app.router.add_post("/api/auth/register", register)
     app.router.add_post("/api/auth/login", login)
-    app.router.add_get('/debug/routers', debug_routers)
     app.router.add_get(HEALTH_PATH, health_handler)
     app.router.add_get("/", index_handler)
     app.router.add_get("/api/profile", api_profile)
     app.router.add_get("/api/last-compare", api_last_compare)
+    app.router.add_get('/debug/routers', debug_routers)
     static_path = os.path.join(os.path.dirname(__file__), "..", "public")
     if os.path.isdir(static_path):
         app.router.add_static('/landing/', path=os.path.join(static_path, 'landing'), show_index=True)
@@ -164,4 +165,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
