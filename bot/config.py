@@ -21,3 +21,5 @@ def get_admin_ids():
     raw = settings.admin_ids or ''
     return [int(x.strip()) for x in raw.split(',') if x.strip()]
 
+    AI_TRANSLATION_ENABLED: bool = Field(default=False, env="AI_TRANSLATION_ENABLED")
+    OPENAI_API_KEY: str = Field(default="", env="OPENAI_API_KEY")

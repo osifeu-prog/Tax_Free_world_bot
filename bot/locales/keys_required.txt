@@ -1,0 +1,8 @@
+﻿welcome
+menu_title
+academy
+choose_language
+language_saved
+my_role
+menu_text
+# ... בעתיד נוסיף את כל המפתחות של 53 הפקודות
