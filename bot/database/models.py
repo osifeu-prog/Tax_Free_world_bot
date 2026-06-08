@@ -235,3 +235,10 @@ class UserProgress(Base):
     completed_lessons = Column(Text, default="[]")   # JSON array
     score = Column(Integer, default=0)
     last_accessed = Column(DateTime, default=datetime.datetime.utcnow)
+
+# עדכון User עם שדות גלובליים
+# (הוסף את זה אחרי כל השדות הקיימים של User)
+    language = Column(String(5), default="he")
+    country = Column(String(5), default="IL")
+    timezone = Column(String(50), default="Asia/Jerusalem")
+    currency = Column(String(10), default="ILS")
