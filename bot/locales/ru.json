@@ -1,9 +1,9 @@
 {
-  "welcome": "Ð”Ð¾Ð±Ñ€Ð¾ Ð¿Ð¾Ð¶Ð°Ð»Ð¾Ð²Ð°Ñ‚ÑŒ Ð² TON Israel!\n\nÐœÑ‹ ÑÑ‚Ñ€Ð¾Ð¸Ð¼ Ð±Ð¾Ð»ÐµÐµ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½Ñ‹Ð¹, ÑƒÐ¼Ð½Ñ‹Ð¹ Ð¸ Ð´ÐµÑ†ÐµÐ½Ñ‚Ñ€Ð°Ð»Ð¸Ð·Ð¾Ð²Ð°Ð½Ð½Ñ‹Ð¹ Ð¼Ð¸Ñ€.",
-  "menu_title": "ðŸ“‹ Ð“Ð»Ð°Ð²Ð½Ð¾Ðµ Ð¼ÐµÐ½ÑŽ  TON Israel",
-  "academy": "ðŸ“š ÐÐºÐ°Ð´ÐµÐ¼Ð¸Ñ TON Israel",
-  "choose_language": "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ ÑÐ·Ñ‹Ðº:",
-  "language_saved": "âœ… Ð¯Ð·Ñ‹Ðº ÑÐ¾Ñ…Ñ€Ð°Ð½Ñ‘Ð½: {lang_name}",
-  "my_role": "Ð¢ÐµÐºÑƒÑ‰Ð°Ñ Ñ€Ð¾Ð»ÑŒ: {role}",
-  "menu_text": "<b>ðŸ“‹ Ð“Ð»Ð°Ð²Ð½Ð¾Ðµ Ð¼ÐµÐ½ÑŽ  TON Israel</b>\nâ”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”\nðŸ’° <b>Ð›Ð¸Ñ‡Ð½Ñ‹Ðµ ÑÐ±ÐµÑ€ÐµÐ¶ÐµÐ½Ð¸Ñ</b>\n/start /compare /wallet /why /business /budget /profile /expenses /addexpense /setincome /delexpense\n\nðŸ  <b>Ð¡ÐµÐ¼ÑŒÑ</b>\n/household /shopping /chore\n\nðŸ“š <b>ÐÐºÐ°Ð´ÐµÐ¼Ð¸Ñ</b>\n/academy /crypto /cbdc /decentral /socio /anti /edu /academy_extended /academy_nft /academy_dao /vision /spark\n\nðŸ‘¥ <b>Ð¡Ð¾Ð¾Ð±Ñ‰ÐµÑÑ‚Ð²Ð¾</b>\n/ref /qr /stats /top /tip /contact /faq /daily /mydata /gift\n\nðŸ› ï¸ <b>Ð˜Ð½ÑÑ‚Ñ€ÑƒÐ¼ÐµÐ½Ñ‚Ñ‹</b>\n/miniapp /keyboard /hide /ask /feedback /help /quiz /id /ai /architecture\n\nðŸ” <b>Ð Ð°Ð·Ñ€ÐµÑˆÐµÐ½Ð¸Ñ</b>\n/requestadmin /addadmin /login /setpassword /removeadmin\n\nðŸ”’ <b>ÐÐ´Ð¼Ð¸Ð½</b>\n/admin /export /debug /addgroup /groups /report /setrole\n\nðŸ‘¤ <b>ÐœÐ¾Ð¹ Ð¿Ñ€Ð¾Ñ„Ð¸Ð»ÑŒ</b>\n/myrole /mydata"
+  "welcome": "Ãâ€ÃÂ¾ÃÂ±Ã‘â‚¬ÃÂ¾ ÃÂ¿ÃÂ¾ÃÂ¶ÃÂ°ÃÂ»ÃÂ¾ÃÂ²ÃÂ°Ã‘â€šÃ‘Å’ ÃÂ² TON Israel!\n\nÃÅ“Ã‘â€¹ Ã‘ÂÃ‘â€šÃ‘â‚¬ÃÂ¾ÃÂ¸ÃÂ¼ ÃÂ±ÃÂ¾ÃÂ»ÃÂµÃÂµ Ã‘ÂÃÂ²ÃÂ¾ÃÂ±ÃÂ¾ÃÂ´ÃÂ½Ã‘â€¹ÃÂ¹, Ã‘Æ’ÃÂ¼ÃÂ½Ã‘â€¹ÃÂ¹ ÃÂ¸ ÃÂ´ÃÂµÃ‘â€ ÃÂµÃÂ½Ã‘â€šÃ‘â‚¬ÃÂ°ÃÂ»ÃÂ¸ÃÂ·ÃÂ¾ÃÂ²ÃÂ°ÃÂ½ÃÂ½Ã‘â€¹ÃÂ¹ ÃÂ¼ÃÂ¸Ã‘â‚¬.",
+  "menu_title": "Ã°Å¸â€œâ€¹ Ãâ€œÃÂ»ÃÂ°ÃÂ²ÃÂ½ÃÂ¾ÃÂµ ÃÂ¼ÃÂµÃÂ½Ã‘Å½  TON Israel",
+  "academy": "Ã°Å¸â€œÅ¡ ÃÂÃÂºÃÂ°ÃÂ´ÃÂµÃÂ¼ÃÂ¸Ã‘Â TON Israel",
+  "choose_language": "Ãâ€™Ã‘â€¹ÃÂ±ÃÂµÃ‘â‚¬ÃÂ¸Ã‘â€šÃÂµ Ã‘ÂÃÂ·Ã‘â€¹ÃÂº:",
+  "language_saved": "Ã¢Å“â€¦ ÃÂ¯ÃÂ·Ã‘â€¹ÃÂº Ã‘ÂÃÂ¾Ã‘â€¦Ã‘â‚¬ÃÂ°ÃÂ½Ã‘â€˜ÃÂ½: {lang_name}",
+  "my_role": "ÃÂ¢ÃÂµÃÂºÃ‘Æ’Ã‘â€°ÃÂ°Ã‘Â Ã‘â‚¬ÃÂ¾ÃÂ»Ã‘Å’: {role}",
+  "menu_text": "<b>Ã°Å¸â€œâ€¹ Ãâ€œÃÂ»ÃÂ°ÃÂ²ÃÂ½ÃÂ¾ÃÂµ ÃÂ¼ÃÂµÃÂ½Ã‘Å½  TON Israel</b>\nÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€Â\nÃ°Å¸â€™Â° <b>Ãâ€ºÃÂ¸Ã‘â€¡ÃÂ½Ã‘â€¹ÃÂµ Ã‘ÂÃÂ±ÃÂµÃ‘â‚¬ÃÂµÃÂ¶ÃÂµÃÂ½ÃÂ¸Ã‘Â</b>\n/start /compare /wallet /why /business /budget /profile /expenses /addexpense /setincome /delexpense\n\nÃ°Å¸ÂÂ  <b>ÃÂ¡ÃÂµÃÂ¼Ã‘Å’Ã‘Â</b>\n/household /shopping /chore\n\nÃ°Å¸â€œÅ¡ <b>ÃÂÃÂºÃÂ°ÃÂ´ÃÂµÃÂ¼ÃÂ¸Ã‘Â</b>\n/academy /crypto /cbdc /decentral /socio /anti /edu /academy_extended /academy_nft /academy_dao /vision /spark\n\nÃ°Å¸â€˜Â¥ <b>ÃÂ¡ÃÂ¾ÃÂ¾ÃÂ±Ã‘â€°ÃÂµÃ‘ÂÃ‘â€šÃÂ²ÃÂ¾</b>\n/ref /qr /stats /top /tip /contact /faq /daily /mydata /gift\n\nÃ°Å¸â€ºÂ Ã¯Â¸Â <b>ÃËœÃÂ½Ã‘ÂÃ‘â€šÃ‘â‚¬Ã‘Æ’ÃÂ¼ÃÂµÃÂ½Ã‘â€šÃ‘â€¹</b>\n/miniapp /keyboard /hide /ask /feedback /help /quiz /id /ai /architecture\n\nÃ°Å¸â€Â <b>ÃÂ ÃÂ°ÃÂ·Ã‘â‚¬ÃÂµÃ‘Ë†ÃÂµÃÂ½ÃÂ¸Ã‘Â</b>\n/requestadmin /addadmin /login /setpassword /removeadmin\n\nÃ°Å¸â€â€™ <b>ÃÂÃÂ´ÃÂ¼ÃÂ¸ÃÂ½</b>\n/admin /export /debug /addgroup /groups /report /setrole\n\nÃ°Å¸â€˜Â¤ <b>ÃÅ“ÃÂ¾ÃÂ¹ ÃÂ¿Ã‘â‚¬ÃÂ¾Ã‘â€žÃÂ¸ÃÂ»Ã‘Å’</b>\n/myrole /mydata"
 }
