@@ -35,5 +35,9 @@
     "pension_title":  "📊 \u003cb\u003ePension Calculator  TON Israel\u003c/b\u003e",
     "pension_salary":  "Monthly gross salary?",
     "no_courses":  "You haven\u0027t started any courses yet.",
-    "pension_return":  "Expected annual return? (e.g. 5.2)"
+    "pension_return":  "Expected annual return? (e.g. 5.2)",
+    "start_welcome":  "🚀 \u003cb\u003eWelcome to TON Israel!\u003c/b\u003e\nBuilding a free, smart, decentralized world.\n📌 Start now: /menu\n📚 Academy: /academy\n🔗 Share: /qr",
+    "employee_public":  "Public sector",
+    "employee_private":  "Private company",
+    "employee_unknown":  "Not sure"
 }

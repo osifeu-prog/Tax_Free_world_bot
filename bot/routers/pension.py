@@ -31,10 +31,28 @@ async def employee_chosen(callback: CallbackQuery):
     uid = callback.from_user.id
     lang = await get_lang(uid)
     user_data[uid] = {"employee_type": emp_type, "step": "age"}
+
     async with async_session() as session:
-        profile = PensionProfile(telegram_id=uid, employee_type=emp_type)
-        session.add(profile)
+        existing = (await session.execute(
+            select(PensionProfile).where(PensionProfile.telegram_id == uid)
+        )).scalar_one_or_none()
+        if existing:
+            existing.employee_type = emp_type
+            existing.age_now = None
+            existing.retirement_age = None
+            existing.salary_bruto = None
+            existing.seniority_years = None
+            existing.contribution_employee = None
+            existing.contribution_employer = None
+            existing.expected_return = None
+            existing.management_fees = None
+            existing.result_capital = None
+            existing.result_monthly = None
+        else:
+            profile = PensionProfile(telegram_id=uid, employee_type=emp_type)
+            session.add(profile)
         await session.commit()
+
     await callback.message.answer(translator.t(lang, "pension_age"))
     await callback.answer()
 

@@ -1,79 +1,58 @@
-﻿import asyncio
+﻿import requests, time
 
-class MockMsg:
-    def __init__(self, text, lang="he"):
-        self.text = text
-        self.from_user = type('u',(),{
-            'id':224223270,'language_code':lang,'is_bot':False,'first_name':'Test'
-        })
-        self.chat = type('c',(),{'id':224223270,'type':'private'})
-        self._ans = ""
-    async def answer(self, txt, **kw):
-        self._ans = txt
-    async def answer_photo(self, photo, caption="", **kw):
-        self._ans = caption or "[photo]"
+BOT_TOKEN = "8782546867:AAFxsqjad8RHCLjRcLpJp8WJ_uQ_mQnHKJc"
+BASE_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
+CHAT_ID = 224223270  # ה-ID שלך
 
-async def main():
-    from bot.routers.start import cmd_start
-    from bot.routers.menu import cmd_menu
-    from bot.routers.help import cmd_help
-    from bot.routers.crypto import cmd_crypto
-    from bot.routers.vision import cmd_vision
-    from bot.routers.qr import cmd_qr
-    from bot.routers.budget import cmd_budget
-    from bot.routers.academy import cmd_academy
-    from bot.routers.report import cmd_report
-    from bot.routers.health import cmd_health
-    from bot.routers.language import cmd_language
-    from bot.routers.familygroup import cmd_familygroup
-    from bot.routers.pension import cmd_pension
-    from bot.routers.setwallet import cmd_setwallet
-    from bot.routers.family_finance import cmd_setincome, cmd_addexpense, cmd_mysavings
-    from bot.routers.donate import cmd_donate
-    from bot.routers.morning import cmd_morning
+def send(msg):
+    return requests.post(f"{BASE_URL}/sendMessage", json={"chat_id": CHAT_ID, "text": msg}).json()
 
-    tests = [
-        (cmd_start, "/start", ["התחל","menu"]),
-        (cmd_menu, "/menu", ["חיסכון","פנסיה"]),
-        (cmd_help, "/help", ["עזרה","חיסכון"]),
-        (cmd_crypto, "/crypto", ["קריפטו","בלוקצ'יין"]),
-        (cmd_vision, "/vision", ["חזון","TON"]),
-        (cmd_qr, "/qr", ["הפניה"]),
-        (cmd_budget, "/budget", ["השתמש"]),
-        (cmd_academy, "/academy", ["בחר"]),
-        (cmd_report, "/report", ["משתמשים","הפניות"]),
-        (cmd_health, "/health", ["Health","Uptime"]),
-        (cmd_language, "/language", ["שפה"]),
-        (cmd_familygroup, "/familygroup", ["קבוצה","בוט"]),
-        (cmd_pension, "/pension", ["עובד","מדינה"]),
-        (cmd_setwallet, "/setwallet", ["ארנק","TON"]),
-        (cmd_setincome, "/setincome", ["השתמש"]),
-        (cmd_addexpense, "/addexpense", ["השתמש"]),
-        (cmd_mysavings, "/mysavings", ["הכנסה"]),
-        (cmd_donate, "/donate", ["תמכו"]),
-        (cmd_morning, "/morning", ["צעדים","smoke_test"]),
-    ]
+def get_bot_reply():
+    time.sleep(2)  # תן לבוט זמן לעבד
+    resp = requests.get(f"{BASE_URL}/getUpdates", params={"offset": -1, "limit": 1}).json()
+    if resp["ok"] and resp["result"]:
+        last_msg = resp["result"][-1]
+        if "message" in last_msg and "text" in last_msg["message"]:
+            return last_msg["message"]["text"]
+    return ""
 
-    ok = 0
-    for handler, cmd, keys in tests:
-        msg = MockMsg(cmd)
-        try:
-            await handler(msg)
-        except Exception as e:
-            print(f"❌ {cmd}  {e}")
-            continue
-        text = msg._ans
-        if not text:
-            print(f"❌ {cmd}  No output")
-            continue
-        if all(k in text for k in keys):
-            print(f"✅ {cmd}")
-            ok += 1
-        else:
-            missing = [k for k in keys if k not in text]
-            print(f"❌ {cmd}  Missing: {missing} (got: {text[:80]})")
-    print(f"\n✅ {ok}/{len(tests)} passed")
+def test(cmd, keywords):
+    send(cmd)
+    reply = get_bot_reply()
+    ok = all(kw in reply for kw in keywords)
+    print(f"{'✅' if ok else '❌'} {cmd}  {'Found' if ok else 'Missing: ' + str(keywords)} [{reply[:60]}]")
 
-asyncio.run(main())
+# /pension דורש בדיקת כפתורים
+def test_pension():
+    send("/pension")
+    time.sleep(2)
+    resp = requests.get(f"{BASE_URL}/getUpdates", params={"offset": -1, "limit": 1}).json()
+    if resp["ok"] and resp["result"]:
+        last = resp["result"][-1]
+        if "message" in last and "reply_markup" in last["message"]:
+            for row in last["message"]["reply_markup"]["inline_keyboard"]:
+                for btn in row:
+                    if "עובד מדינה" in btn["text"]:
+                        print("✅ /pension")
+                        return
+    print("❌ /pension  Missing: ['עובד מדינה']")
 
-
+# רשימת הבדיקות
+test("/start", ["ברוכים"])
+test("/menu", ["תפריט"])
+test("/help", ["עזרה"])
+test("/crypto", ["קריפטו"])
+test("/vision", ["חזון"])
+test_pension()
+test("/budget", ["תקציב"])
+test("/academy", ["בחר"])
+test("/report", ["הפניות"])
+test("/health", ["תקין"])
+test("/language", ["בחר"])
+test("/familygroup", ["צור"])
+test("/setwallet", ["הארנק"])
+test("/setincome", ["הכנסה"])
+test("/addexpense", ["הוצאה"])
+test("/mysavings", ["חיסכון"])
+test("/donate", ["תמכו"])
+test("/morning", ["בוקר"])

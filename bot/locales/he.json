@@ -35,5 +35,9 @@
     "pension_title":  "📊 \u003cb\u003eמחשבון פנסיה  TON Israel\u003c/b\u003e",
     "pension_salary":  "שכר ברוטו חודשי?",
     "no_courses":  "עדיין לא התחלת קורסים.",
-    "pension_return":  "תשואה שנתית משוערת? (לדוגמה: 5.2)"
+    "pension_return":  "תשואה שנתית משוערת? (לדוגמה: 5.2)",
+    "start_welcome":  "🚀 \u003cb\u003eברוכים הבאים ל-TON Israel!\u003c/b\u003e\nבונים עולם חופשי, חכם ומבוזר.\n📌 התחל עכשיו: /menu\n📚 אקדמיה: /academy\n🔗 שתף: /qr",
+    "employee_public":  "עובד מדינה",
+    "employee_private":  "עובד בחברה פרטית",
+    "employee_unknown":  "לא יודע"
 }
