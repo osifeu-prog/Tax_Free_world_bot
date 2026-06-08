@@ -152,7 +152,10 @@ import datetime
 
 # ... (הקיים נשאר)
 
-class Course(Base):\n    passclass UserProgress(Base):\n    pass
+
+
+
+
 class Course(Base):
     __tablename__ = "courses"
     id = Column(Integer, primary_key=True)
