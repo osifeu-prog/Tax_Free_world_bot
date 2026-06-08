@@ -1,5 +1,5 @@
-﻿# -*- coding: utf-8 -*-
-from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Float, DateTime, Boolean
+﻿from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Float, DateTime, Boolean, Text, UniqueConstraint
+# -*- coding: utf-8 -*-
 from sqlalchemy.orm import DeclarativeBase
 import datetime
 
@@ -147,7 +147,6 @@ class UserRole(Base):
     timezone = Column(String(50), default="Asia/Jerusalem")
     currency = Column(String(10), default="ILS")
     role = Column(String(50), default="citizen")  # citizen, entrepreneur, leader, expert, fighter, builder
-from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Text, Boolean, DateTime
 import datetime
 
 # ... (הקיים נשאר)
@@ -182,3 +181,38 @@ class Event(Base):
     type = Column(String(50))
     payload = Column(Text)  # JSON
     timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+
+class KnowledgeNode(Base):
+    __tablename__ = "knowledge_nodes"
+    id = Column(Integer, primary_key=True)
+    slug = Column(String(100), unique=True, nullable=False)
+    title = Column(String(200), nullable=False)
+    type = Column(String(50), nullable=False)
+    description = Column(Text)
+    difficulty = Column(Integer, default=1)
+    estimated_minutes = Column(Integer)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class KnowledgeEdge(Base):
+    __tablename__ = "knowledge_edges"
+    id = Column(Integer, primary_key=True)
+    from_node_id = Column(Integer, ForeignKey("knowledge_nodes.id"))
+    to_node_id = Column(Integer, ForeignKey("knowledge_nodes.id"))
+    relation_type = Column(String(50), nullable=False)
+    weight = Column(Integer, default=1)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    __table_args__ = (UniqueConstraint('from_node_id', 'to_node_id', 'relation_type'),)
+
+class UserKnowledgeProgress(Base):
+    __tablename__ = "user_knowledge_progress"
+    id = Column(Integer, primary_key=True)
+    telegram_id = Column(BigInteger, index=True)
+    node_id = Column(Integer, ForeignKey("knowledge_nodes.id"))
+    status = Column(String(20), default="not_started")
+    score = Column(Integer, default=0)
+    completed_at = Column(DateTime)
+    last_accessed = Column(DateTime, default=datetime.datetime.utcnow)
+    __table_args__ = (UniqueConstraint('telegram_id', 'node_id'),)
+
+
+
