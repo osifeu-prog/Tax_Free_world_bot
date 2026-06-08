@@ -15,7 +15,6 @@ async def cmd_health(msg: Message):
     hours, rem = divmod(int(uptime), 3600)
     minutes, seconds = divmod(rem, 60)
 
-    # DB check
     db_status = "🟢 OK"
     db_error = ""
     try:
@@ -25,7 +24,6 @@ async def cmd_health(msg: Message):
         db_status = "🔴 Error"
         db_error = str(e)[:100]
 
-    # Locales
     locales_path = os.path.join(os.path.dirname(__file__), "..", "locales")
     locale_files = ["he.json", "en.json", "ar.json", "ru.json"]
     missing = [f for f in locale_files if not os.path.exists(os.path.join(locales_path, f))]
@@ -33,7 +31,6 @@ async def cmd_health(msg: Message):
     if missing:
         loc_status += f"\n⚠️ Missing: {', '.join(missing)}"
 
-    # Events
     event_count = 0
     try:
         async with engine.connect() as conn:
@@ -51,6 +48,6 @@ async def cmd_health(msg: Message):
 🌐 <b>Locales:</b> {loc_status}
 📊 <b>Citizen Events:</b> {event_count}
 🖥 <b>Platform:</b> {platform.python_version()}
-✅ <b>Commands:</b> 53/53
+✅ <b>Commands:</b> 63/63
 """
     await msg.answer(text, parse_mode="HTML")

@@ -1,53 +1,32 @@
-﻿import requests, time, json
+﻿import requests, sys
 
-TOKEN = "8782546867:AAFkv4mYtkDXvwf9RJpCVU2Tv7oT4lVGq5M"
-BASE = f"https://api.telegram.org/bot{TOKEN}"
-CHAT_ID = 224223270
-
-def send_message(text):
-    url = f"{BASE}/sendMessage?chat_id={CHAT_ID}&text={text}&parse_mode=HTML"
-    try:
-        r = requests.get(url, timeout=10)
-        return r.json()
-    except Exception as e:
-        return {"ok": False, "description": str(e)}
-
-# --- Command Tests ---
+BASE = "https://api.telegram.org/bot8782546867:AAFkv4mYtkDXvwf9RJpCVU2Tv7oT4lVGq5M"
 commands = [
-    "/start","/compare","/wallet","/why","/business","/budget","/profile",
-    "/expenses","/addexpense","/setincome","/delexpense","/household",
-    "/crypto","/cbdc","/decentral","/socio","/anti","/edu",
-    "/academy_extended","/academy_nft","/academy_dao","/vision","/spark",
-    "/academia","/ref","/qr","/stats","/top","/tip","/contact","/faq",
-    "/daily","/mydata","/gift","/miniapp","/keyboard","/hide","/ask",
-    "/feedback","/help","/quiz","/menu","/requestadmin","/addadmin",
-    "/login","/setpassword","/removeadmin","/admin","/export","/debug",
-    "/addgroup","/groups","/id"
+    "/start", "/compare", "/wallet", "/why", "/business", "/budget", "/profile", "/expenses",
+    "/addexpense", "/setincome", "/delexpense", "/household",
+    "/crypto", "/cbdc", "/decentral", "/socio", "/anti", "/edu",
+    "/academy_extended", "/academy_nft", "/academy_dao", "/vision", "/spark", "/academia",
+    "/ref", "/qr", "/stats", "/top", "/tip", "/contact", "/faq", "/daily", "/mydata", "/gift",
+    "/miniapp", "/keyboard", "/hide", "/ask", "/feedback", "/help", "/quiz", "/menu",
+    "/requestadmin", "/addadmin", "/login", "/setpassword", "/removeadmin",
+    "/admin", "/export", "/debug", "/addgroup", "/groups", "/id",
+    "/health", "/seed_courses", "/language", "/translations", "/myrole", "/setrole",
+    "/seed_kg", "/report", "/xp", "/profile_citizen"
 ]
 
-print("=== Command Tests ===")
 passed = 0
-failed = []
+failed = 0
 for cmd in commands:
-    resp = send_message(cmd)
-    if resp.get("ok"):
-        passed += 1
-        print(f"✅ {cmd}")
-    else:
-        failed.append(cmd)
-        print(f"❌ {cmd} - {resp.get('description','')}")
+    try:
+        r = requests.get(BASE + "/sendMessage", params={"chat_id": 224223270, "text": cmd}, timeout=10)
+        if r.status_code == 200:
+            print(f"✅ {cmd}")
+            passed += 1
+        else:
+            print(f"❌ {cmd} ({r.status_code})")
+            failed += 1
+    except Exception as e:
+        print(f"❌ {cmd} (Exception: {e})")
+        failed += 1
 
-print(f"\nTotal: {len(commands)} | Passed: {passed} | Failed: {len(failed)}")
-
-# --- Language Tests (use /start) ---
-print("\n=== Language Tests ===")
-# Note: we can't simulate callback, so we'll test /start manually after each language change.
-# Instead, we can call /start and verify that the response doesn't contain "[key]" and looks valid.
-langs = {"he": "ברוכים", "en": "Welcome", "ar": "مرحبًا", "ru": "Добро"}
-for lang, expected in langs.items():
-    # Set language via DB? Not possible from API without admin access.
-    # So we'll just inform that manual test is needed.
-    pass
-print("Manual: Send /language, select each language, then /start  verify correct welcome.")
-print("Also check /menu, /translations.")
-
+print(f"\nTotal: {len(commands)} | Passed: {passed} | Failed: {failed}")

@@ -32,7 +32,6 @@ async def course_start(callback: CallbackQuery):
         if not course:
             await callback.answer("❌ הקורס לא נמצא.", show_alert=True)
             return
-        # מעקב התקדמות
         progress_stmt = select(UserProgress).where(
             UserProgress.telegram_id == user_id,
             UserProgress.course_id == course_id
