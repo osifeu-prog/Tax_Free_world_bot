@@ -1,9 +1,18 @@
-{
-  "welcome": "Welcome to TON Israel!\n\nBuilding a freer, smarter and decentralized world together.",
-  "menu_title": "📋 Main Menu  TON Israel",
-  "academy": "📚 TON Israel Academy",
-  "choose_language": "Choose your language:",
-  "language_saved": "✅ Language saved: {lang_name}",
-  "my_role": "Current role: {role}",
-  "menu_text": "<b>📋 Main Menu  TON Israel</b>\n━━━━━━━━━━━━━━━━━━━━━━\n💰 <b>Personal Savings</b>\n/start /compare /wallet /why /business /budget /profile /expenses /addexpense /setincome /delexpense\n\n🏠 <b>Household</b>\n/household /shopping /chore\n\n📚 <b>Academy</b>\n/academy /crypto /cbdc /decentral /socio /anti /edu /academy_extended /academy_nft /academy_dao /vision /spark\n\n👥 <b>Community</b>\n/ref /qr /stats /top /tip /contact /faq /daily /mydata /gift\n\n🛠️ <b>Tools</b>\n/miniapp /keyboard /hide /ask /feedback /help /quiz /id /ai /architecture\n\n🔐 <b>Permissions</b>\n/requestadmin /addadmin /login /setpassword /removeadmin\n\n🔒 <b>Admin</b>\n/admin /export /debug /addgroup /groups /report /setrole\n\n👤 <b>My Profile</b>\n/myrole /mydata"
+﻿{
+    "savings":  "💰 \u003cb\u003ePersonal Savings\u003c/b\u003e",
+    "crypto_title":  "🪙 What is Crypto?",
+    "crypto_footer":  "🔹 Want to understand how it differs from CBDC? → /cbdc",
+    "help_title":  "📖 \u003cb\u003eHelp  TON Israel\u003c/b\u003e",
+    "menu_title":  "📋 \u003cb\u003eMain Menu\u003c/b\u003e",
+    "academy":  "📚 \u003cb\u003eAcademy\u003c/b\u003e",
+    "language_saved":  "✅ Language saved: English",
+    "welcome":  "Welcome to TON Israel! 🚀\nBuilding a free, smart, decentralized world.",
+    "permissions":  "🔐 \u003cb\u003ePermissions\u003c/b\u003e",
+    "admin":  "🔒 \u003cb\u003eAdmin Panel\u003c/b\u003e",
+    "profile":  "👤 \u003cb\u003eMy Profile\u003c/b\u003e",
+    "community":  "👥 \u003cb\u003eCommunity\u003c/b\u003e",
+    "choose_language":  "Choose your language:",
+    "household":  "🏠 \u003cb\u003eHousehold\u003c/b\u003e",
+    "tools":  "🛠️ \u003cb\u003eTools\u003c/b\u003e",
+    "crypto_body":  "Crypto is a decentralized digital currency, not controlled by any bank or government.\n\n🔗 \u003cb\u003eBlockchain\u003c/b\u003e  a public, shared ledger.\n👥 \u003cb\u003eDecentralization\u003c/b\u003e  no central authority, the network runs on thousands of computers.\n📜 \u003cb\u003eSmart Contracts\u003c/b\u003e  automated programs."
 }

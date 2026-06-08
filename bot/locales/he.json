@@ -1,9 +1,18 @@
-{
-  "welcome": "ברוכים הבאים ל-TON Israel!\n\nאנחנו בונים עולם חופשי, חכם ומבוזר.",
-  "menu_title": "📋 תפריט ראשי  TON Israel",
-  "academy": "📚 האקדמיה של TON Israel",
-  "choose_language": "בחר שפה:",
-  "language_saved": "✅ השפה נשמרה: {lang_name}",
-  "my_role": "התפקיד שלי: {role}",
-  "menu_text": "<b>📋 תפריט ראשי  TON Israel</b>\n━━━━━━━━━━━━━━━━━━━━━━\n💰 <b>חיסכון אישי</b>\n/start /compare /wallet /why /business /budget /profile /expenses /addexpense /setincome /delexpense\n\n🏠 <b>משק בית</b>\n/household /shopping /chore\n\n📚 <b>אקדמיה</b>\n/academy /crypto /cbdc /decentral /socio /anti /edu /academy_extended /academy_nft /academy_dao /vision /spark\n\n👥 <b>קהילה</b>\n/ref /qr /stats /top /tip /contact /faq /daily /mydata /gift\n\n🛠️ <b>כלים</b>\n/miniapp /keyboard /hide /ask /feedback /help /quiz /id /ai /architecture\n\n🔐 <b>הרשאות</b>\n/requestadmin /addadmin /login /setpassword /removeadmin\n\n🔒 <b>ניהול (אדמין)</b>\n/admin /export /debug /addgroup /groups /report /setrole\n\n👤 <b>הפרופיל שלי</b>\n/myrole /mydata"
+﻿{
+    "savings":  "💰 \u003cb\u003eחיסכון אישי\u003c/b\u003e",
+    "crypto_title":  "🪙 מהו קריפטו?",
+    "crypto_footer":  "🔹 רוצה להבין איך זה שונה מ‑CBDC? → /cbdc",
+    "help_title":  "📖 \u003cb\u003eעזרה  TON Israel\u003c/b\u003e",
+    "menu_title":  "📋 \u003cb\u003eתפריט ראשי\u003c/b\u003e",
+    "academy":  "📚 \u003cb\u003eאקדמיה\u003c/b\u003e",
+    "language_saved":  "✅ השפה נשמרה: עברית",
+    "welcome":  "ברוכים הבאים ל-TON Israel! 🚀\nבונים עולם חופשי, חכם ומבוזר.",
+    "permissions":  "🔐 \u003cb\u003eהרשאות\u003c/b\u003e",
+    "admin":  "🔒 \u003cb\u003eניהול (אדמין)\u003c/b\u003e",
+    "profile":  "👤 \u003cb\u003eהפרופיל שלי\u003c/b\u003e",
+    "community":  "👥 \u003cb\u003eקהילה\u003c/b\u003e",
+    "choose_language":  "בחר/י שפה:",
+    "household":  "🏠 \u003cb\u003eמשק בית\u003c/b\u003e",
+    "tools":  "🛠️ \u003cb\u003eכלים\u003c/b\u003e",
+    "crypto_body":  "קריפטו הוא מטבע דיגיטלי מבוזר, שאינו נשלט על ידי אף בנק או ממשלה.\n\n🔗 \u003cb\u003eבלוקצ\u0027יין\u003c/b\u003e  ספר חשבונות ציבורי ומשותף.\n👥 \u003cb\u003eביזור\u003c/b\u003e  אין גוף מרכזי, הרשת מנוהלת על ידי אלפי מחשבים.\n📜 \u003cb\u003eחוזים חכמים\u003c/b\u003e  תוכנות אוטומטיות."
 }

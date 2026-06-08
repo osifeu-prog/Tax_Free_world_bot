@@ -1,4 +1,6 @@
-﻿# -*- coding: utf-8 -*-
+﻿from dotenv import load_dotenv
+load_dotenv()
+# -*- coding: utf-8 -*-
 from pydantic_settings import BaseSettings
 from typing import Optional
 
@@ -23,3 +25,4 @@ def get_admin_ids():
 
     AI_TRANSLATION_ENABLED: bool = Field(default=False, env="AI_TRANSLATION_ENABLED")
     OPENAI_API_KEY: str = Field(default="", env="OPENAI_API_KEY")
+

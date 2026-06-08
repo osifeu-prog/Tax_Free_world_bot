@@ -1,9 +1,18 @@
-{
-  "welcome": "مرحبًا بكم في TON Israel!\n\nنحن نبني عالمًا أكثر حرية وذكاءً ولامركزية.",
-  "menu_title": "📋 القائمة الرئيسية  TON Israel",
-  "academy": "📚 أكاديمية TON Israel",
-  "choose_language": "اختر اللغة:",
-  "language_saved": "✅ تم حفظ اللغة: {lang_name}",
-  "my_role": "الدور الحالي: {role}",
-  "menu_text": "<b>📋 القائمة الرئيسية  TON Israel</b>\n━━━━━━━━━━━━━━━━━━━━━━\n💰 <b>المدخرات الشخصية</b>\n/start /compare /wallet /why /business /budget /profile /expenses /addexpense /setincome /delexpense\n\n🏠 <b>الأسرة</b>\n/household /shopping /chore\n\n📚 <b>الأكاديمية</b>\n/academy /crypto /cbdc /decentral /socio /anti /edu /academy_extended /academy_nft /academy_dao /vision /spark\n\n👥 <b>المجتمع</b>\n/ref /qr /stats /top /tip /contact /faq /daily /mydata /gift\n\n🛠️ <b>الأدوات</b>\n/miniapp /keyboard /hide /ask /feedback /help /quiz /id /ai /architecture\n\n🔐 <b>الصلاحيات</b>\n/requestadmin /addadmin /login /setpassword /removeadmin\n\n🔒 <b>الإدارة</b>\n/admin /export /debug /addgroup /groups /report /setrole\n\n👤 <b>ملفي الشخصي</b>\n/myrole /mydata"
+﻿{
+    "savings":  "💰 \u003cb\u003eالمدخرات الشخصية\u003c/b\u003e",
+    "crypto_title":  "🪙 ما هي العملات الرقمية؟",
+    "crypto_footer":  "🔹 هل تريد معرفة الفرق بينها وبين CBDC؟ → /cbdc",
+    "help_title":  "📖 \u003cb\u003eمساعدة  TON Israel\u003c/b\u003e",
+    "menu_title":  "📋 \u003cb\u003eالقائمة الرئيسية\u003c/b\u003e",
+    "academy":  "📚 \u003cb\u003eالأكاديمية\u003c/b\u003e",
+    "language_saved":  "✅ تم حفظ اللغة: العربية",
+    "welcome":  "مرحباً بكم في TON Israel! 🚀\nبناء عالم حر، ذكي، لا مركزي.",
+    "permissions":  "🔐 \u003cb\u003eالصلاحيات\u003c/b\u003e",
+    "admin":  "🔒 \u003cb\u003eلوحة الإدارة\u003c/b\u003e",
+    "profile":  "👤 \u003cb\u003eملفي الشخصي\u003c/b\u003e",
+    "community":  "👥 \u003cb\u003eالمجتمع\u003c/b\u003e",
+    "choose_language":  "اختر لغتك:",
+    "household":  "🏠 \u003cb\u003eالأسرة\u003c/b\u003e",
+    "tools":  "🛠️ \u003cb\u003eأدوات\u003c/b\u003e",
+    "crypto_body":  "العملات الرقمية هي عملات رقمية لامركزية، لا تخضع لسيطرة أي بنك أو حكومة.\n\n🔗 \u003cb\u003eالبلوك تشين\u003c/b\u003e  سجل حسابات عام ومشترك.\n👥 \u003cb\u003eاللامركزية\u003c/b\u003e  لا توجد سلطة مركزية، الشبكة تعمل بواسطة آلاف الحواسيب.\n📜 \u003cb\u003eالعقود الذكية\u003c/b\u003e  برامج تلقائية."
 }
