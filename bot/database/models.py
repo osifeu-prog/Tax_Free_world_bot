@@ -152,13 +152,13 @@ import datetime
 
 # ... (הקיים נשאר)
 
+class Course(Base):\n    passclass UserProgress(Base):\n    pass
 class Course(Base):
     __tablename__ = "courses"
-    
     id = Column(Integer, primary_key=True)
     title = Column(String(200), nullable=False)
     description = Column(Text)
-    content = Column(Text)                    # טקסט או JSON של השיעור
+    content = Column(Text)
     required_role = Column(String(50), default="citizen")
     order_num = Column(Integer, default=0)
     is_active = Column(Boolean, default=True)
@@ -166,96 +166,9 @@ class Course(Base):
 
 class UserProgress(Base):
     __tablename__ = "user_progress"
-    
     id = Column(Integer, primary_key=True)
     telegram_id = Column(BigInteger, index=True)
     course_id = Column(Integer, ForeignKey("courses.id"))
-    completed_lessons = Column(Text, default="[]")   # JSON array
+    completed_lessons = Column(Text, default="[]")
     score = Column(Integer, default=0)
     last_accessed = Column(DateTime, default=datetime.datetime.utcnow)
-from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Text, Boolean, DateTime
-import datetime
-
-# ... (הקיים נשאר)
-
-class Course(Base):
-    __tablename__ = "courses"
-    
-    id = Column(Integer, primary_key=True)
-    title = Column(String(200), nullable=False)
-    description = Column(Text)
-    content = Column(Text)                    # טקסט או JSON של השיעור
-    required_role = Column(String(50), default="citizen")
-    order_num = Column(Integer, default=0)
-    is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
-
-class UserProgress(Base):
-    __tablename__ = "user_progress"
-    
-    id = Column(Integer, primary_key=True)
-    telegram_id = Column(BigInteger, index=True)
-    course_id = Column(Integer, ForeignKey("courses.id"))
-    completed_lessons = Column(Text, default="[]")   # JSON array
-    score = Column(Integer, default=0)
-    last_accessed = Column(DateTime, default=datetime.datetime.utcnow)
-from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Text, Boolean, DateTime
-import datetime
-
-# ... (הקיים נשאר)
-
-class Course(Base):
-    __tablename__ = "courses"
-    
-    id = Column(Integer, primary_key=True)
-    title = Column(String(200), nullable=False)
-    description = Column(Text)
-    content = Column(Text)                    # טקסט או JSON של השיעור
-    required_role = Column(String(50), default="citizen")
-    order_num = Column(Integer, default=0)
-    is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
-
-class UserProgress(Base):
-    __tablename__ = "user_progress"
-    
-    id = Column(Integer, primary_key=True)
-    telegram_id = Column(BigInteger, index=True)
-    course_id = Column(Integer, ForeignKey("courses.id"))
-    completed_lessons = Column(Text, default="[]")   # JSON array
-    score = Column(Integer, default=0)
-    last_accessed = Column(DateTime, default=datetime.datetime.utcnow)
-from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Text, Boolean, DateTime
-import datetime
-
-# ... (הקיים נשאר)
-
-class Course(Base):
-    __tablename__ = "courses"
-    
-    id = Column(Integer, primary_key=True)
-    title = Column(String(200), nullable=False)
-    description = Column(Text)
-    content = Column(Text)                    # טקסט או JSON של השיעור
-    required_role = Column(String(50), default="citizen")
-    order_num = Column(Integer, default=0)
-    is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
-
-class UserProgress(Base):
-    __tablename__ = "user_progress"
-    
-    id = Column(Integer, primary_key=True)
-    telegram_id = Column(BigInteger, index=True)
-    course_id = Column(Integer, ForeignKey("courses.id"))
-    completed_lessons = Column(Text, default="[]")   # JSON array
-    score = Column(Integer, default=0)
-    last_accessed = Column(DateTime, default=datetime.datetime.utcnow)
-
-# עדכון User עם שדות גלובליים
-# (הוסף את זה אחרי כל השדות הקיימים של User)
-    language = Column(String(5), default="he")
-    country = Column(String(5), default="IL")
-    timezone = Column(String(50), default="Asia/Jerusalem")
-    currency = Column(String(10), default="ILS")
-
