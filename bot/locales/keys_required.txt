@@ -1,4 +1,4 @@
-﻿welcome
+welcome
 menu_title
 academy
 choose_language
