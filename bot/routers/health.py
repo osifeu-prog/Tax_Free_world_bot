@@ -6,8 +6,6 @@ from bot.database.session import engine
 from sqlalchemy import text
 
 router = Router()
-
-# === Uptime ===
 _START_TIME = time.time()
 
 @router.message(Command("health"))
@@ -19,21 +17,23 @@ async def cmd_health(msg: Message):
 
     # DB check
     db_status = "🟢 OK"
+    db_error = ""
     try:
         async with engine.connect() as conn:
             await conn.execute(text("SELECT 1"))
-    except Exception:
+    except Exception as e:
         db_status = "🔴 Error"
+        db_error = str(e)[:100]
 
-    # Locales check
+    # Locales
     locales_path = os.path.join(os.path.dirname(__file__), "..", "locales")
     locale_files = ["he.json", "en.json", "ar.json", "ru.json"]
-    missing_locales = [f for f in locale_files if not os.path.exists(os.path.join(locales_path, f))]
-    locales_status = f"✅ {4 - len(missing_locales)}/4 loaded"
-    if missing_locales:
-        locales_status += f"\n⚠️ Missing: {', '.join(missing_locales)}"
+    missing = [f for f in locale_files if not os.path.exists(os.path.join(locales_path, f))]
+    loc_status = f"✅ {4 - len(missing)}/4 loaded"
+    if missing:
+        loc_status += f"\n⚠️ Missing: {', '.join(missing)}"
 
-    # Event count
+    # Events
     event_count = 0
     try:
         async with engine.connect() as conn:
@@ -47,8 +47,8 @@ async def cmd_health(msg: Message):
 ━━━━━━━━━━━━━━━━━━━━━━
 🕒 <b>Server Time:</b> {now}
 ⏱ <b>Uptime:</b> {hours}h {minutes}m {seconds}s
-🗄 <b>Database:</b> {db_status}
-🌐 <b>Locales:</b> {locales_status}
+🗄 <b>Database:</b> {db_status} {db_error}
+🌐 <b>Locales:</b> {loc_status}
 📊 <b>Citizen Events:</b> {event_count}
 🖥 <b>Platform:</b> {platform.python_version()}
 ✅ <b>Commands:</b> 53/53
