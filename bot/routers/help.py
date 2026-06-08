@@ -1,18 +1,17 @@
 ﻿from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
-from bot.services.translation_service import translator
 from bot.database.session import async_session
 from bot.database.models import User
 from sqlalchemy import select
+from bot.services.translation_service import translator
 
 router = Router()
 
-async def get_user_lang(telegram_id: int) -> str:
-    async with async_session() as session:
-        stmt = select(User).where(User.telegram_id == telegram_id)
-        user = (await session.execute(stmt)).scalar_one_or_none()
-        return user.language if user and user.language else "he"
+async def get_user_lang(uid: int) -> str:
+    async with async_session() as s:
+        u = (await s.execute(select(User).where(User.telegram_id == uid))).scalar_one_or_none()
+        return u.language if u and u.language else "he"
 
 @router.message(Command("help"))
 async def cmd_help(msg: Message):

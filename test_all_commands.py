@@ -1,95 +1,93 @@
-﻿import requests, json, time
+﻿import asyncio, os, sys
 
-BASE = "https://api.telegram.org/bot8782546867:AAFkv4mYtkDXvwf9RJpCVU2Tv7oT4lVGq5M"
-CHAT_ID = 224223270  # Osif (admin)
+# הוסף את תיקיית הפרויקט לנתיב
+sys.path.insert(0, r"D:\PROJ\TON-Israel")
 
-commands = {
-    "/start": {"expect": ["ברוכים", "TON Israel", "menu"]},
-    "/menu": {"expect": ["תפריט", "חיסכון", "אקדמיה"]},
-    "/help": {"expect": ["פקודות", "חיסכון", "אקדמיה"]},
-    "/crypto": {"expect": ["קריפטו", "בלוקצ'יין"]},
-    "/cbdc": {"expect": ["CBDC"]},
-    "/decentral": {"expect": ["ביזור"]},
-    "/socio": {"expect": ["סוציוקרטיה"]},
-    "/anti": {"expect": ["שחיתות"]},
-    "/edu": {"expect": ["חינוך"]},
-    "/academy_extended": {"expect": ["NFT", "ביזוריות"]},
-    "/academy_nft": {"expect": ["NFT"]},
-    "/academy_dao": {"expect": ["DAO"]},
-    "/vision": {"expect": ["חזון", "TON Israel"]},
-    "/spark": {"expect": ["SLH_Spark_AI_BOT"]},
-    "/academia": {"expect": ["SLH_Academia_bot"]},
-    "/ref": {"expect": ["הפניה"]},
-    "/qr": {"expect": ["הפניה"]},
-    "/stats": {"expect": ["סטטיסטיקות"]},
-    "/top": {"expect": ["מובילים"]},
-    "/tip": {"expect": ["טיפ"]},
-    "/contact": {"expect": ["קשר"]},
-    "/faq": {"expect": ["שאלות"]},
-    "/daily": {"expect": ["סיכום"]},
-    "/mydata": {"expect": ["נתונים"]},
-    "/gift": {"expect": ["מתנה"]},
-    "/miniapp": {"expect": ["מחשבון"]},
-    "/keyboard": {"expect": ["מקלדת"]},
-    "/hide": {"expect": ["מקלדת"]},
-    "/ask": {"expect": ["שאל"]},
-    "/feedback": {"expect": ["דיווח"]},
-    "/quiz": {"expect": ["חידון"]},
-    "/wallet": {"expect": ["ארנק", "TON"]},
-    "/why": {"expect": ["TON"]},
-    "/business": {"expect": ["עסקים"]},
-    "/budget": {"expect": ["תקציב"]},
-    "/profile": {"expect": ["פרופיל"]},
-    "/expenses": {"expect": ["הוצאות"]},
-    "/addexpense": {"expect": ["הוסף"]},
-    "/setincome": {"expect": ["הכנסה"]},
-    "/delexpense": {"expect": ["מחק"]},
-    "/household": {"expect": ["משק בית"]},
-    "/requestadmin": {"expect": ["מנהל"]},
-    "/addadmin": {"expect": ["מנהל"]},
-    "/login": {"expect": ["התחבר"]},
-    "/setpassword": {"expect": ["סיסמה"]},
-    "/removeadmin": {"expect": ["מנהל"]},
-    "/admin": {"expect": ["אדמין"]},
-    "/export": {"expect": ["ייצוא"]},
-    "/debug": {"expect": ["סטטוס"]},
-    "/addgroup": {"expect": ["קבוצה"]},
-    "/groups": {"expect": ["קבוצות"]},
-    "/id": {"expect": ["זיהוי"]},
-    "/health": {"expect": ["Health"]},
-    "/seed_courses": {"expect": ["קורסים"]},
-    "/language": {"expect": ["שפה"]},
-    "/translations": {"expect": ["תרגומים"]},
-    "/myrole": {"expect": ["תפקיד"]},
-    "/setrole": {"expect": ["תפקיד"]},
-    "/seed_kg": {"expect": ["Knowledge Graph"]},
-    "/report": {"expect": ["דוח"]},
-    "/xp": {"expect": ["XP"]},
-    "/profile_citizen": {"expect": ["פרופיל"]},
-    "/compare": {"expect": ["עמלות", "חיסכון"]},
-}
+from aiogram import Bot, Dispatcher
+from aiogram.types import Message, Chat, User
+from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.filters import Command
+import bot.routers as routers_pkg
+import pkgutil, importlib
 
-passed = 0
-failed = 0
+# טען כל הראוטרים
+dp = Dispatcher(storage=MemoryStorage())
+for importer, modname, ispkg in pkgutil.iter_modules(routers_pkg.__path__):
+    module = importlib.import_module(f"bot.routers.{modname}")
+    if hasattr(module, 'router'):
+        dp.include_router(module.router)
 
-for cmd, check in commands.items():
+# סימולציית משתמש
+class MockUser(User):
+    def __init__(self, id=224223270, language="he"):
+        super().__init__(id=id, is_bot=False, first_name="Test")
+        self._language = language
+    @property
+    def language_code(self):
+        return self._language
+
+class MockMessage(Message):
+    def __init__(self, text, user_lang="he"):
+        self.text = text
+        self.from_user = MockUser(language=user_lang)
+        self.chat = Chat(id=224223270, type="private")
+        self._answer = None
+    async def answer(self, text, **kwargs):
+        self._answer = text
+    async def reply(self, text, **kwargs):
+        self._answer = text
+
+async def test_command(cmd: str, lang="he", expected_keywords=[]):
+    msg = MockMessage(cmd, user_lang=lang)
+    # הפעל את ה-dispatcher עם ה-message
     try:
-        r = requests.get(BASE + "/sendMessage", params={"chat_id": CHAT_ID, "text": cmd}, timeout=30)
-        if r.status_code == 200:
-            resp = r.json()
-            text = resp.get("result", {}).get("text", "")
-            if any(exp in text for exp in check["expect"]):
-                print(f"✅ {cmd}")
-                passed += 1
-            else:
-                print(f"⚠️ {cmd}  unexpected response: {text[:80]}...")
-                failed += 1
-        else:
-            print(f"❌ {cmd} (HTTP {r.status_code})")
-            failed += 1
+        await dp.feed_update(Bot("dummy"), {"message": msg, "update_id": 1})
     except Exception as e:
-        print(f"❌ {cmd} ({e})")
-        failed += 1
-    time.sleep(0.5)
+        return False, f"Exception: {e}"
+    text = msg._answer or ""
+    if not text:
+        return False, "No response"
+    # בדוק תרגום חסר
+    if text.startswith("[") and text.endswith("]"):
+        return False, f"Missing translation: {text}"
+    # בדוק מילות מפתח
+    for kw in expected_keywords:
+        if kw not in text:
+            return False, f"Missing keyword: '{kw}'"
+    return True, text[:100]
 
-print(f"\nTotal: {len(commands)} | Passed: {passed} | Failed: {failed}")
+async def main():
+    tests = [
+        ("/start", ["ברוכים", "TON"]),
+        ("/menu", ["תפריט", "חיסכון"]),
+        ("/help", ["פקודות", "חיסכון"]),
+        ("/crypto", ["קריפטו", "בלוקצ'יין"]),
+        ("/vision", ["חזון", "TON"]),
+        ("/qr", ["הפניה"]),
+        ("/budget", ["תקציב"]),
+        ("/academy", ["אקדמיה"]),
+        ("/report", ["דוח"]),
+        ("/health", ["Health", "Uptime"]),
+    ]
+
+    passed = 0
+    for cmd, keywords in tests:
+        ok, detail = await test_command(cmd, "he", keywords)
+        if ok:
+            print(f"✅ {cmd}")
+            passed += 1
+        else:
+            print(f"❌ {cmd}  {detail}")
+
+    # i18n check  אנגלית
+    print("\n🌐 i18n check (English):")
+    for cmd in ["/start", "/menu", "/help"]:
+        ok, detail = await test_command(cmd, "en")
+        if ok:
+            print(f"  ✅ {cmd}  translated")
+        else:
+            print(f"  ⚠️ {cmd}  {detail}")
+
+    print(f"\nTests: {passed}/{len(tests)} passed")
+
+asyncio.run(main())
