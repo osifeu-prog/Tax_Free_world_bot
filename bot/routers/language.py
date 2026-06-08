@@ -3,39 +3,35 @@ from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from bot.database.session import async_session
 from bot.database.models import User
-from bot.services.translation_service import translator
 from sqlalchemy import select
 
 router = Router()
 
-LANGS = {
-    "he": "🇮🇱 עברית",
-    "en": "🇺🇸 English",
-    "ru": "🇷🇺 Русский",
-    "ar": "🇸🇦 العربية"
-}
-
 @router.message(Command("language"))
 async def cmd_language(msg: Message):
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text=name, callback_data=f"setlang_{code}")]
-        for code, name in LANGS.items()
+        [
+            InlineKeyboardButton(text="🇮🇱 עברית", callback_data="lang_he"),
+            InlineKeyboardButton(text="🇺🇸 English", callback_data="lang_en"),
+            InlineKeyboardButton(text="🇪🇸 Español", callback_data="lang_es"),
+            InlineKeyboardButton(text="🇫🇷 Français", callback_data="lang_fr"),
+            InlineKeyboardButton(text="🇷🇺 Русский", callback_data="lang_ru"),
+            InlineKeyboardButton(text="🇸🇦 العربية", callback_data="lang_ar")
+        ]
     ])
-    await msg.answer(translator.t("he", "choose_language"), reply_markup=kb)
+    await msg.answer("🌐 בחר/י שפה:", reply_markup=kb)
 
-@router.callback_query(F.data.startswith("setlang_"))
-async def on_set_lang(call: CallbackQuery):
-    lang = call.data.split("_")[1]
-    async with async_session() as session:
-        stmt = select(User).where(User.telegram_id == call.from_user.id)
-        user = (await session.execute(stmt)).scalar_one_or_none()
-        if user:
-            user.language = lang
+@router.callback_query(F.data.startswith("lang_"))
+async def lang_callback(callback: CallbackQuery):
+    lang = callback.data.split("_")[1]
+    async with async_session() as s:
+        u = (await s.execute(select(User).where(User.telegram_id == callback.from_user.id))).scalar_one_or_none()
+        if u:
+            u.language = lang
         else:
-            user = User(telegram_id=call.from_user.id, language=lang)
-            session.add(user)
-        await session.commit()
-    # תוקן: נשלח את השם בתור lang_name
-    text = translator.t(lang, "language_saved", lang_name=LANGS[lang])
-    await call.message.edit_text(text)
-    await call.answer()
+            u = User(telegram_id=callback.from_user.id, language=lang)
+            s.add(u)
+        await s.commit()
+    names = {"he":"עברית","en":"English","es":"Español","fr":"Français","ru":"Русский","ar":"العربية"}
+    await callback.answer(f"✅ {names.get(lang, lang)}", show_alert=True)
+    await callback.message.edit_reply_markup()

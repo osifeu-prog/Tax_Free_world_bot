@@ -95,3 +95,4 @@ async def finalize_pension(msg: Message, data: dict):
         f"📌 <i>הערכה בלבד  אינה ייעוץ פנסיוני</i>",
         parse_mode="HTML"
     )
+

@@ -1,33 +1,24 @@
 ﻿from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
+from bot.database.session import async_session
+from bot.database.models import User
+from sqlalchemy import select
+from bot.services.translation_service import translator
 
 router = Router()
 
+async def get_user_lang(uid: int) -> str:
+    async with async_session() as s:
+        u = (await s.execute(select(User).where(User.telegram_id == uid))).scalar_one_or_none()
+        return u.language if u and u.language else "he"
+
 @router.message(Command("vision"))
 async def cmd_vision(msg: Message):
-    text = """
-🌐 <b>החזון של TON Israel</b>
-
-אנחנו בונים פלטפורמה חינוכית-כלכלית מבוזרת:
-• 🎓 <b>אקדמיה</b>  קורסים על ביזוריות, כלכלה חכמה, DAO, NFT.
-• 🕹️ <b>משחקים</b>  "העיר המבוזרת", "צייד השחיתות", סימולציות.
-• 🧑🤝🧑 <b>קהילה</b>  ניהול קבוצות, משק בית משותף, לוחות מובילים.
-• 💎 <b>NFT-זהות</b>  כרטיס ביקור דיגיטלי, רישיון מקצועי.
-• 🪙 <b>טוקן קהילתי</b>  תגמולים, Premium, כלכלה פנימית.
-
-🔗 <b>האקדמיה שלנו:</b> @SLH_Spark_AI_BOT  
-🔗 <b>תכנים מתקדמים:</b> @SLH_Academia_bot  
-
-📌 <b>מתחילים עכשיו:</b> /academy  לבחירת מסלול למידה  
-📌 <b>מנהלים:</b> /setrole  להגדיר תפקידים
-"""
+    lang = await get_user_lang(msg.from_user.id)
+    text = (
+        translator.t(lang, "vision_title") + "\n\n" +
+        translator.t(lang, "vision_body") + "\n\n" +
+        translator.t(lang, "vision_footer")
+    )
     await msg.answer(text, parse_mode="HTML")
-
-@router.message(Command("spark"))
-async def cmd_spark(msg: Message):
-    await msg.answer("🤖 @SLH_Spark_AI_BOT  בוט הבינה המתקדם של הרשת.\nשאלו אותו כל דבר!")
-
-@router.message(Command("academia"))
-async def cmd_academia(msg: Message):
-    await msg.answer("📚 @SLH_Academia_bot  תוכן אקדמי מורחב, קורסים ומשחקים.")

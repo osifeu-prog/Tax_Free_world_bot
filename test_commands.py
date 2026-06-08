@@ -26,18 +26,24 @@ async def main():
     from bot.routers.academy import cmd_academy
     from bot.routers.report import cmd_report
     from bot.routers.health import cmd_health
+    from bot.routers.language import cmd_language
+    from bot.routers.familygroup import cmd_familygroup
+    from bot.routers.pension import cmd_pension
 
     tests = [
         (cmd_start, "/start", ["ברוכים","TON"]),
         (cmd_menu, "/menu", ["תפריט","חיסכון"]),
         (cmd_help, "/help", ["חיסכון","אקדמיה"]),
         (cmd_crypto, "/crypto", ["קריפטו","בלוקצ'יין"]),
-        (cmd_vision, "/vision", ["חזון","TON"]),
+        (cmd_vision, "/vision", ["SLH","אקדמיה"]),
         (cmd_qr, "/qr", ["הפניה"]),
         (cmd_budget, "/budget", ["הכנסה","דוגמה"]),
         (cmd_academy, "/academy", ["אקדמיה"]),
         (cmd_report, "/report", ["משתמשים","הפניות"]),
         (cmd_health, "/health", ["Health","Uptime"]),
+        (cmd_language, "/language", ["שפה"]),
+        (cmd_familygroup, "/familygroup", ["קבוצה","בוט"]),
+        (cmd_pension, "/pension", ["פנסיה","גילך"]),
     ]
 
     ok = 0
@@ -61,9 +67,9 @@ async def main():
 
     print(f"\n✅ {ok}/{len(tests)} passed")
 
-    # i18n
-    print("\n🌐 i18n (English):")
-    for handler, cmd in [(cmd_start,"/start"),(cmd_menu,"/menu"),(cmd_help,"/help")]:
+    # i18n check
+    print("\n🌐 i18n check (English):")
+    for handler, cmd in [(cmd_start,"/start"), (cmd_menu,"/menu"), (cmd_help,"/help")]:
         msg = MockMsg(cmd,"en")
         await handler(msg)
         text = msg._ans
