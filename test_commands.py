@@ -28,8 +28,7 @@ async def main():
     from bot.routers.health import cmd_health
     from bot.routers.language import cmd_language
     from bot.routers.familygroup import cmd_familygroup
-    from bot.routers.pension import cmd_pension`nfrom bot.routers.setwallet import cmd_setwallet
-
+    
     tests = [
         (cmd_start, "/start", ["ברוכים","TON"]),
         (cmd_menu, "/menu", ["תפריט","חיסכון"]),
@@ -43,7 +42,8 @@ async def main():
         (cmd_health, "/health", ["Health","Uptime"]),
         (cmd_language, "/language", ["שפה"]),
         (cmd_familygroup, "/familygroup", ["קבוצה","בוט"]),
-        (cmd_pension, "/pension", ["פנסיה","גילך"])`n    (cmd_setwallet, "/setwallet", ["ארנק","TON"]),
+        (cmd_pension, '/pension', ['פנסיה','גילך'])
+    (cmd_setwallet, '/setwallet', ['ארנק','TON'])`n    (cmd_setwallet, "/setwallet", ["ארנק","TON"]),
     ]
 
     ok = 0
@@ -79,6 +79,7 @@ async def main():
             print(f"  ⚠️ {cmd} not translated")
 
 asyncio.run(main())
+
 
 
 
