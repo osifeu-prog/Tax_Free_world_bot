@@ -12,6 +12,7 @@ from bot.database.models import Base
 from bot.database.session import engine
 from bot.migrate_i18n import add_lang_columns
 import bot.routers as routers_pkg
+from bot.routers import academy
 from bot.routers import language
 from bot.routers import profile_citizen
 from bot.routers import translations_status
@@ -182,6 +183,7 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 
 
