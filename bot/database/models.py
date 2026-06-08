@@ -131,3 +131,107 @@ class UserRole(Base):
     id = Column(Integer, primary_key=True)
     telegram_id = Column(BigInteger, unique=True, index=True)
     role = Column(String(50), default="citizen")  # citizen, entrepreneur, leader, expert, fighter, builder
+from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Text, Boolean, DateTime
+import datetime
+
+# ... (הקיים נשאר)
+
+class Course(Base):
+    __tablename__ = "courses"
+    
+    id = Column(Integer, primary_key=True)
+    title = Column(String(200), nullable=False)
+    description = Column(Text)
+    content = Column(Text)                    # טקסט או JSON של השיעור
+    required_role = Column(String(50), default="citizen")
+    order_num = Column(Integer, default=0)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class UserProgress(Base):
+    __tablename__ = "user_progress"
+    
+    id = Column(Integer, primary_key=True)
+    telegram_id = Column(BigInteger, index=True)
+    course_id = Column(Integer, ForeignKey("courses.id"))
+    completed_lessons = Column(Text, default="[]")   # JSON array
+    score = Column(Integer, default=0)
+    last_accessed = Column(DateTime, default=datetime.datetime.utcnow)
+from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Text, Boolean, DateTime
+import datetime
+
+# ... (הקיים נשאר)
+
+class Course(Base):
+    __tablename__ = "courses"
+    
+    id = Column(Integer, primary_key=True)
+    title = Column(String(200), nullable=False)
+    description = Column(Text)
+    content = Column(Text)                    # טקסט או JSON של השיעור
+    required_role = Column(String(50), default="citizen")
+    order_num = Column(Integer, default=0)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class UserProgress(Base):
+    __tablename__ = "user_progress"
+    
+    id = Column(Integer, primary_key=True)
+    telegram_id = Column(BigInteger, index=True)
+    course_id = Column(Integer, ForeignKey("courses.id"))
+    completed_lessons = Column(Text, default="[]")   # JSON array
+    score = Column(Integer, default=0)
+    last_accessed = Column(DateTime, default=datetime.datetime.utcnow)
+from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Text, Boolean, DateTime
+import datetime
+
+# ... (הקיים נשאר)
+
+class Course(Base):
+    __tablename__ = "courses"
+    
+    id = Column(Integer, primary_key=True)
+    title = Column(String(200), nullable=False)
+    description = Column(Text)
+    content = Column(Text)                    # טקסט או JSON של השיעור
+    required_role = Column(String(50), default="citizen")
+    order_num = Column(Integer, default=0)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class UserProgress(Base):
+    __tablename__ = "user_progress"
+    
+    id = Column(Integer, primary_key=True)
+    telegram_id = Column(BigInteger, index=True)
+    course_id = Column(Integer, ForeignKey("courses.id"))
+    completed_lessons = Column(Text, default="[]")   # JSON array
+    score = Column(Integer, default=0)
+    last_accessed = Column(DateTime, default=datetime.datetime.utcnow)
+from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Text, Boolean, DateTime
+import datetime
+
+# ... (הקיים נשאר)
+
+class Course(Base):
+    __tablename__ = "courses"
+    
+    id = Column(Integer, primary_key=True)
+    title = Column(String(200), nullable=False)
+    description = Column(Text)
+    content = Column(Text)                    # טקסט או JSON של השיעור
+    required_role = Column(String(50), default="citizen")
+    order_num = Column(Integer, default=0)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class UserProgress(Base):
+    __tablename__ = "user_progress"
+    
+    id = Column(Integer, primary_key=True)
+    telegram_id = Column(BigInteger, index=True)
+    course_id = Column(Integer, ForeignKey("courses.id"))
+    completed_lessons = Column(Text, default="[]")   # JSON array
+    score = Column(Integer, default=0)
+    last_accessed = Column(DateTime, default=datetime.datetime.utcnow)

@@ -1,29 +1,30 @@
 ﻿from aiogram import Router
 from aiogram.filters import Command
-from aiogram.types import Message
+from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+from bot.database.session import async_session
+from bot.database.models import Course
+from sqlalchemy import select
+from sqlalchemy.exc import NoResultFound
 
 router = Router()
 
 @router.message(Command("academy"))
 async def cmd_academy(msg: Message):
-    text = """
-📚 <b>האקדמיה של TON Israel</b>
-━━━━━━━━━━━━━━━━━━━━━━
+    async with async_session() as session:
+        stmt = select(Course).where(Course.is_active == True).order_by(Course.order_num)
+        courses = (await session.execute(stmt)).scalars().all()
+    
+    if not courses:
+        await msg.answer("📚 עדיין אין קורסים. בקרוב יתווספו!")
+        return
 
-ברוך הבא לקורסים ולתכנים החינוכיים שלנו!
+    kb = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text=f"📖 {c.title}", callback_data=f"course_start_{c.id}")]
+        for c in courses
+    ])
 
-<b>קורסים זמינים:</b>
-• /crypto — מבוא לקריפטו וביטקוין
-• /cbdc — CBDC והסכנות של מטבעות בנק מרכזי
-• /decentral — ביזור מול ריכוז
-• /socio — סוציוקרטיה ודמוקרטיה מבוזרת
-• /anti — טכנולוגיות נגד שחיתות
-• /edu — חינוך כלכלי ופיננסי
-• /academy_extended — ביזוריות מתקדמת
-• /academy_nft — NFT כזהות דיגיטלית
-• /academy_dao — DAO וקהילות מבוזרות
-• /vision — החזון המלא של TON Israel
-
-🔗 בוט אקדמיה מתקדם: @SLH_Academia_bot
-"""
-    await msg.answer(text, parse_mode="HTML")
+    await msg.answer(
+        "<b>🎓 האקדמיה של TON Israel</b>\n\nבחר קורס:", 
+        parse_mode="HTML", 
+        reply_markup=kb
+    )
