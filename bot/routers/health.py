@@ -7,10 +7,13 @@ from sqlalchemy import text
 
 router = Router()
 
+# === Uptime ===
+_START_TIME = time.time()
+
 @router.message(Command("health"))
 async def cmd_health(msg: Message):
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    uptime = time.time() - start_time
+    uptime = time.time() - _START_TIME
     hours, rem = divmod(int(uptime), 3600)
     minutes, seconds = divmod(rem, 60)
 
