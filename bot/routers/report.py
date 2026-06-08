@@ -41,9 +41,10 @@ async def cmd_report(msg: Message):
 👥 <b>משתמשים:</b> {users}
 🔗 <b>הפניות:</b> {refs}
 📝 <b>לוגים:</b> {logs}
-📊 <b>אירועים:</b> {events}
+📊 <b>אירועים:</b> {events}\n🌐 <b>אנגלית:</b> {en_users}\n🇮🇱 <b>עברית:</b> {he_users}\n👛 <b>עם ארנק:</b> {wallet_users}
 """
     except Exception as e:
         out_text = f"📊 דוח מערכת  שגיאה: {e}"
 
     await msg.answer(out_text, parse_mode="HTML")
+
