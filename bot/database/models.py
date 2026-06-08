@@ -175,3 +175,10 @@ class UserProgress(Base):
     completed_lessons = Column(Text, default="[]")
     score = Column(Integer, default=0)
     last_accessed = Column(DateTime, default=datetime.datetime.utcnow)
+class Event(Base):
+    __tablename__ = "events"
+    id = Column(Integer, primary_key=True)
+    telegram_id = Column(BigInteger, index=True)
+    type = Column(String(50))
+    payload = Column(Text)  # JSON
+    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
