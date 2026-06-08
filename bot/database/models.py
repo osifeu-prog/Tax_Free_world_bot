@@ -125,3 +125,9 @@ class BotGroup(Base):
     chat_id = Column(BigInteger, unique=True, nullable=False)
     title = Column(String, nullable=True)
 
+
+class UserRole(Base):
+    __tablename__ = "user_roles"
+    id = Column(Integer, primary_key=True)
+    telegram_id = Column(BigInteger, unique=True, index=True)
+    role = Column(String(50), default="citizen")  # citizen, entrepreneur, leader, expert, fighter, builder
