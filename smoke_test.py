@@ -37,7 +37,7 @@ async def main():
         (cmd_qr, "/qr", ["הפניה"]),
         (cmd_budget, "/budget", ["הכנסה","דוגמה"]),
         (cmd_academy, "/academy", ["אקדמיה"]),
-        (cmd_report, "/report", ["משתמשים","הפניות"]),
+        (cmd_report, "/report", ["משתמשים","הפניות","אירועים"]),
         (cmd_health, "/health", ["Health","Uptime"]),
         (cmd_language, "/language", ["שפה"]),
         (cmd_familygroup, "/familygroup", ["קבוצה","בוט"]),
@@ -76,3 +76,4 @@ async def main():
             print(f"  ⚠️ {cmd} not translated")
 
 asyncio.run(main())
+

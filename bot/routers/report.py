@@ -25,26 +25,21 @@ async def cmd_report(msg: Message):
             users = await conn.scalar(text("SELECT count(*) FROM users"))
             refs = await conn.scalar(text("SELECT count(*) FROM referrals"))
             logs = await conn.scalar(text("SELECT count(*) FROM command_logs"))
-            try:
-                events = await conn.scalar(text("SELECT count(*) FROM events"))
-            except:
-                events = "N/A"
-
-        uptime_seconds = int(time.time() - start_time) if 'start_time' in globals() else 0
-        hours, rem = divmod(uptime_seconds, 3600)
-        minutes, seconds = divmod(rem, 60)
+            events = await conn.scalar(text("SELECT count(*) FROM events"))
+            en = await conn.scalar(text("SELECT count(*) FROM users WHERE language='en'"))
+            he = await conn.scalar(text("SELECT count(*) FROM users WHERE language='he'"))
+            wallets = await conn.scalar(text("SELECT count(*) FROM users WHERE wallet_address IS NOT NULL"))
 
         out_text = f"""<b>📊 דוח מערכת  TON Israel</b>
 ━━━━━━━━━━━━━━━━━━━━━━
-🕒 <b>זמן:</b> {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-⏱ <b>Up:</b> {hours}h {minutes}m {seconds}s
 👥 <b>משתמשים:</b> {users}
 🔗 <b>הפניות:</b> {refs}
 📝 <b>לוגים:</b> {logs}
-📊 <b>אירועים:</b> {events}\n🌐 <b>אנגלית:</b> {en_users}\n🇮🇱 <b>עברית:</b> {he_users}\n👛 <b>עם ארנק:</b> {wallet_users}
+📊 <b>אירועים:</b> {events}
+🌐 <b>אנגלית:</b> {en} | 🇮🇱 <b>עברית:</b> {he}
+👛 <b>עם ארנק:</b> {wallets}
 """
     except Exception as e:
         out_text = f"📊 דוח מערכת  שגיאה: {e}"
 
     await msg.answer(out_text, parse_mode="HTML")
-
