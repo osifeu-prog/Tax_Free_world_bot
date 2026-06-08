@@ -1,54 +1,49 @@
-﻿from aiogram import Router
+﻿from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from bot.database.session import async_session
 from bot.database.models import User
 from sqlalchemy import select
-from bot.services.translation_service import translator
 
 router = Router()
 
-async def set_user_lang(telegram_id: int, lang: str):
-    async with async_session() as session:
-        stmt = select(User).where(User.telegram_id == telegram_id)
-        user = (await session.execute(stmt)).scalar_one_or_none()
-        if user:
-            user.language = lang
+async def set_user_lang(uid: int, lang: str):
+    async with async_session() as s:
+        stmt = select(User).where(User.telegram_id == uid)
+        u = (await s.execute(stmt)).scalar_one_or_none()
+        if u: u.language = lang
         else:
-            user = User(telegram_id=telegram_id, language=lang)
-            session.add(user)
-        await session.commit()
-
-async def get_user_lang(telegram_id: int) -> str:
-    async with async_session() as session:
-        stmt = select(User).where(User.telegram_id == telegram_id)
-        user = (await session.execute(stmt)).scalar_one_or_none()
-        return user.language if user and user.language else "he"
+            u = User(telegram_id=uid, language=lang)
+            s.add(u)
+        await s.commit()
 
 @router.message(Command("start"))
 async def cmd_start(msg: Message):
-    lang = await get_user_lang(msg.from_user.id)
-    # כפתורי בחירת שפה
-    kb = InlineKeyboardMarkup(inline_keyboard=[
-        [
-            InlineKeyboardButton(text="🇮🇱 עברית", callback_data="lang_he"),
-            InlineKeyboardButton(text="🇺🇸 English", callback_data="lang_en"),
-            InlineKeyboardButton(text="🇪🇸 Español", callback_data="lang_es"),
-            InlineKeyboardButton(text="🇫🇷 Français", callback_data="lang_fr"),
-            InlineKeyboardButton(text="🇷🇺 Русский", callback_data="lang_ru"),
-            InlineKeyboardButton(text="🇸🇦 العربية", callback_data="lang_ar")
-        ]
-    ])
-    welcome = translator.t(lang, "welcome")
-    choose = translator.t(lang, "choose_language")
-    await msg.answer(f"{welcome}\n\n{choose}", reply_markup=kb)
+    # וודא משתמש קיים
+    await set_user_lang(msg.from_user.id, "he")  # ברירת מחדל
+    kb = InlineKeyboardMarkup(inline_keyboard=[[
+        InlineKeyboardButton(text="🇮🇱 עברית", callback_data="lang_he"),
+        InlineKeyboardButton(text="🇺🇸 English", callback_data="lang_en"),
+        InlineKeyboardButton(text="🇪🇸 Español", callback_data="lang_es"),
+        InlineKeyboardButton(text="🇫🇷 Français", callback_data="lang_fr"),
+        InlineKeyboardButton(text="🇷🇺 Русский", callback_data="lang_ru"),
+        InlineKeyboardButton(text="🇸🇦 العربية", callback_data="lang_ar")
+    ]])
+    await msg.answer(
+        "🚀 <b>ברוכים הבאים ל-TON Israel!</b>\n\n"
+        "בונים עולם חופשי, חכם ומבוזר.\n\n"
+        "📌 <b>התחל עכשיו:</b> /menu  תפריט ראשי\n"
+        "📚 <b>אקדמיה:</b> /academy\n"
+        "🔗 <b>שתף:</b> /qr\n\n"
+        "<i>בחר/י שפה:</i>",
+        parse_mode="HTML", reply_markup=kb
+    )
 
-@router.callback_query(lambda c: c.data and c.data.startswith("lang_"))
-async def lang_callback(callback: CallbackQuery):
-    lang = callback.data.split("_")[1]
-    await set_user_lang(callback.from_user.id, lang)
-    saved = translator.t(lang, "language_saved")
-    await callback.answer(saved, show_alert=True)
-    # כעת שלח הודעת התחלה בשפה החדשה
-    welcome = translator.t(lang, "welcome")
-    await callback.message.answer(welcome)
+@router.callback_query(F.data.startswith("lang_"))
+async def lang_callback(c: CallbackQuery):
+    lang = c.data.split("_")[1]
+    await set_user_lang(c.from_user.id, lang)
+    names = {"he":"עברית","en":"English","es":"Español","fr":"Français","ru":"Русский","ar":"العربية"}
+    await c.answer(f"✅ השפה נשמרה: {names.get(lang, lang)}", show_alert=True)
+    await c.message.edit_reply_markup()
+    await c.message.answer("✅ השפה נשמרה בהצלחה!")
