@@ -121,6 +121,25 @@ class AdminRequest(Base):
 class Admin(Base):
     __tablename__ = "admins"
     id = Column(Integer, primary_key=True)
+
+
+class PensionProfile(Base):
+    __tablename__ = "pension_profiles"
+    id = Column(Integer, primary_key=True)
+    telegram_id = Column(BigInteger, unique=True, index=True)
+    employee_type = Column(String(20))
+    pension_type = Column(String(20))
+    age_now = Column(Integer)
+    retirement_age = Column(Integer)
+    salary_bruto = Column(Float)
+    seniority_years = Column(Integer)
+    contribution_employee = Column(Float)
+    contribution_employer = Column(Float)
+    expected_return = Column(Float)
+    management_fees = Column(Float)
+    result_capital = Column(Float)
+    result_monthly = Column(Float)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
     telegram_id = Column(BigInteger, unique=True, index=True)
     language = Column(String(5), default="he")
     country = Column(String(5), default="IL")
@@ -213,6 +232,7 @@ class UserKnowledgeProgress(Base):
     completed_at = Column(DateTime)
     last_accessed = Column(DateTime, default=datetime.datetime.utcnow)
     __table_args__ = (UniqueConstraint('telegram_id', 'node_id'),)
+
 
 
 
