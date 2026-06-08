@@ -11,7 +11,8 @@ router = Router()
 LANGS = {
     "he": "🇮🇱 עברית",
     "en": "🇺🇸 English",
-    "ru": "🇷🇺 Русский"
+    "ru": "🇷🇺 Русский",
+    "ar": "🇸🇦 العربية"
 }
 
 @router.message(Command("language"))
@@ -34,6 +35,7 @@ async def on_set_lang(call: CallbackQuery):
             user = User(telegram_id=call.from_user.id, language=lang)
             session.add(user)
         await session.commit()
-    text = translator.t(lang, "language_saved", language=LANGS[lang])
+    # תוקן: נשלח את השם בתור lang_name
+    text = translator.t(lang, "language_saved", lang_name=LANGS[lang])
     await call.message.edit_text(text)
     await call.answer()

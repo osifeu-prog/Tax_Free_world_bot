@@ -1,8 +1,9 @@
 {
-  "welcome": "×‘×¨×•×›×™× ×”×‘××™× ×œTON Israel!\n\n×× ×—× ×• ×‘×•× ×™× ×¢×•×œ× ×—×•×¤×©×™, ×—×›× ×•×ž×‘×•×–×¨ ×™×•×ª×¨.",
-  "menu_title": "ðŸ“‹ ×ª×¤×¨×™×˜ ×¨××©×™  TON Israel",
-  "academy": "ðŸŽ“ ×”××§×“×ž×™×” ×©×œ TON Israel",
-  "choose_language": "ðŸŒ ×‘×—×¨ ×©×¤×”:",
-  "language_saved": "âœ… ×”×©×¤×” × ×©×ž×¨×”: {language}",
-  "my_role": "×ª×¤×§×™×“ × ×•×›×—×™: {role}"
+  "welcome": "ברוכים הבאים ל-TON Israel!\n\nאנחנו בונים עולם חופשי, חכם ומבוזר.",
+  "menu_title": "📋 תפריט ראשי  TON Israel",
+  "academy": "📚 האקדמיה של TON Israel",
+  "choose_language": "בחר שפה:",
+  "language_saved": "✅ השפה נשמרה: {lang_name}",
+  "my_role": "התפקיד שלי: {role}",
+  "menu_text": "<b>📋 תפריט ראשי  TON Israel</b>\n━━━━━━━━━━━━━━━━━━━━━━\n💰 <b>חיסכון אישי</b>\n/start /compare /wallet /why /business /budget /profile /expenses /addexpense /setincome /delexpense\n\n🏠 <b>משק בית</b>\n/household /shopping /chore\n\n📚 <b>אקדמיה</b>\n/academy /crypto /cbdc /decentral /socio /anti /edu /academy_extended /academy_nft /academy_dao /vision /spark\n\n👥 <b>קהילה</b>\n/ref /qr /stats /top /tip /contact /faq /daily /mydata /gift\n\n🛠️ <b>כלים</b>\n/miniapp /keyboard /hide /ask /feedback /help /quiz /id /ai /architecture\n\n🔐 <b>הרשאות</b>\n/requestadmin /addadmin /login /setpassword /removeadmin\n\n🔒 <b>ניהול (אדמין)</b>\n/admin /export /debug /addgroup /groups /report /setrole\n\n👤 <b>הפרופיל שלי</b>\n/myrole /mydata"
 }

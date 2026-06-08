@@ -2,7 +2,7 @@
 
 TOKEN = "8782546867:AAFkv4mYtkDXvwf9RJpCVU2Tv7oT4lVGq5M"
 BASE = f"https://api.telegram.org/bot{TOKEN}"
-CHAT_ID = 224223270  # <-- עדכן למספר שלך
+CHAT_ID = 224223270
 
 commands = [
     "/start","/compare","/wallet","/why","/business","/budget","/profile",
@@ -16,28 +16,35 @@ commands = [
     "/addgroup","/groups","/id"
 ]
 
-total = len(commands)
+def send_message(text):
+    url = f"{BASE}/sendMessage?chat_id={CHAT_ID}&text={text}&parse_mode=HTML"
+    try:
+        r = requests.get(url, timeout=10)
+        return r.json().get("ok", False), r.json().get("description", "")
+    except Exception as e:
+        return False, str(e)
+
+print("=== Command Tests ===")
 passed = 0
 failed = []
-start_time = time.time()
-
 for cmd in commands:
-    url = f"{BASE}/sendMessage?chat_id={CHAT_ID}&text={cmd}"
-    try:
-        r = requests.get(url, timeout=5)
-        if r.json().get("ok"):
-            passed += 1
-            print(f"✅ {cmd}")
-        else:
-            failed.append(cmd)
-            print(f"❌ {cmd} - {r.json().get('description','unknown')}")
-    except Exception as e:
+    ok, desc = send_message(cmd)
+    if ok:
+        passed += 1
+        print(f"✅ {cmd}")
+    else:
         failed.append(cmd)
-        print(f"❌ {cmd} - exception {e}")
+        print(f"❌ {cmd} - {desc}")
 
-elapsed = time.time() - start_time
-print(f"\n{'='*30}")
-print(f"Total: {total} | Passed: {passed} | Failed: {len(failed)}")
-print(f"Time: {elapsed:.1f}s")
-if failed:
-    print(f"Failures: {', '.join(failed)}")
+print(f"\nTotal: {len(commands)} | Passed: {passed} | Failed: {len(failed)}")
+
+# Language tests (must be run after the bot is updated)
+print("\n=== Language Tests ===")
+# Set English
+requests.post(f"{BASE}/answerCallbackQuery", json={
+    "callback_query_id": "0",  # placeholder; we can't simulate callback here.
+}).text
+# Instead, we can check /start output after a language change by sending /language and clicking, but we can't do programmatically without a live session.
+# So print instructions for manual check.
+print("Manual: Send /language, click English, then /start → should show English welcome. Then Arabic.")
+

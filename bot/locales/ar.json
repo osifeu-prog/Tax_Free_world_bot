@@ -1,0 +1,9 @@
+{
+  "welcome": "مرحبًا بكم في TON Israel!\n\nنحن نبني عالمًا أكثر حرية وذكاءً ولامركزية.",
+  "menu_title": "📋 القائمة الرئيسية  TON Israel",
+  "academy": "📚 أكاديمية TON Israel",
+  "choose_language": "اختر اللغة:",
+  "language_saved": "✅ تم حفظ اللغة: {lang_name}",
+  "my_role": "الدور الحالي: {role}",
+  "menu_text": "<b>📋 القائمة الرئيسية  TON Israel</b>\n━━━━━━━━━━━━━━━━━━━━━━\n💰 <b>المدخرات الشخصية</b>\n/start /compare /wallet /why /business /budget /profile /expenses /addexpense /setincome /delexpense\n\n🏠 <b>الأسرة</b>\n/household /shopping /chore\n\n📚 <b>الأكاديمية</b>\n/academy /crypto /cbdc /decentral /socio /anti /edu /academy_extended /academy_nft /academy_dao /vision /spark\n\n👥 <b>المجتمع</b>\n/ref /qr /stats /top /tip /contact /faq /daily /mydata /gift\n\n🛠️ <b>الأدوات</b>\n/miniapp /keyboard /hide /ask /feedback /help /quiz /id /ai /architecture\n\n🔐 <b>الصلاحيات</b>\n/requestadmin /addadmin /login /setpassword /removeadmin\n\n🔒 <b>الإدارة</b>\n/admin /export /debug /addgroup /groups /report /setrole\n\n👤 <b>ملفي الشخصي</b>\n/myrole /mydata"
+}

@@ -1,8 +1,9 @@
 {
   "welcome": "Welcome to TON Israel!\n\nBuilding a freer, smarter and decentralized world together.",
-  "menu_title": "ðŸ“‹ Main Menu  TON Israel",
-  "academy": "ðŸŽ“ TON Israel Academy",
-  "choose_language": "ðŸŒ Choose your language:",
-  "language_saved": "âœ… Language saved: {language}",
-  "my_role": "Current role: {role}"
+  "menu_title": "📋 Main Menu  TON Israel",
+  "academy": "📚 TON Israel Academy",
+  "choose_language": "Choose your language:",
+  "language_saved": "✅ Language saved: {lang_name}",
+  "my_role": "Current role: {role}",
+  "menu_text": "<b>📋 Main Menu  TON Israel</b>\n━━━━━━━━━━━━━━━━━━━━━━\n💰 <b>Personal Savings</b>\n/start /compare /wallet /why /business /budget /profile /expenses /addexpense /setincome /delexpense\n\n🏠 <b>Household</b>\n/household /shopping /chore\n\n📚 <b>Academy</b>\n/academy /crypto /cbdc /decentral /socio /anti /edu /academy_extended /academy_nft /academy_dao /vision /spark\n\n👥 <b>Community</b>\n/ref /qr /stats /top /tip /contact /faq /daily /mydata /gift\n\n🛠️ <b>Tools</b>\n/miniapp /keyboard /hide /ask /feedback /help /quiz /id /ai /architecture\n\n🔐 <b>Permissions</b>\n/requestadmin /addadmin /login /setpassword /removeadmin\n\n🔒 <b>Admin</b>\n/admin /export /debug /addgroup /groups /report /setrole\n\n👤 <b>My Profile</b>\n/myrole /mydata"
 }
