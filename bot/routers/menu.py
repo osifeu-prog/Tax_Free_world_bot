@@ -8,75 +8,29 @@ router = Router()
 async def cmd_menu(msg: Message):
     text = """
 <b>📋 תפריט ראשי  TON Israel</b>
-
 ━━━━━━━━━━━━━━━━━━━━━━
 💰 <b>חיסכון אישי</b>
-/start  דף הבית
-/compare  מחשבון עמלות
-/wallet  ארנק TON
-/budget  תקציב
-/profile  פרופיל
-/expenses  הוצאות
-/addexpense  הוסף הוצאה
-/setincome  עדכן הכנסה
-/delexpense  מחק הוצאה
+/start /compare /wallet /why /business /budget /profile /expenses /addexpense /setincome /delexpense
 
-━━━━━━━━━━━━━━━━━━━━━━
 🏠 <b>משק בית</b>
-/household  ניהול משק בית
+/household /shopping /chore
 
-━━━━━━━━━━━━━━━━━━━━━━
 📚 <b>אקדמיה</b>
-/crypto  קריפטו
-/cbdc  CBDC
-/decentral  ביזור
-/socio  סוציוקרטיה
-/anti  נגד שחיתות
-/edu  חינוך
-/academy_extended  ביזוריות, NFT
-/academy_nft  NFT-זהות
-/academy_dao  DAO
-/vision  החזון המלא
-/spark  @SLH_Spark_AI_BOT
-/academia  @SLH_Academia_bot
+/academy /crypto /cbdc /decentral /socio /anti /edu /academy_extended /academy_nft /academy_dao /vision /spark
 
-━━━━━━━━━━━━━━━━━━━━━━
 👥 <b>קהילה</b>
-/ref  הפניה
-/qr  QR אישי
-/stats  סטטיסטיקות
-/top  מובילים
-/tip  טיפ יומי
-/contact  צור קשר
-/faq  שאלות נפוצות
-/daily  סיכום יומי
-/mydata  הנתונים שלי
-/gift  מתנה יומית
+/ref /qr /stats /top /tip /contact /faq /daily /mydata /gift
 
-━━━━━━━━━━━━━━━━━━━━━━
 🛠️ <b>כלים</b>
-/miniapp  מחשבון ויזואלי
-/keyboard  מקלדת
-/hide  הסתר מקלדת
-/ask  שאל את הבינה
-/feedback  דיווח
-/help  עזרה
-/quiz  חידון
+/miniapp /keyboard /hide /ask /feedback /help /quiz /id /ai /architecture
 
-━━━━━━━━━━━━━━━━━━━━━━
 🔐 <b>הרשאות</b>
-/requestadmin  בקש הרשאות
-/addadmin  הוסף מנהל (אדמין)
-/removeadmin  הסר מנהל (אדמין)
-/setpassword  שנה סיסמה (אדמין)
+/requestadmin /addadmin /login /setpassword /removeadmin
 
-━━━━━━━━━━━━━━━━━━━━━━
-🔒 <b>ניהול (אדמינים)</b>\n/report  דוח מלא
-/admin  לוח בקרה
-/export  ייצוא
-/debug  סטטוס
-/addgroup  הוסף קבוצה
-/groups  רשימת קבוצות
+🔒 <b>ניהול (אדמין)</b>
+/admin /export /debug /addgroup /groups /report /setrole
+
+👤 <b>הפרופיל שלי</b>
+/myrole /mydata
 """
     await msg.answer(text, parse_mode="HTML")
-
