@@ -29,7 +29,7 @@ class MockMsg:
 
 async def main():
     tests = [
-        (cmd_start, "/start", ["ברוכים","TON"]),
+        (cmd_start, "/start", ["welcome","menu_prompt"]),
         (cmd_menu, "/menu", ["תפריט","פנסיה"]),          # וודא פנסיה מופיע
         (cmd_help, "/help", ["פקודות","פנסיה"]),
         (cmd_crypto, "/crypto", ["קריפטו","בלוקצ'יין"]),
@@ -41,7 +41,7 @@ async def main():
         (cmd_health, "/health", ["Health","Uptime"]),
         (cmd_language, "/language", ["שפה"]),
         (cmd_familygroup, "/familygroup", ["קבוצה","בוט"]),
-        (cmd_pension, "/pension", ["פנסיה","גילך"]),
+        (cmd_pension, "/pension", ["מחשבון","עובד"]),
         (cmd_setwallet, "/setwallet", ["ארנק","TON"]),
     ]
     ok = 0
@@ -76,4 +76,6 @@ async def main():
             print(f"  ⚠️ {cmd} not translated")
 
 asyncio.run(main())
+
+
 
