@@ -1,9 +1,18 @@
-﻿import requests, time
+﻿import requests, time, json
 
 TOKEN = "8782546867:AAFkv4mYtkDXvwf9RJpCVU2Tv7oT4lVGq5M"
 BASE = f"https://api.telegram.org/bot{TOKEN}"
 CHAT_ID = 224223270
 
+def send_message(text):
+    url = f"{BASE}/sendMessage?chat_id={CHAT_ID}&text={text}&parse_mode=HTML"
+    try:
+        r = requests.get(url, timeout=10)
+        return r.json()
+    except Exception as e:
+        return {"ok": False, "description": str(e)}
+
+# --- Command Tests ---
 commands = [
     "/start","/compare","/wallet","/why","/business","/budget","/profile",
     "/expenses","/addexpense","/setincome","/delexpense","/household",
@@ -16,35 +25,29 @@ commands = [
     "/addgroup","/groups","/id"
 ]
 
-def send_message(text):
-    url = f"{BASE}/sendMessage?chat_id={CHAT_ID}&text={text}&parse_mode=HTML"
-    try:
-        r = requests.get(url, timeout=10)
-        return r.json().get("ok", False), r.json().get("description", "")
-    except Exception as e:
-        return False, str(e)
-
 print("=== Command Tests ===")
 passed = 0
 failed = []
 for cmd in commands:
-    ok, desc = send_message(cmd)
-    if ok:
+    resp = send_message(cmd)
+    if resp.get("ok"):
         passed += 1
         print(f"✅ {cmd}")
     else:
         failed.append(cmd)
-        print(f"❌ {cmd} - {desc}")
+        print(f"❌ {cmd} - {resp.get('description','')}")
 
 print(f"\nTotal: {len(commands)} | Passed: {passed} | Failed: {len(failed)}")
 
-# Language tests (must be run after the bot is updated)
+# --- Language Tests (use /start) ---
 print("\n=== Language Tests ===")
-# Set English
-requests.post(f"{BASE}/answerCallbackQuery", json={
-    "callback_query_id": "0",  # placeholder; we can't simulate callback here.
-}).text
-# Instead, we can check /start output after a language change by sending /language and clicking, but we can't do programmatically without a live session.
-# So print instructions for manual check.
-print("Manual: Send /language, click English, then /start → should show English welcome. Then Arabic.")
+# Note: we can't simulate callback, so we'll test /start manually after each language change.
+# Instead, we can call /start and verify that the response doesn't contain "[key]" and looks valid.
+langs = {"he": "ברוכים", "en": "Welcome", "ar": "مرحبًا", "ru": "Добро"}
+for lang, expected in langs.items():
+    # Set language via DB? Not possible from API without admin access.
+    # So we'll just inform that manual test is needed.
+    pass
+print("Manual: Send /language, select each language, then /start  verify correct welcome.")
+print("Also check /menu, /translations.")
 

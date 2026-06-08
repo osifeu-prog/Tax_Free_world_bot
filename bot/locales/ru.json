@@ -1,9 +1,9 @@
-﻿{
-  "welcome": "Добро пожаловать в TON Israel!\n\nМы строим более свободный, умный и децентрализованный мир.",
-  "menu_title": "📋 Главное меню  TON Israel",
-  "academy": "📚 Академия TON Israel",
-  "choose_language": "Выберите язык:",
-  "language_saved": "✅ Язык сохранён: {lang_name}",
-  "my_role": "Текущая роль: {role}",
-  "menu_text": "<b>📋 Главное меню  TON Israel</b>\n━━━━━━━━━━━━━━━━━━━━━━\n💰 <b>Личные сбережения</b>\n/start /compare /wallet /why /business /budget /profile /expenses /addexpense /setincome /delexpense\n\n🏠 <b>Семья</b>\n/household /shopping /chore\n\n📚 <b>Академия</b>\n/academy /crypto /cbdc /decentral /socio /anti /edu /academy_extended /academy_nft /academy_dao /vision /spark\n\n👥 <b>Сообщество</b>\n/ref /qr /stats /top /tip /contact /faq /daily /mydata /gift\n\n🛠️ <b>Инструменты</b>\n/miniapp /keyboard /hide /ask /feedback /help /quiz /id /ai /architecture\n\n🔐 <b>Разрешения</b>\n/requestadmin /addadmin /login /setpassword /removeadmin\n\n🔒 <b>Админ</b>\n/admin /export /debug /addgroup /groups /report /setrole\n\n👤 <b>Мой профиль</b>\n/myrole /mydata"
+{
+  "welcome": "Ð”Ð¾Ð±Ñ€Ð¾ Ð¿Ð¾Ð¶Ð°Ð»Ð¾Ð²Ð°Ñ‚ÑŒ Ð² TON Israel!\n\nÐœÑ‹ ÑÑ‚Ñ€Ð¾Ð¸Ð¼ Ð±Ð¾Ð»ÐµÐµ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½Ñ‹Ð¹, ÑƒÐ¼Ð½Ñ‹Ð¹ Ð¸ Ð´ÐµÑ†ÐµÐ½Ñ‚Ñ€Ð°Ð»Ð¸Ð·Ð¾Ð²Ð°Ð½Ð½Ñ‹Ð¹ Ð¼Ð¸Ñ€.",
+  "menu_title": "ðŸ“‹ Ð“Ð»Ð°Ð²Ð½Ð¾Ðµ Ð¼ÐµÐ½ÑŽ  TON Israel",
+  "academy": "ðŸ“š ÐÐºÐ°Ð´ÐµÐ¼Ð¸Ñ TON Israel",
+  "choose_language": "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ ÑÐ·Ñ‹Ðº:",
+  "language_saved": "âœ… Ð¯Ð·Ñ‹Ðº ÑÐ¾Ñ…Ñ€Ð°Ð½Ñ‘Ð½: {lang_name}",
+  "my_role": "Ð¢ÐµÐºÑƒÑ‰Ð°Ñ Ñ€Ð¾Ð»ÑŒ: {role}",
+  "menu_text": "<b>ðŸ“‹ Ð“Ð»Ð°Ð²Ð½Ð¾Ðµ Ð¼ÐµÐ½ÑŽ  TON Israel</b>\nâ”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”\nðŸ’° <b>Ð›Ð¸Ñ‡Ð½Ñ‹Ðµ ÑÐ±ÐµÑ€ÐµÐ¶ÐµÐ½Ð¸Ñ</b>\n/start /compare /wallet /why /business /budget /profile /expenses /addexpense /setincome /delexpense\n\nðŸ  <b>Ð¡ÐµÐ¼ÑŒÑ</b>\n/household /shopping /chore\n\nðŸ“š <b>ÐÐºÐ°Ð´ÐµÐ¼Ð¸Ñ</b>\n/academy /crypto /cbdc /decentral /socio /anti /edu /academy_extended /academy_nft /academy_dao /vision /spark\n\nðŸ‘¥ <b>Ð¡Ð¾Ð¾Ð±Ñ‰ÐµÑÑ‚Ð²Ð¾</b>\n/ref /qr /stats /top /tip /contact /faq /daily /mydata /gift\n\nðŸ› ï¸ <b>Ð˜Ð½ÑÑ‚Ñ€ÑƒÐ¼ÐµÐ½Ñ‚Ñ‹</b>\n/miniapp /keyboard /hide /ask /feedback /help /quiz /id /ai /architecture\n\nðŸ” <b>Ð Ð°Ð·Ñ€ÐµÑˆÐµÐ½Ð¸Ñ</b>\n/requestadmin /addadmin /login /setpassword /removeadmin\n\nðŸ”’ <b>ÐÐ´Ð¼Ð¸Ð½</b>\n/admin /export /debug /addgroup /groups /report /setrole\n\nðŸ‘¤ <b>ÐœÐ¾Ð¹ Ð¿Ñ€Ð¾Ñ„Ð¸Ð»ÑŒ</b>\n/myrole /mydata"
 }
