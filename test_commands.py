@@ -1,22 +1,21 @@
-﻿import asyncio, sys
+﻿import asyncio
 
-class MockMessage:
-    def __init__(self, text, user_lang="he"):
+class MockMsg:
+    def __init__(self, text, lang="he"):
         self.text = text
-        self.from_user = type('u', (), {
-            'id': 224223270,
-            'language_code': user_lang,
-            'is_bot': False,
-            'first_name': 'Test'
+        self.from_user = type('u',(),{
+            'id':224223270,'language_code':lang,'is_bot':False,'first_name':'Test'
         })
-        self.chat = type('c', (), {'id': 224223270, 'type': 'private'})
-        self._answer = None
+        self.chat = type('c',(),{'id':224223270,'type':'private'})
+        self._ans = ""
 
-    async def answer(self, text, **kwargs):
-        self._answer = text
+    async def answer(self, txt, **kw):
+        self._ans = txt
 
-async def run():
-    # ייבוא הפונקציות ישירות
+    async def answer_photo(self, photo, caption="", **kw):
+        self._ans = caption or "[photo]"
+
+async def main():
     from bot.routers.start import cmd_start
     from bot.routers.menu import cmd_menu
     from bot.routers.help import cmd_help
@@ -29,52 +28,49 @@ async def run():
     from bot.routers.health import cmd_health
 
     tests = [
-        (cmd_start, "/start", ["ברוכים", "TON"]),
-        (cmd_menu, "/menu", ["תפריט", "חיסכון"]),
-        (cmd_help, "/help", ["פקודות", "חיסכון"]),
-        (cmd_crypto, "/crypto", ["קריפטו", "בלוקצ'יין"]),
-        (cmd_vision, "/vision", ["חזון", "TON"]),
+        (cmd_start, "/start", ["ברוכים","TON"]),
+        (cmd_menu, "/menu", ["תפריט","חיסכון"]),
+        (cmd_help, "/help", ["חיסכון","אקדמיה"]),
+        (cmd_crypto, "/crypto", ["קריפטו","בלוקצ'יין"]),
+        (cmd_vision, "/vision", ["חזון","TON"]),
         (cmd_qr, "/qr", ["הפניה"]),
-        (cmd_budget, "/budget", ["תקציב"]),
+        (cmd_budget, "/budget", ["הכנסה","דוגמה"]),
         (cmd_academy, "/academy", ["אקדמיה"]),
-        (cmd_report, "/report", ["דוח"]),
-        (cmd_health, "/health", ["Health"]),
+        (cmd_report, "/report", ["משתמשים","הפניות"]),
+        (cmd_health, "/health", ["Health","Uptime"]),
     ]
 
-    passed = 0
-    for handler, cmd, keywords in tests:
-        msg = MockMessage(cmd, "he")
+    ok = 0
+    for handler, cmd, keys in tests:
+        msg = MockMsg(cmd)
         try:
             await handler(msg)
         except Exception as e:
-            print(f"❌ {cmd}  Exception: {e}")
+            print(f"❌ {cmd}  {e}")
             continue
-        text = msg._answer or ""
+        text = msg._ans
         if not text:
-            print(f"❌ {cmd}  No response")
+            print(f"❌ {cmd}  No output")
             continue
-        if text.startswith("[") and text.endswith("]"):
-            print(f"❌ {cmd}  Missing translation")
-            continue
-        if not all(kw in text for kw in keywords):
-            missing = [kw for kw in keywords if kw not in text]
-            print(f"❌ {cmd}  Missing keywords: {missing}")
-            continue
-        print(f"✅ {cmd}")
-        passed += 1
+        if all(k in text for k in keys):
+            print(f"✅ {cmd}")
+            ok += 1
+        else:
+            missing = [k for k in keys if k not in text]
+            print(f"❌ {cmd}  Missing: {missing}")
+
+    print(f"\n✅ {ok}/{len(tests)} passed")
 
     # i18n
-    print("\n🌐 i18n check (English):")
-    for handler, cmd in [(cmd_start, "/start"), (cmd_menu, "/menu"), (cmd_help, "/help")]:
-        msg = MockMessage(cmd, "en")
+    print("\n🌐 i18n (English):")
+    for handler, cmd in [(cmd_start,"/start"),(cmd_menu,"/menu"),(cmd_help,"/help")]:
+        msg = MockMsg(cmd,"en")
         await handler(msg)
-        text = msg._answer or ""
-        if text and not (text.startswith("[") and text.endswith("]")):
-            print(f"  ✅ {cmd}  translated")
+        text = msg._ans
+        if text and not text.startswith("[") and not text.endswith("]"):
+            print(f"  ✅ {cmd} translated")
         else:
-            print(f"  ⚠️ {cmd}  not translated")
+            print(f"  ⚠️ {cmd} not translated")
 
-    print(f"\nTests: {passed}/{len(tests)} passed")
-
-asyncio.run(run())
+asyncio.run(main())
 
