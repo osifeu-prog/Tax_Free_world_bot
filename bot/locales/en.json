@@ -39,5 +39,13 @@
     "start_welcome":  "🚀 \u003cb\u003eWelcome to TON Israel!\u003c/b\u003e\nBuilding a free, smart, decentralized world.\n📌 Start now: /menu\n📚 Academy: /academy\n🔗 Share: /qr",
     "employee_public":  "Public sector",
     "employee_private":  "Private company",
-    "employee_unknown":  "Not sure"
+    "employee_unknown":  "Not sure",
+    "academy_promo":  "📚 Learn Crypto  /academy",
+    "welcome_message":  "🚀 \u003cb\u003eWelcome to TON City!\u003c/b\u003e\n\nBuild your economic future.",
+    "share_qr":  "🔗 Share \u0026 earn rewards  /qr",
+    "donate_promo":  "💖 Support the project  /donate",
+    "household_promo":  "🏠 Manage household budget  /household",
+    "pension_promo":  "💼 Discover your pension  /pension",
+    "tour_step1":  "1️⃣ Start with pension calculator: /pension",
+    "tour_title":  "🧭 Guided Tour"
 }

@@ -39,5 +39,13 @@
     "start_welcome":  "🚀 \u003cb\u003eברוכים הבאים ל-TON Israel!\u003c/b\u003e\nבונים עולם חופשי, חכם ומבוזר.\n📌 התחל עכשיו: /menu\n📚 אקדמיה: /academy\n🔗 שתף: /qr",
     "employee_public":  "עובד מדינה",
     "employee_private":  "עובד בחברה פרטית",
-    "employee_unknown":  "לא יודע"
+    "employee_unknown":  "לא יודע",
+    "academy_promo":  "📚 ללמוד קריפטו  /academy",
+    "welcome_message":  "🚀 \u003cb\u003eברוכים הבאים ל‑TON City!\u003c/b\u003e\n\nבנה את העתיד הכלכלי שלך.",
+    "share_qr":  "🔗 שתף וקבל תגמולים  /qr",
+    "donate_promo":  "💖 תמוך בפרויקט  /donate",
+    "household_promo":  "🏠 נהל את כלכלת הבית  /household",
+    "pension_promo":  "💼 גלה את הפנסיה שלך  /pension",
+    "tour_step1":  "1️⃣ התחל בחישוב פנסיה: /pension",
+    "tour_title":  "🧭 סיור מודרך"
 }
