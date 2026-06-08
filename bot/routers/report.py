@@ -28,7 +28,14 @@ async def cmd_report(msg: Message):
             events = await conn.scalar(text("SELECT count(*) FROM events"))
             en = await conn.scalar(text("SELECT count(*) FROM users WHERE language='en'"))
             he = await conn.scalar(text("SELECT count(*) FROM users WHERE language='he'"))
-            wallets = await conn.scalar(text("SELECT count(*) FROM users WHERE wallet_address IS NOT NULL"))
+            # בדוק אם wallet_address קיימת
+            has_wallet = False
+            try:
+                await conn.execute(text("SELECT wallet_address FROM users LIMIT 1"))
+                has_wallet = True
+            except:
+                pass
+            wallets = await conn.scalar(text("SELECT count(*) FROM users WHERE wallet_address IS NOT NULL")) if has_wallet else "N/A"
 
         out_text = f"""<b>📊 דוח מערכת  TON Israel</b>
 ━━━━━━━━━━━━━━━━━━━━━━

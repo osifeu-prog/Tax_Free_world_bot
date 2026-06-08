@@ -1,4 +1,6 @@
-﻿# -*- coding: utf-8 -*-
+﻿import time
+start_time = time.time()
+# -*- coding: utf-8 -*-
 import asyncio, os, pkgutil, importlib
 from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand, BotCommandScopeDefault, WebAppInfo, MenuButtonWebApp
@@ -8,7 +10,19 @@ from bot.api.email_routes import register, login
 from bot.utils.logger import logger
 from bot.database.models import Base
 from bot.database.session import engine
+from bot.migrate_i18n import add_lang_columns
 import bot.routers as routers_pkg
+from bot.routers import setwallet
+from bot.routers import familygroup
+from bot.routers import pension
+from bot.routers import seed_courses
+from bot.routers import academy
+from bot.routers import language
+from bot.routers import profile_citizen
+from bot.routers import translations_status
+from bot.routers import seed_kg
+from bot.routers import report
+from bot.routers import menu
 
 HEALTH_PATH = "/health"
 
@@ -93,7 +107,15 @@ async def set_default_commands():
 async def init_db():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+        # הוסף עמודות email (SQLite לא תומך ב‑IF NOT EXISTS)
+        from sqlalchemy import text
+        for col, dtype in [("email", "VARCHAR(255)"), ("google_id", "VARCHAR(255)"), ("password_hash", "VARCHAR(255)")]:
+            try:
+                await conn.execute(text(f"ALTER TABLE users ADD COLUMN {col} {dtype}"))
+            except Exception:
+                pass
     logger.info("Database initialized.")
+    await add_lang_columns()
 
 async def health_handler(request):
     return web.Response(text="OK")
@@ -165,3 +187,19 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

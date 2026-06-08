@@ -59,6 +59,7 @@ class User(Base):
     language = Column(String(2), default="he")
     is_business = Column(Boolean, default=False)
     points = Column(Integer, default=0)
+    wallet_address = Column(String(255), nullable=True)
     last_gift_date = Column(String)
     gift_shares_today = Column(Integer, default=0)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
@@ -232,6 +233,7 @@ class UserKnowledgeProgress(Base):
     completed_at = Column(DateTime)
     last_accessed = Column(DateTime, default=datetime.datetime.utcnow)
     __table_args__ = (UniqueConstraint('telegram_id', 'node_id'),)
+
 
 
 
