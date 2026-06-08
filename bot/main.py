@@ -8,6 +8,7 @@ from bot.api.email_routes import register, login
 from bot.utils.logger import logger
 from bot.database.models import Base
 from bot.database.session import engine
+from bot.migrate_i18n import add_lang_columns
 import bot.routers as routers_pkg
 from bot.routers import language
 from bot.routers import report
@@ -104,6 +105,7 @@ async def init_db():
             except Exception:
                 pass
     logger.info("Database initialized.")
+    await add_lang_columns()
 
 async def health_handler(request):
     return web.Response(text="OK")
@@ -175,6 +177,7 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 
 

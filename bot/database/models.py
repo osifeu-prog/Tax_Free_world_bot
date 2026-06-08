@@ -52,6 +52,10 @@ class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
     telegram_id = Column(BigInteger, unique=True, index=True)
+    language = Column(String(5), default="he")
+    country = Column(String(5), default="IL")
+    timezone = Column(String(50), default="Asia/Jerusalem")
+    currency = Column(String(10), default="ILS")
     language = Column(String(2), default="he")
     is_business = Column(Boolean, default=False)
     points = Column(Integer, default=0)
@@ -78,6 +82,10 @@ class UserProfile(Base):
     __tablename__ = "user_profiles"
     id = Column(Integer, primary_key=True)
     telegram_id = Column(BigInteger, unique=True, index=True)
+    language = Column(String(5), default="he")
+    country = Column(String(5), default="IL")
+    timezone = Column(String(50), default="Asia/Jerusalem")
+    currency = Column(String(10), default="ILS")
     monthly_income = Column(Float, default=0.0)
     family_size = Column(Integer, default=1)
     city = Column(String(100))
@@ -114,6 +122,10 @@ class Admin(Base):
     __tablename__ = "admins"
     id = Column(Integer, primary_key=True)
     telegram_id = Column(BigInteger, unique=True, index=True)
+    language = Column(String(5), default="he")
+    country = Column(String(5), default="IL")
+    timezone = Column(String(50), default="Asia/Jerusalem")
+    currency = Column(String(10), default="ILS")
     role = Column(String(50))
     password_hash = Column(String(200))
 
@@ -130,6 +142,10 @@ class UserRole(Base):
     __tablename__ = "user_roles"
     id = Column(Integer, primary_key=True)
     telegram_id = Column(BigInteger, unique=True, index=True)
+    language = Column(String(5), default="he")
+    country = Column(String(5), default="IL")
+    timezone = Column(String(50), default="Asia/Jerusalem")
+    currency = Column(String(10), default="ILS")
     role = Column(String(50), default="citizen")  # citizen, entrepreneur, leader, expert, fighter, builder
 from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Text, Boolean, DateTime
 import datetime
@@ -242,3 +258,4 @@ class UserProgress(Base):
     country = Column(String(5), default="IL")
     timezone = Column(String(50), default="Asia/Jerusalem")
     currency = Column(String(10), default="ILS")
+
