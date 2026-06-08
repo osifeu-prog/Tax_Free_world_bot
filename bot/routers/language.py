@@ -1,10 +1,10 @@
 ﻿from aiogram import Router, F
 from aiogram.filters import Command
-from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
+from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from bot.database.session import async_session
 from bot.database.models import User
-from sqlalchemy import select
 from bot.services.translation_service import translator
+from sqlalchemy import select
 
 router = Router()
 
@@ -36,3 +36,4 @@ async def on_set_lang(call: CallbackQuery):
         await session.commit()
     text = translator.t(lang, "language_saved", language=LANGS[lang])
     await call.message.edit_text(text)
+    await call.answer()

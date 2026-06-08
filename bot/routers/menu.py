@@ -1,36 +1,19 @@
 ﻿from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
+from bot.database.session import async_session
+from bot.database.models import User
+from bot.services.translation_service import translator
+from sqlalchemy import select
 
 router = Router()
 
 @router.message(Command("menu"))
 async def cmd_menu(msg: Message):
-    text = """
-<b>📋 תפריט ראשי  TON Israel</b>
-━━━━━━━━━━━━━━━━━━━━━━
-💰 <b>חיסכון אישי</b>
-/start /compare /wallet /why /business /budget /profile /expenses /addexpense /setincome /delexpense
-
-🏠 <b>משק בית</b>
-/household /shopping /chore
-
-📚 <b>אקדמיה</b>
-/academy /crypto /cbdc /decentral /socio /anti /edu /academy_extended /academy_nft /academy_dao /vision /spark
-
-👥 <b>קהילה</b>
-/ref /qr /stats /top /tip /contact /faq /daily /mydata /gift
-
-🛠️ <b>כלים</b>
-/miniapp /keyboard /hide /ask /feedback /help /quiz /id /ai /architecture
-
-🔐 <b>הרשאות</b>
-/requestadmin /addadmin /login /setpassword /removeadmin
-
-🔒 <b>ניהול (אדמין)</b>
-/admin /export /debug /addgroup /groups /report /setrole
-
-👤 <b>הפרופיל שלי</b>
-/myrole /mydata
-"""
-    await msg.answer(text, parse_mode="HTML")
+    async with async_session() as session:
+        stmt = select(User.language).where(User.telegram_id == msg.from_user.id)
+        lang = (await session.execute(stmt)).scalar_one_or_none()
+        lang = lang or "he"
+    
+    menu_text = translator.t(lang, "menu_text")
+    await msg.answer(menu_text, parse_mode="HTML")

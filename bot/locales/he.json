@@ -1,8 +1,8 @@
-﻿{
-  "welcome": "ברוכים הבאים לTON Israel!\n\nאנחנו בונים עולם חופשי, חכם ומבוזר יותר.",
-  "menu_title": "📋 תפריט ראשי  TON Israel",
-  "academy": "🎓 האקדמיה של TON Israel",
-  "choose_language": "🌍 בחר שפה:",
-  "language_saved": "✅ השפה נשמרה: {language}",
-  "my_role": "תפקיד נוכחי: {role}"
+{
+  "welcome": "×‘×¨×•×›×™× ×”×‘××™× ×œTON Israel!\n\n×× ×—× ×• ×‘×•× ×™× ×¢×•×œ× ×—×•×¤×©×™, ×—×›× ×•×ž×‘×•×–×¨ ×™×•×ª×¨.",
+  "menu_title": "ðŸ“‹ ×ª×¤×¨×™×˜ ×¨××©×™  TON Israel",
+  "academy": "ðŸŽ“ ×”××§×“×ž×™×” ×©×œ TON Israel",
+  "choose_language": "ðŸŒ ×‘×—×¨ ×©×¤×”:",
+  "language_saved": "âœ… ×”×©×¤×” × ×©×ž×¨×”: {language}",
+  "my_role": "×ª×¤×§×™×“ × ×•×›×—×™: {role}"
 }
