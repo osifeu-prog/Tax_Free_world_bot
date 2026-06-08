@@ -2,14 +2,14 @@
 from aiogram.filters import Command
 from aiogram.types import Message
 from datetime import datetime
+from zoneinfo import ZoneInfo
 import random, math
 
 router = Router()
 
 @router.message(Command("market"))
 async def cmd_market(msg: Message):
-    now = datetime.now().strftime("%H:%M:%S")
-    # סימולציה של ביקוש-היצע
+    now = datetime.now(ZoneInfo("Asia/Jerusalem")).strftime("%H:%M:%S")
     supply = random.uniform(80, 120)
     demand = random.uniform(80, 120)
     price = 100 * (demand / supply)

@@ -4,6 +4,7 @@ from aiogram.types import Message
 from bot.database.session import engine
 from sqlalchemy import text
 from datetime import datetime
+from zoneinfo import ZoneInfo
 import random
 
 router = Router()
@@ -14,19 +15,17 @@ async def cmd_city(msg: Message):
         users = await conn.scalar(text("SELECT count(*) FROM users"))
         pensions = await conn.scalar(text("SELECT count(*) FROM pension_profiles"))
         courses = await conn.scalar(text("SELECT count(*) FROM courses"))
-        # households table check
         households = 0
         try:
             households = await conn.scalar(text("SELECT count(*) FROM households"))
         except:
             pass
         donations = random.randint(0, 5)
-    # Market index simulation
     base = 100
     sentiment = random.uniform(-3, 3)
     index = base + sentiment
     arrow = "↑" if sentiment > 0 else "↓" if sentiment < 0 else "→"
-    now = datetime.now().strftime("%H:%M:%S")
+    now = datetime.now(ZoneInfo("Asia/Jerusalem")).strftime("%H:%M:%S")
     txt = (
         f"🏙️ <b>TON City Report</b>\n"
         f"━━━━━━━━━━━━━━━━━━━\n"

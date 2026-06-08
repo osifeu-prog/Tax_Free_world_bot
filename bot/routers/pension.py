@@ -6,6 +6,7 @@ from bot.database.models import PensionProfile, User
 from sqlalchemy import select
 from bot.services.pension_calc import calc_accumulating, calc_budgetary, estimate_tax
 from bot.services.translation_service import translator
+from bot.services.event_logger import log_event
 
 router = Router()
 user_data = {}
@@ -23,6 +24,7 @@ async def cmd_pension(msg: Message):
         [InlineKeyboardButton(text="🏢 " + translator.t(lang, "employee_private"), callback_data="employee_private")],
         [InlineKeyboardButton(text="❓ " + translator.t(lang, "employee_unknown"), callback_data="employee_unknown")]
     ])
+    await log_event(msg.from_user.id, "pension_start")
     await msg.answer(translator.t(lang, "pension_title") + "\n\n" + translator.t(lang, "pension_where"), parse_mode="HTML", reply_markup=kb)
 
 @router.callback_query(F.data.startswith("employee_"))
@@ -31,11 +33,8 @@ async def employee_chosen(callback: CallbackQuery):
     uid = callback.from_user.id
     lang = await get_lang(uid)
     user_data[uid] = {"employee_type": emp_type, "step": "age"}
-
     async with async_session() as session:
-        existing = (await session.execute(
-            select(PensionProfile).where(PensionProfile.telegram_id == uid)
-        )).scalar_one_or_none()
+        existing = (await session.execute(select(PensionProfile).where(PensionProfile.telegram_id == uid))).scalar_one_or_none()
         if existing:
             existing.employee_type = emp_type
             existing.age_now = None
@@ -52,7 +51,6 @@ async def employee_chosen(callback: CallbackQuery):
             profile = PensionProfile(telegram_id=uid, employee_type=emp_type)
             session.add(profile)
         await session.commit()
-
     await callback.message.answer(translator.t(lang, "pension_age"))
     await callback.answer()
 
@@ -82,12 +80,9 @@ async def handle_number(msg: Message):
             profile = user_data.pop(uid)
             result = calc_budgetary(profile)
             tax = estimate_tax(result["monthly_pension"])
+            await log_event(uid, "pension_finish", f"budgetary:{result['monthly_pension']}")
             await msg.answer(
-                f"💰 <b>פנסיה תקציבית</b>\n"
-                f"━━━━━━━━━━━━━━━━\n"
-                f"📆 קצבה: {result['monthly_pension']:,.0f} שח\n"
-                f"⚖ מס: {tax:,.0f} שח\n"
-                f"📥 נטו: {result['monthly_pension']-tax:,.0f} שח",
+                f"💰 <b>פנסיה תקציבית</b>\n━━━━━━━━━━━━━━━━\n📆 קצבה: {result['monthly_pension']:,.0f} שח\n⚖ מס: {tax:,.0f} שח\n📥 נטו: {result['monthly_pension']-tax:,.0f} שח",
                 parse_mode="HTML"
             )
         else:
@@ -111,6 +106,7 @@ async def handle_number(msg: Message):
         profile["current_capital"] = 0
         result = calc_accumulating(profile)
         tax = estimate_tax(result["monthly_pension"])
+        await log_event(uid, "pension_finish", f"accumulating:{result['monthly_pension']}")
         async with async_session() as session:
             p = PensionProfile(
                 telegram_id=uid,
@@ -130,11 +126,6 @@ async def handle_number(msg: Message):
             session.add(p)
             await session.commit()
         await msg.answer(
-            f"📊 <b>תוצאת חישוב</b>\n"
-            f"━━━━━━━━━━━━━━━━\n"
-            f"💰 צבירה: {result['capital']:,.0f} שח\n"
-            f"📆 קצבה: {result['monthly_pension']:,.0f} שח\n"
-            f"⚖ מס: {tax:,.0f} שח\n"
-            f"📥 נטו: {result['monthly_pension']-tax:,.0f} שח",
+            f"📊 <b>תוצאת חישוב</b>\n━━━━━━━━━━━━━━━━\n💰 צבירה: {result['capital']:,.0f} שח\n📆 קצבה: {result['monthly_pension']:,.0f} שח\n⚖ מס: {tax:,.0f} שח\n📥 נטו: {result['monthly_pension']-tax:,.0f} שח",
             parse_mode="HTML"
         )
