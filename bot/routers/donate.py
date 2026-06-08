@@ -7,7 +7,7 @@ router = Router()
 @router.message(Command("donate"))
 async def cmd_donate(msg: Message):
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="💎 שלח תרומה ב‑TON", url="https://ton.org/transfer?address=UQCr743gEr_nqV_0SBkSp3CtYS_15R3LDLBvLmKeEv7XdGvp")],
+        [InlineKeyboardButton(text="💎 שלח תרומה ב‑TON", url="https://app.tonkeeper.com/transfer/UQCr743gEr_nqV_0SBkSp3CtYS_15R3LDLBvLmKeEv7XdGvp")],
         [InlineKeyboardButton(text="🔗 שתף QR שלך", callback_data="share_qr")]
     ])
     text = """

@@ -1,33 +1,50 @@
 ﻿from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
+from bot.database.session import async_session
+from bot.database.models import User
+from sqlalchemy import select
+from bot.services.translation_service import translator
 
 router = Router()
 
+async def get_user_lang(uid: int) -> str:
+    async with async_session() as s:
+        u = (await s.execute(select(User).where(User.telegram_id == uid))).scalar_one_or_none()
+        return u.language if u and u.language else "he"
+
 @router.message(Command("help"))
 async def cmd_help(msg: Message):
-    text = """
-📖 <b>כל הפקודות  TON Israel</b>
-━━━━━━━━━━━━━━━━━━━━━━
-💰 <b>חיסכון אישי</b>
+    lang = await get_user_lang(msg.from_user.id)
+    title = translator.t(lang, "help_title")
+    body = f"""
+{translator.t(lang, 'savings')}
 /start /compare /wallet /why /business /budget /profile /expenses /addexpense /setincome /delexpense
-🏠 <b>משק בית</b>
+
+{translator.t(lang, 'household')}
 /household /shopping /chore /familygroup
-📚 <b>אקדמיה</b>
+
+{translator.t(lang, 'academy')}
 /crypto /cbdc /decentral /socio /anti /edu /academy_extended /academy_nft /academy_dao /vision /spark /academia
-👥 <b>קהילה</b>
+
+{translator.t(lang, 'community')}
 /ref /qr /stats /top /tip /contact /faq /daily /mydata /gift
-🛠️ <b>כלים</b>
+
+{translator.t(lang, 'tools')}
 /miniapp /keyboard /hide /ask /feedback /help /quiz /menu /language
-🔐 <b>הרשאות</b>
+
+{translator.t(lang, 'permissions')}
 /requestadmin /addadmin /login /setpassword /removeadmin
-🔒 <b>אדמין</b>
+
+{translator.t(lang, 'admin')}
 /admin /export /debug /addgroup /groups /report /setrole /seed_courses
-👤 <b>הפרופיל שלי</b>
+
+{translator.t(lang, 'profile')}
 /myrole /mydata /setwallet
+
 📊 <b>פנסיה</b>
 /pension
 💖 <b>תרומה</b>
 /donate
 """
-    await msg.answer(text, parse_mode="HTML")
+    await msg.answer(f"{title}\n\n{body}", parse_mode="HTML")
