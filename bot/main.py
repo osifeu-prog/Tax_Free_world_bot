@@ -12,6 +12,8 @@ from bot.database.models import Base
 from bot.database.session import engine
 from bot.migrate_i18n import add_lang_columns
 import bot.routers as routers_pkg
+from bot.routers import report_pension
+from bot.routers import course_progress
 from bot.routers import family_finance
 from bot.routers import morning
 from bot.routers import loadplan
@@ -191,6 +193,7 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 
 

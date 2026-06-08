@@ -19,5 +19,21 @@
     "vision_footer":  "🔗 @SLH_Spark_AI_BOT",
     "vision_title":  "🌐 Vision of TON Israel",
     "qr_caption":  "🔗 Your referral link:\nPay with TON, Bitcoin, USDT via @Tax_Free_world_bot",
-    "menu_prompt":  "📌 Get started:"
+    "menu_prompt":  "📌 Get started:",
+    "pension_age":  "What is your age? (number)",
+    "pension_retirement":  "Retirement age?",
+    "pension_seniority":  "Years of seniority?",
+    "pension_contrib_emp":  "Employer contribution %? (e.g. 6.5)",
+    "progress_title":  "📚 \u003cb\u003eYour Progress\u003c/b\u003e",
+    "academy_select":  "Choose a course:",
+    "household_create":  "Create household",
+    "academy_title":  "🎓 \u003cb\u003eTON Israel Academy\u003c/b\u003e",
+    "pension_contrib_self":  "Your contribution %? (e.g. 6)",
+    "pension_fees":  "Annual management fees? (e.g. 0.5)",
+    "household_title":  "🏠 \u003cb\u003eHousehold\u003c/b\u003e",
+    "pension_where":  "Where do you work?",
+    "pension_title":  "📊 \u003cb\u003ePension Calculator  TON Israel\u003c/b\u003e",
+    "pension_salary":  "Monthly gross salary?",
+    "no_courses":  "You haven\u0027t started any courses yet.",
+    "pension_return":  "Expected annual return? (e.g. 5.2)"
 }

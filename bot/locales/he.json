@@ -19,5 +19,21 @@
     "vision_footer":  "🔗 האקדמיה שלנו: @SLH_Spark_AI_BOT  \n🔗 תכנים מתקדמים: @SLH_Academia_bot  \n\n📌 מתחילים עכשיו: /academy  לבחירת מסלול למידה  \n📌 מנהלים: /setrole  להגדיר תפקידים",
     "vision_title":  "🌐 החזון של TON Israel",
     "qr_caption":  "🔗 קישור ההפניה שלך:\nשלם ב‑TON, Bitcoin, USDT דרך @Tax_Free_world_bot",
-    "menu_prompt":  "📌 התחל עכשיו:"
+    "menu_prompt":  "📌 התחל עכשיו:",
+    "pension_age":  "מה גילך? (מספר)",
+    "pension_retirement":  "גיל פרישה?",
+    "pension_seniority":  "ותק בעבודה (שנים)?",
+    "pension_contrib_emp":  "אחוז הפרשת מעסיק? (לדוגמה: 6.5)",
+    "progress_title":  "📚 \u003cb\u003eההתקדמות שלך\u003c/b\u003e",
+    "academy_select":  "בחר קורס:",
+    "household_create":  "צור משק בית",
+    "academy_title":  "🎓 \u003cb\u003eהאקדמיה של TON Israel\u003c/b\u003e",
+    "pension_contrib_self":  "אחוז הפרשה שלך? (לדוגמה: 6)",
+    "pension_fees":  "דמי ניהול שנתיים? (לדוגמה: 0.5)",
+    "household_title":  "🏠 \u003cb\u003eמשק בית\u003c/b\u003e",
+    "pension_where":  "איפה אתה עובד?",
+    "pension_title":  "📊 \u003cb\u003eמחשבון פנסיה  TON Israel\u003c/b\u003e",
+    "pension_salary":  "שכר ברוטו חודשי?",
+    "no_courses":  "עדיין לא התחלת קורסים.",
+    "pension_return":  "תשואה שנתית משוערת? (לדוגמה: 5.2)"
 }
