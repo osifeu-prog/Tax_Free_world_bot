@@ -4,25 +4,21 @@ import pkgutil
 import importlib
 import time
 from pathlib import Path
-
 start_time = time.time()
 
 from aiogram import Bot, Dispatcher
-from aiogram.types import BotCommand, BotCommandScopeDefault, WebAppInfo, MenuButtonDefault
+from aiogram.types import BotCommand, BotCommandScopeDefault, MenuButtonDefault
 from aiohttp import web
-
 from bot.config import settings
 from bot.api.email_routes import register, login
 from bot.utils.logger import logger
 from bot.database.models import Base
 from bot.database.session import engine
-from bot.migrate_i18n import add_lang_columns
 import bot.routers as routers_pkg
 
 bot = Bot(token=settings.bot_token)
 dp = Dispatcher()
 
-# טעינה דינמית
 loaded_routers = []
 for _, modname, _ in pkgutil.iter_modules(routers_pkg.__path__):
     try:
