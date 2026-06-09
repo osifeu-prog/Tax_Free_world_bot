@@ -1,14 +1,17 @@
+
 import asyncio
 import os
 import pkgutil
 import importlib
 import time
 from pathlib import Path
+
 start_time = time.time()
 
 from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand, BotCommandScopeDefault, MenuButtonDefault
 from aiohttp import web
+
 from bot.config import settings
 from bot.api.email_routes import register, login
 from bot.utils.logger import logger
@@ -23,7 +26,7 @@ loaded_routers = []
 for _, modname, _ in pkgutil.iter_modules(routers_pkg.__path__):
     try:
         module = importlib.import_module(f"bot.routers.{modname}")
-        if hasattr(module, 'router'):
+        if hasattr(module, "router"):
             dp.include_router(module.router)
             loaded_routers.append(modname)
             logger.info(f"✅ Router {modname} loaded")
@@ -67,7 +70,7 @@ async def start_http():
     app.router.add_get("/", index_handler)
     static_path = Path(__file__).parent.parent / "public"
     if static_path.is_dir():
-        app.router.add_static('/landing/', path=str(static_path / 'landing'), show_index=True)
+        app.router.add_static("/landing/", path=str(static_path / "landing"), show_index=True)
         logger.info("✅ Static files served from /landing")
     runner = web.AppRunner(app)
     await runner.setup()
