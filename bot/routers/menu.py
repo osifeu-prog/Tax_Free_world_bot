@@ -5,7 +5,6 @@ from bot.services.translation_service import translator
 from bot.database.session import async_session
 from bot.database.models import User
 from sqlalchemy import select
-
 router = Router()
 
 async def get_lang(uid):
@@ -14,14 +13,7 @@ async def get_lang(uid):
         return u.language if u and u.language else "he"
 
 async def get_menu_text(lang: str) -> str:
-    return (
-        f"🗺️ <b>{translator.t(lang, 'menu_title')}</b>\n\n"
-        f"💼 {translator.t(lang, 'pension_promo')}\n"
-        f"📚 {translator.t(lang, 'academy_promo')}\n"
-        f"🔗 {translator.t(lang, 'share_qr')}\n"
-        f"🏠 {translator.t(lang, 'household_promo')}\n"
-        f"💖 {translator.t(lang, 'donate_promo')}\n"
-    )
+    return f"🗺️ <b>{translator.t(lang, 'menu_title')}</b>\n\n💼 {translator.t(lang, 'pension_promo')}\n📚 {translator.t(lang, 'academy_promo')}\n🔗 {translator.t(lang, 'share_qr')}\n🏠 {translator.t(lang, 'household_promo')}\n💖 {translator.t(lang, 'donate_promo')}"
 
 def get_main_keyboard(lang: str) -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(inline_keyboard=[
