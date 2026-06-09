@@ -17,13 +17,17 @@ import bot.routers as routers_pkg
 bot = Bot(token=settings.bot_token)
 dp = Dispatcher()
 
-loaded_routers = []
+# טעינת start ראשון (חייב)
+from bot.routers.start import router as start_router
+dp.include_router(start_router)
+
+# שאר הראוטרים
 for _, modname, _ in pkgutil.iter_modules(routers_pkg.__path__):
+    if modname == 'start': continue
     try:
         module = importlib.import_module(f"bot.routers.{modname}")
         if hasattr(module, 'router'):
             dp.include_router(module.router)
-            loaded_routers.append(modname)
             logger.info(f"✅ Router {modname} loaded")
     except Exception as e:
         logger.error(f"❌ Failed to load router {modname}: {e}")
