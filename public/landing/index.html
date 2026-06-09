@@ -2,76 +2,41 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>TON City  חיסכון חכם מתחיל כאן</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TON City  חיסכון חכם</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: linear-gradient(145deg, #0a0a1a 0%, #151530 50%, #0a0a1a 100%);
-    color: #fff;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-  .glass {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(20px);
-    border-radius: 40px;
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 25px 50px -10px rgba(0,0,0,0.6);
-    padding: 50px 35px;
-    max-width: 600px;
-    width: 100%;
-    text-align: center;
-  }
-  h1 {
-    font-size: 3.8rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #00d4ff, #7b2fbe, #ff6ec7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .subtitle { font-size: 1.3rem; opacity: 0.85; margin: 20px 0 35px; }
-  .features { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 40px; }
-  .feature { background: rgba(255,255,255,0.08); border-radius: 20px; padding: 20px; font-weight: 500; }
-  .btn {
-    display: inline-block;
-    background: #4ade80;
-    color: #000 !important;
-    padding: 18px 45px;
-    border-radius: 60px;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-decoration: none;
-    margin: 10px;
-    transition: all 0.25s;
-    box-shadow: 0 8px 25px rgba(74,222,128,0.4);
-  }
-  .btn:hover { transform: scale(1.06); }
-  .btn-outline {
-    background: transparent;
-    border: 2px solid #eab308;
-    color: #eab308 !important;
-  }
-  .btn-outline:hover { background: #eab308; color: #000 !important; }
+  body { font-family:system-ui, sans-serif; background:#0f172a; color:#f1f5f9; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .card { max-width:500px; width:100%; background:#1e293b; border-radius:24px; padding:40px 30px; box-shadow:0 20px 40px rgba(0,0,0,0.5); text-align:center; }
+  h1 { font-size:2.5rem; margin-bottom:10px; }
+  .sub { color:#94a3b8; margin-bottom:30px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:30px; }
+  .item { background:#334155; border-radius:16px; padding:16px; font-weight:600; }
+  .btn { display:block; width:100%; background:#22c55e; color:#000; padding:16px; border-radius:50px; font-size:1.2rem; font-weight:bold; text-decoration:none; margin-bottom:12px; transition:0.2s; }
+  .btn:hover { background:#16a34a; transform:scale(1.02); }
+  .btn-outline { background:transparent; border:2px solid #eab308; color:#eab308; }
+  .btn-outline:hover { background:#eab308; color:#000; }
+  .lang { margin-top:25px; color:#64748b; font-size:0.9rem; }
+  body.light { background:#f8fafc; color:#0f172a; }
+  body.light .card { background:#fff; }
+  body.light .item { background:#e2e8f0; }
+  body.light .sub { color:#475569; }
 </style>
 </head>
 <body>
-<div class="glass">
+<div class="card">
   <h1>🚀 TON City</h1>
-  <p class="subtitle">עצור את הכסף שזורם לפח.<br>חיסכון חכם, פנסיה בטוחה, קהילה מבוזרת  הכל במקום אחד.</p>
-  <div class="features">
-    <div class="feature">💰 חיסכון של אלפי  בשנה</div>
-    <div class="feature">📊 מחשבון פנסיה חכם</div>
-    <div class="feature">🎓 אקדמיה חינוכית</div>
-    <div class="feature">👥 קהילה + הפניות</div>
+  <p class="sub">עצור את הכסף שזורם לפח  הצטרף לעיר הכלכלית החכמה.</p>
+  <div class="grid">
+    <div class="item">💰 חיסכון</div>
+    <div class="item">📊 פנסיה</div>
+    <div class="item">🎓 אקדמיה</div>
+    <div class="item">👥 קהילה</div>
   </div>
   <a href="https://t.me/Tax_Free_world_bot" class="btn">📱 פתח את הבוט</a>
   <a href="https://t.me/Tax_Free_world_bot?start=ref" class="btn btn-outline">🎁 קבל בונוס</a>
+  <div class="lang">🇮🇱 🇬🇧 🇷🇺 🇸🇦 🇪🇸 🇫🇷 🇾🇮</div>
+  <button onclick="document.body.classList.toggle('light')" style="margin-top:20px;background:#475569;color:white;border:none;padding:10px 20px;border-radius:30px;cursor:pointer;">🌓 החלף מצב</button>
 </div>
 </body>
 </html>
