@@ -3,40 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TON City  חיסכון חכם</title>
+<title>TON City  המהפכה הכלכלית שלך</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:system-ui, sans-serif; background:#0f172a; color:#f1f5f9; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
-  .card { max-width:500px; width:100%; background:#1e293b; border-radius:24px; padding:40px 30px; box-shadow:0 20px 40px rgba(0,0,0,0.5); text-align:center; }
-  h1 { font-size:2.5rem; margin-bottom:10px; }
-  .sub { color:#94a3b8; margin-bottom:30px; }
-  .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:30px; }
-  .item { background:#334155; border-radius:16px; padding:16px; font-weight:600; }
-  .btn { display:block; width:100%; background:#22c55e; color:#000; padding:16px; border-radius:50px; font-size:1.2rem; font-weight:bold; text-decoration:none; margin-bottom:12px; transition:0.2s; }
-  .btn:hover { background:#16a34a; transform:scale(1.02); }
-  .btn-outline { background:transparent; border:2px solid #eab308; color:#eab308; }
-  .btn-outline:hover { background:#eab308; color:#000; }
-  .lang { margin-top:25px; color:#64748b; font-size:0.9rem; }
-  body.light { background:#f8fafc; color:#0f172a; }
-  body.light .card { background:#fff; }
-  body.light .item { background:#e2e8f0; }
-  body.light .sub { color:#475569; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #0b1120; color: #e2e8f0; }
+  .container { max-width: 700px; margin: 0 auto; padding: 50px 20px; }
+  .hero { text-align: center; margin-bottom: 60px; }
+  .hero h1 { font-size: 3.2rem; font-weight: 800; background: linear-gradient(135deg, #00d4ff, #7b2fbe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { font-size: 1.3rem; color: #94a3b8; margin-top: 20px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 60px; }
+  .stat { background: #1e293b; border-radius: 20px; padding: 25px; text-align: center; }
+  .stat .num { font-size: 2.2rem; font-weight: 700; color: #4ade80; }
+  .stat .label { font-size: 0.9rem; color: #94a3b8; margin-top: 8px; }
+  .section { margin-bottom: 60px; }
+  .section h2 { font-size: 1.8rem; margin-bottom: 20px; color: #f1f5f9; }
+  .feature-list { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+  .feature { background: #1e293b; border-radius: 16px; padding: 20px; }
+  .feature h3 { font-size: 1.1rem; color: #f1f5f9; margin-bottom: 8px; }
+  .feature p { font-size: 0.9rem; color: #94a3b8; }
+  .cta-box { background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 24px; padding: 40px 30px; text-align: center; border: 1px solid #334155; }
+  .cta-box h2 { font-size: 1.8rem; margin-bottom: 20px; }
+  .btn { display: inline-block; background: #4ade80; color: #000; padding: 16px 40px; border-radius: 60px; font-size: 1.2rem; font-weight: 700; text-decoration: none; margin: 10px; transition: all 0.2s; }
+  .btn:hover { background: #22c55e; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(74,222,128,0.3); }
+  .btn-outline { background: transparent; border: 2px solid #4ade80; color: #4ade80; }
+  .btn-outline:hover { background: #4ade80; color: #000; }
+  .lang-bar { text-align: center; margin-top: 30px; color: #64748b; }
+  @media (max-width: 600px) { .feature-list, .stat-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 2.2rem; } }
 </style>
 </head>
 <body>
-<div class="card">
-  <h1>🚀 TON City</h1>
-  <p class="sub">עצור את הכסף שזורם לפח  הצטרף לעיר הכלכלית החכמה.</p>
-  <div class="grid">
-    <div class="item">💰 חיסכון</div>
-    <div class="item">📊 פנסיה</div>
-    <div class="item">🎓 אקדמיה</div>
-    <div class="item">👥 קהילה</div>
+<div class="container">
+  <div class="hero">
+    <h1>🚀 TON City</h1>
+    <p>עצור את הכסף שזורם לפח  גלה כמה אתה יכול לחסוך עוד היום.</p>
   </div>
-  <a href="https://t.me/Tax_Free_world_bot" class="btn">📱 פתח את הבוט</a>
-  <a href="https://t.me/Tax_Free_world_bot?start=ref" class="btn btn-outline">🎁 קבל בונוס</a>
-  <div class="lang">🇮🇱 🇬🇧 🇷🇺 🇸🇦 🇪🇸 🇫🇷 🇾🇮</div>
-  <button onclick="document.body.classList.toggle('light')" style="margin-top:20px;background:#475569;color:white;border:none;padding:10px 20px;border-radius:30px;cursor:pointer;">🌓 החלף מצב</button>
+  <div class="stat-grid">
+    <div class="stat"><div class="num">25,000+</div><div class="label">חיסכון שנתי למשפחה</div></div>
+    <div class="stat"><div class="num">0.1%</div><div class="label">עמלת TON</div></div>
+    <div class="stat"><div class="num">7</div><div class="label">שפות נתמכות</div></div>
+  </div>
+  <div class="section">
+    <h2>💰 מה תקבל?</h2>
+    <div class="feature-list">
+      <div class="feature"><h3>📊 מחשבון פנסיה</h3><p>חישוב פנסיה תקציבית וצוברת.</p></div>
+      <div class="feature"><h3>📱 מחשבון חיסכון</h3><p>השוואת עמלות Bit vs PayBox vs TON.</p></div>
+      <div class="feature"><h3>🎓 אקדמיה</h3><p>קורסים חינמיים על קריפטו וסוציוקרטיה.</p></div>
+      <div class="feature"><h3>👥 קהילה</h3><p>הפניות, נקודות, לוח מובילים.</p></div>
+    </div>
+  </div>
+  <div class="cta-box">
+    <h2>🚀 התחיל לחסוך עוד היום</h2>
+    <p style="margin-bottom:25px; color:#94a3b8;">הצטרף בחינם  בלי כרטיס אשראי.</p>
+    <a href="https://t.me/Tax_Free_world_bot" class="btn">📱 פתח את הבוט</a>
+    <a href="https://t.me/Tax_Free_world_bot?start=ref" class="btn btn-outline">🎁 קבל בונוס</a>
+  </div>
+  <div class="lang-bar">🇮🇱 🇬🇧 🇷🇺 🇸🇦 🇪🇸 🇫🇷 🇾🇮  7 שפות</div>
 </div>
 </body>
 </html>

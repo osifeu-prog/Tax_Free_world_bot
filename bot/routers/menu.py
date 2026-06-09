@@ -1,4 +1,4 @@
-from aiogram import Router, F
+﻿from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 router = Router()
@@ -6,16 +6,12 @@ router = Router()
 @router.message(Command('menu'))
 async def cmd_menu(msg: Message):
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text='💰 חיסכון', callback_data='go_budget'),
-         InlineKeyboardButton(text='📊 פנסיה', callback_data='go_pension')],
-        [InlineKeyboardButton(text='🎓 אקדמיה', callback_data='go_academy'),
-         InlineKeyboardButton(text='🏙️ TON City', callback_data='go_city')],
-        [InlineKeyboardButton(text='💖 תרומה', callback_data='go_donate'),
-         InlineKeyboardButton(text='🔗 הפניה', callback_data='go_ref')],
-        [InlineKeyboardButton(text='📱 מחשבון ויזואלי', callback_data='open_miniapp'),
-         InlineKeyboardButton(text='❔ עזרה', callback_data='go_help')]
+        [InlineKeyboardButton(text='💰 חיסכון', callback_data='go_budget'), InlineKeyboardButton(text='📊 פנסיה', callback_data='go_pension')],
+        [InlineKeyboardButton(text='🎓 אקדמיה', callback_data='go_academy'), InlineKeyboardButton(text='🏙️ TON City', callback_data='go_city')],
+        [InlineKeyboardButton(text='💖 תרומה', callback_data='go_donate'), InlineKeyboardButton(text='🔗 הפניה', callback_data='go_ref')],
+        [InlineKeyboardButton(text='📱 מחשבון ויזואלי', callback_data='open_miniapp'), InlineKeyboardButton(text='❔ עזרה', callback_data='go_help')]
     ])
-    await msg.answer('<b>📋 תפריט ראשי</b>', parse_mode='HTML', reply_markup=kb)
+    await msg.answer('📋 <b>תפריט ראשי</b>', parse_mode='HTML', reply_markup=kb)
 
 @router.callback_query(F.data.startswith('go_'))
 async def menu_click(callback: CallbackQuery):
