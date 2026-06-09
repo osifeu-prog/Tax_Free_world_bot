@@ -1,12 +1,16 @@
-﻿{
-    "cmd_city":  "🏙️ TON City",
-    "cmd_academy":  "🎓 Académie",
-    "menu_title":  "Menu principal",
-    "cmd_donate":  "💖 Faire un don",
-    "choose_language":  "🌐 Choisissez la langue :",
-    "cmd_market":  "📈 Marché",
-    "cmd_report":  "📊 Rapport",
-    "cmd_pension":  "📊 Pension",
-    "cmd_help":  "❔ Aide",
-    "welcome_message":  "🚀 \u003cb\u003eBienvenue à TON City !\u003c/b\u003e\n\nConstruisez votre avenir économique."
+{
+  "cmd_city": "🏙️ TON City",
+  "cmd_academy": "🎓 Académie",
+  "menu_title": "Menu principal",
+  "cmd_donate": "💖 Faire un don",
+  "choose_language": "🌐 Choisissez la langue :",
+  "cmd_market": "📈 Marché",
+  "cmd_report": "📊 Rapport",
+  "cmd_pension": "📊 Pension",
+  "cmd_help": "❔ Aide",
+  "welcome_message": "🚀 <b>Bienvenue à TON City !</b>\n\nConstruisez votre avenir économique.",
+  "open_miniapp": "📱 Calculatrice visuelle",
+  "savings": "💰Épargne",
+  "budget": "🏠 Gestion budgétaire",
+  "pension_title": "📊 Calculateur de retraite"
 }

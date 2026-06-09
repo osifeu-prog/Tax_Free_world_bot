@@ -1,12 +1,16 @@
-﻿{
-    "cmd_city":  "🏙️ TON City",
-    "cmd_academy":  "🎓 الأكاديمية",
-    "menu_title":  "القائمة الرئيسية",
-    "cmd_donate":  "💖 تبرع",
-    "choose_language":  "🌐 اختر اللغة:",
-    "cmd_market":  "📈 السوق",
-    "cmd_report":  "📊 التقرير",
-    "cmd_pension":  "📊 المعاش",
-    "cmd_help":  "❔ مساعدة",
-    "welcome_message":  "🚀 \u003cb\u003eمرحبًا بك في TON City!\u003c/b\u003e\n\nابنِ مستقبلك الاقتصادي."
+{
+  "cmd_city": "🏙️ TON City",
+  "cmd_academy": "🎓 الأكاديمية",
+  "menu_title": "القائمة الرئيسية",
+  "cmd_donate": "💖 تبرع",
+  "choose_language": "🌐 اختر اللغة:",
+  "cmd_market": "📈 السوق",
+  "cmd_report": "📊 التقرير",
+  "cmd_pension": "📊 المعاش",
+  "cmd_help": "❔ مساعدة",
+  "welcome_message": "🚀 <b>مرحبًا بك في TON City!</b>\n\nابنِ مستقبلك الاقتصادي.",
+  "open_miniapp": "📱آلة حاسبة مرئية",
+  "savings": "💰 التوفير",
+  "budget": "🏠 إدارة الميزانية",
+  "pension_title": "📊 حاسبة المعاشات التقاعدية"
 }
