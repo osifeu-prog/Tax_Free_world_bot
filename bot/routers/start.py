@@ -30,7 +30,6 @@ async def cmd_start(msg: Message):
         [InlineKeyboardButton(text="📱 מחשבון ויזואלי", callback_data="open_miniapp")],
         [InlineKeyboardButton(text="📋 תפריט מלא", callback_data="show_menu")]
     ])
-
     await msg.answer(welcome, parse_mode="HTML", reply_markup=kb)
 
 @router.callback_query(F.data.startswith("lang_"))
