@@ -2,33 +2,151 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TON City  חיסכון חופשי</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>TON City  חיסכון חכם מתחיל כאן</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:system-ui, sans-serif; background:linear-gradient(135deg,#0f0c29,#302b63,#24243e); color:white; min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; padding:20px; }
-.container { max-width:600px; background:rgba(255,255,255,0.08); backdrop-filter:blur(16px); border-radius:28px; padding:50px 30px; box-shadow:0 30px 60px rgba(0,0,0,0.4); }
-h1 { font-size:3.2em; margin-bottom:12px; }
-.subtitle { font-size:1.35em; opacity:0.9; margin-bottom:35px; }
-.cta { display:inline-block; background:#22c55e; color:white; padding:18px 48px; border-radius:50px; font-size:1.35em; font-weight:bold; text-decoration:none; margin:12px; transition:all 0.3s; }
-.cta:hover { transform:scale(1.08); background:#16a34a; }
-.features { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:40px 0; }
-.feature { background:rgba(255,255,255,0.1); padding:18px; border-radius:16px; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(145deg, #0a0a1a 0%, #151530 50%, #0a0a1a 100%);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin: 0;
+  }
+  .glass {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 40px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 25px 50px -10px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05);
+    padding: 50px 35px;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  .glass:hover { transform: translateY(-5px); }
+  h1 {
+    font-size: 3.8rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #00d4ff, #7b2fbe, #ff6ec7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+  }
+  .subtitle {
+    font-size: 1.3rem;
+    opacity: 0.85;
+    margin-bottom: 35px;
+    line-height: 1.6;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    padding: 5px 15px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+    backdrop-filter: blur(5px);
+  }
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 40px;
+  }
+  .feature {
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 20px 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    backdrop-filter: blur(5px);
+    transition: background 0.2s;
+  }
+  .feature:hover { background: rgba(255,255,255,0.15); }
+  .btn {
+    display: inline-block;
+    background: #4ade80;
+    color: #000 !important;
+    padding: 18px 45px;
+    border-radius: 60px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 10px 8px;
+    transition: all 0.25s;
+    box-shadow: 0 8px 25px rgba(74,222,128,0.4);
+  }
+  .btn:hover {
+    transform: scale(1.06);
+    box-shadow: 0 12px 35px rgba(74,222,128,0.6);
+  }
+  .btn-outline {
+    background: transparent;
+    border: 2px solid #eab308;
+    color: #eab308 !important;
+    box-shadow: 0 0 20px rgba(234,179,8,0.2);
+  }
+  .btn-outline:hover {
+    background: #eab308;
+    color: #000 !important;
+  }
+  .languages {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+  .lang {
+    background: rgba(255,255,255,0.08);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    backdrop-filter: blur(5px);
+  }
+  @media (max-width: 480px) {
+    h1 { font-size: 2.8rem; }
+    .features { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
-<div class="container">
-<h1>🚀 TON City</h1>
-<p class="subtitle">עצור את הכסף שזורם לפח.<br>חיסכון אמיתי + פנסיה + קהילה מבוזרת</p>
-<div class="features">
-<div class="feature">💰 חיסכון של אלפי שקלים בשנה</div>
-<div class="feature">📊 מחשבון פנסיה חכם</div>
-<div class="feature">🎓 אקדמיה חינוכית</div>
-<div class="feature">👥 קהילה + הפניות</div>
-</div>
-<a href="https://t.me/Tax_Free_world_bot" class="cta" target="_blank">פתח את הבוט עכשיו</a>
-<br>
-<a href="https://t.me/Tax_Free_world_bot?start=ref" class="cta" style="background:#eab308">קבל בונוס בהפניה</a>
+<div class="glass">
+  <h1>🚀 TON City</h1>
+  <div class="badge">🇮🇱 המהפכה הכלכלית של ישראל</div>
+  <p class="subtitle">
+    עצור את הכסף שזורם לפח.<br>
+    חיסכון חכם, פנסיה בטוחה, וקהילה מבוזרת  הכל במקום אחד.
+  </p>
+
+  <div class="features">
+    <div class="feature">💰 חיסכון של אלפי  בשנה</div>
+    <div class="feature">📊 מחשבון פנסיה חכם</div>
+    <div class="feature">🎓 אקדמיה חינוכית</div>
+    <div class="feature">👥 קהילה + הפניות</div>
+  </div>
+
+  <a href="https://t.me/Tax_Free_world_bot" class="btn" target="_blank">📱 פתח את הבוט</a>
+  <a href="https://t.me/Tax_Free_world_bot?start=ref" class="btn btn-outline" target="_blank">🎁 קבל בונוס</a>
+
+  <div class="languages">
+    <span class="lang">🇮🇱 עברית</span>
+    <span class="lang">🇬🇧 English</span>
+    <span class="lang">🇷🇺 Русский</span>
+    <span class="lang">🇸🇦 العربية</span>
+    <span class="lang">🇪🇸 Español</span>
+    <span class="lang">🇫🇷 Français</span>
+    <span class="lang">🇾🇮 יידיש</span>
+  </div>
 </div>
 </body>
 </html>
