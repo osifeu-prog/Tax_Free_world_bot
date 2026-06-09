@@ -5,101 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TON City  העיר הכלכלית שלך</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 40px 30px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-        }
-        h1 {
-            font-size: 2.8em;
-            margin-bottom: 10px;
-        }
-        .subtitle {
-            font-size: 1.3em;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-        .features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 35px;
-        }
-        .feature {
-            background: rgba(255,255,255,0.08);
-            border-radius: 14px;
-            padding: 15px;
-            font-size: 1em;
-        }
-        .cta {
-            display: inline-block;
-            background: #2ecc71;
-            color: white;
-            text-decoration: none;
-            padding: 16px 40px;
-            border-radius: 50px;
-            font-size: 1.2em;
-            font-weight: bold;
-            margin: 10px;
-            transition: transform 0.2s;
-        }
-        .cta:hover { transform: scale(1.05); }
-        .cta.secondary {
-            background: rgba(255,255,255,0.15);
-        }
-        .lang-switcher {
-            margin-top: 25px;
-            opacity: 0.7;
-        }
-        .lang-switcher a {
-            color: white;
-            margin: 0 8px;
-            text-decoration: none;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI', system-ui, sans-serif; background:linear-gradient(135deg,#0f0c29,#302b63,#24243e); color:white; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:20px; }
+        .container { max-width:600px; background:rgba(255,255,255,0.05); backdrop-filter:blur(12px); border-radius:24px; padding:40px 30px; box-shadow:0 25px 50px rgba(0,0,0,0.3); }
+        h1 { font-size:2.8em; margin-bottom:10px; }
+        .subtitle { font-size:1.3em; margin-bottom:30px; opacity:0.9; }
+        .features { display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:35px; }
+        .feature { background:rgba(255,255,255,0.08); border-radius:14px; padding:15px; font-size:1em; }
+        .cta { display:inline-block; background:#2ecc71; color:white; text-decoration:none; padding:16px 40px; border-radius:50px; font-size:1.2em; font-weight:bold; margin:10px; transition:transform 0.2s; }
+        .cta:hover { transform:scale(1.05); }
+        .cta.secondary { background:rgba(255,255,255,0.15); }
+        .lang-switcher { margin-top:25px; opacity:0.7; }
+        .lang-switcher button { background:none; border:none; color:white; margin:0 8px; font-size:1em; cursor:pointer; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🏙️ TON City</h1>
-        <p class="subtitle">העיר הכלכלית החכמה  פנסיה, בורסה, אקדמיה, משק בית</p>
-        
+        <h1 id="title">🏙️ TON City</h1>
+        <p class="subtitle" id="subtitle">העיר הכלכלית החכמה  פנסיה, בורסה, אקדמיה, משק בית</p>
         <div class="features">
-            <div class="feature">📊 <b>מחשבון פנסיה</b><br>גלה את הפנסיה שלך</div>
-            <div class="feature">📈 <b>בורסת TONC</b><br>מחיר, היצע וביקוש</div>
-            <div class="feature">🎓 <b>אקדמיה</b><br>קורסי קריפטו וכלכלה</div>
-            <div class="feature">🏠 <b>משק בית</b><br>נהל תקציב משפחתי</div>
+            <div class="feature"><b id="f1_title">📊 מחשבון פנסיה</b><br id="f1_desc">גלה את הפנסיה שלך</div>
+            <div class="feature"><b id="f2_title">📈 בורסת TONC</b><br id="f2_desc">מחיר, היצע וביקוש</div>
+            <div class="feature"><b id="f3_title">🎓 אקדמיה</b><br id="f3_desc">קורסי קריפטו וכלכלה</div>
+            <div class="feature"><b id="f4_title">🏠 משק בית</b><br id="f4_desc">נהל תקציב משפחתי</div>
         </div>
-
-        <a class="cta" href="https://t.me/Tax_Free_world_bot" target="_blank">🚀 התחל עכשיו בטלגרם</a>
+        <a class="cta" href="https://t.me/Tax_Free_world_bot" target="_blank" id="cta1">🚀 התחל עכשיו בטלגרם</a>
         <br>
-        <a class="cta secondary" href="https://t.me/Tax_Free_world_bot?start=ref" target="_blank">🔗 שתף וקבל תגמולים</a>
-
+        <a class="cta secondary" href="https://t.me/Tax_Free_world_bot?start=ref" target="_blank" id="cta2">🔗 שתף וקבל תגמולים</a>
         <div class="lang-switcher">
-            <a href="#" onclick="switchLang('he')">🇮🇱 עברית</a>
-            <a href="#" onclick="switchLang('en')">🇬🇧 English</a>
-            <a href="#" onclick="switchLang('ru')">🇷🇺 Русский</a>
+            <button onclick="switchLang('he')">🇮🇱 עברית</button>
+            <button onclick="switchLang('en')">🇬🇧 English</button>
+            <button onclick="switchLang('ru')">🇷🇺 Русский</button>
         </div>
     </div>
     <script>
+        const translations = {
+            he: {
+                title: "🏙️ TON City",
+                subtitle: "העיר הכלכלית החכמה  פנסיה, בורסה, אקדמיה, משק בית",
+                f1_title: "📊 מחשבון פנסיה", f1_desc: "גלה את הפנסיה שלך",
+                f2_title: "📈 בורסת TONC", f2_desc: "מחיר, היצע וביקוש",
+                f3_title: "🎓 אקדמיה", f3_desc: "קורסי קריפטו וכלכלה",
+                f4_title: "🏠 משק בית", f4_desc: "נהל תקציב משפחתי",
+                cta1: "🚀 התחל עכשיו בטלגרם",
+                cta2: "🔗 שתף וקבל תגמולים"
+            },
+            en: {
+                title: "🏙️ TON City",
+                subtitle: "Your smart economic city  Pension, Stock, Academy, Household",
+                f1_title: "📊 Pension Calculator", f1_desc: "Discover your pension",
+                f2_title: "📈 TONC Market", f2_desc: "Price, supply & demand",
+                f3_title: "🎓 Academy", f3_desc: "Crypto & economy courses",
+                f4_title: "🏠 Household", f4_desc: "Manage family budget",
+                cta1: "🚀 Start now on Telegram",
+                cta2: "🔗 Share & earn rewards"
+            },
+            ru: {
+                title: "🏙️ TON City",
+                subtitle: "Ваш умный экономический город  Пенсия, Биржа, Академия, Дом",
+                f1_title: "📊 Пенсионный калькулятор", f1_desc: "Узнайте свою пенсию",
+                f2_title: "📈 Биржа TONC", f2_desc: "Цена, спрос и предложение",
+                f3_title: "🎓 Академия", f3_desc: "Курсы криптовалют и экономики",
+                f4_title: "🏠 Домашнее хозяйство", f4_desc: "Управляйте семейным бюджетом",
+                cta1: "🚀 Начать в Telegram",
+                cta2: "🔗 Поделитесь и получайте вознаграждения"
+            }
+        };
+
         function switchLang(lang) {
-            // בהמשך  טעינה דינמית של תוכן לפי שפה
-            alert('Language switching coming soon!');
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+            const t = translations[lang];
+            document.getElementById('title').textContent = t.title;
+            document.getElementById('subtitle').textContent = t.subtitle;
+            document.getElementById('f1_title').textContent = t.f1_title;
+            document.getElementById('f1_desc').textContent = t.f1_desc;
+            document.getElementById('f2_title').textContent = t.f2_title;
+            document.getElementById('f2_desc').textContent = t.f2_desc;
+            document.getElementById('f3_title').textContent = t.f3_title;
+            document.getElementById('f3_desc').textContent = t.f3_desc;
+            document.getElementById('f4_title').textContent = t.f4_title;
+            document.getElementById('f4_desc').textContent = t.f4_desc;
+            document.getElementById('cta1').textContent = t.cta1;
+            document.getElementById('cta2').textContent = t.cta2;
         }
     </script>
 </body>

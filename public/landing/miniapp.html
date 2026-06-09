@@ -1,201 +1,73 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>מחשבון TON  SPARK מערכות</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מחשבון TON</title>
     <style>
-        :root {
-            --primary: #0088CC;
-            --primary-light: #e8f4fd;
-            --success: #28a745;
-            --warning: #e67e00;
-            --danger: #dc3545;
-            --bg: #f0f4f8;
-            --card-bg: #ffffff;
-            --text: #1a1a1a;
-            --text-light: #666;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg);
-            padding: 12px;
-            color: var(--text);
-        }
-        .container {
-            max-width: 420px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-        .header { text-align: center; margin-bottom: 20px; }
-        .header h1 { font-size: 1.5em; color: var(--primary); margin-bottom: 4px; }
-        .header .subtitle { color: var(--text-light); font-size: 0.9em; }
-        .profile-box {
-            background: var(--primary-light);
-            border-radius: 12px; padding: 12px; margin-bottom: 16px;
-            text-align: center; display: none;
-        }
-        .profile-box .income { font-size: 1.2em; font-weight: bold; color: var(--primary); }
-        .profile-box .savings { font-size: 1em; color: var(--success); }
-        .slider-group { margin-bottom: 18px; }
-        label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.95em; }
-        input[type=range] { width: 100%; accent-color: var(--primary); }
-        .value {
-            background: var(--primary-light);
-            padding: 4px 12px; border-radius: 20px;
-            font-weight: bold; color: var(--primary);
-            display: inline-block; margin-right: 8px;
-        }
-        canvas { margin: 20px 0; }
-        .cards { display: flex; gap: 10px; margin-top: 16px; }
-        .card {
-            flex: 1; background: #f9f9f9; border-radius: 12px;
-            padding: 12px; text-align: center;
-        }
-        .card.ton { background: #d4edda; border: 2px solid var(--success); }
-        .card .label { font-size: 0.85em; color: #555; }
-        .card .fee { font-size: 1.3em; font-weight: bold; margin-top: 4px; }
-        .savings {
-            background: #fff8e1; border-radius: 12px;
-            padding: 12px; margin-top: 16px; text-align: center;
-        }
-        .savings strong { color: var(--warning); font-size: 1.2em; }
-        .btn {
-            display: block; background: var(--primary); color: white;
-            text-align: center; padding: 12px; border-radius: 30px;
-            text-decoration: none; font-weight: bold; margin-top: 12px;
-            cursor: pointer; border: none; width: 100%; font-size: 1em;
-        }
-        .btn.secondary { background: #f0f0f0; color: var(--text); }
-        .note { text-align: center; color: #999; font-size: 0.8em; margin-top: 12px; }
+        body { font-family: Arial, sans-serif; background:#1a1a2e; color:white; padding:20px; text-align:center; }
+        input, select { padding:10px; margin:5px; border-radius:8px; border:none; width:80%; }
+        button { background:#2ecc71; color:white; border:none; padding:12px 30px; border-radius:50px; font-size:1em; cursor:pointer; margin:10px; }
+        .lang-bar { position:fixed; top:10px; right:10px; }
+        .lang-bar button { background:rgba(255,255,255,0.2); font-size:0.8em; padding:5px 12px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>💰 מחשבון TON</h1>
-            <p class="subtitle">גלה כמה כסף תוכל לחסוך השנה</p>
-        </div>
-        <div id="profileBox" class="profile-box">
-            <div class="income">הכנסה חודשית: <span id="profileIncome">0</span></div>
-            <div class="savings">חיסכון פוטנציאלי: <span id="profileSavings">0</span>/שנה</div>
-        </div>
-        <div class="slider-group">
-            <label>סכום להעברה ()</label>
-            <input type="range" id="amount" min="50" max="15000" value="500" step="10">
-            <span class="value"><span id="amountVal">500</span> </span>
-        </div>
-        <div class="slider-group">
-            <label>העברות בחודש</label>
-            <input type="range" id="txCount" min="1" max="30" value="10" step="1">
-            <span class="value"><span id="txCountVal">10</span></span>
-        </div>
-        <canvas id="chart" height="200"></canvas>
-        <div class="cards">
-            <div class="card"><div class="label">🔴 ביט</div><div class="fee" id="bitFee">0</div><div class="label">להעברה</div></div>
-            <div class="card"><div class="label">🟠 פייבוקס</div><div class="fee" id="payboxFee">0</div><div class="label">להעברה</div></div>
-            <div class="card ton"><div class="label">🟢 TON</div><div class="fee" id="tonFee">0</div><div class="label">להעברה ✅</div></div>
-        </div>
-        <div class="savings">
-            💰 <b>חיסכון שנתי:</b> <strong id="saveBit">0</strong>  לעומת ביט<br>
-            💰 <b>חיסכון שנתי:</b> <strong id="savePaybox">0</strong>  לעומת פייבוקס
-        </div>
-        <a id="shareBtn" class="btn" href="#">📤 שלח לחבר וגם הוא יחסוך!</a>
-        <button class="btn secondary" onclick="openBudget()">📊 פתח / נהל תקציב</button>
-        <button class="btn secondary" onclick="showPresets()">📊 תרחישים מהירים</button>
-        <div class="note">ℹ️ הבוט חינוכי, לא ייעוץ פיננסי.</div>
+    <div class="lang-bar">
+        <button onclick="switchLang('he')">🇮🇱</button>
+        <button onclick="switchLang('en')">🇬🇧</button>
+        <button onclick="switchLang('ru')">🇷🇺</button>
     </div>
+    <h1 id="headline">💰 מחשבון TON</h1>
+    <p id="subhead">גלה כמה כסף תוכל לחסוך השנה</p>
+    <label id="lblAmount">סכום להעברה ()</label>
+    <input type="number" id="amount" value="500">
+    <label id="lblFreq">העברות בחודש</label>
+    <input type="number" id="freq" value="10">
+    <div id="results">
+        <p>🔴 <span id="bitFee">7.50</span> </p>
+        <p>🟠 <span id="boxFee">9.50</span> </p>
+        <p>🟢 <span id="tonFee">0.50</span> </p>
+        <p id="savingsText">💰 חיסכון שנתי: <span id="savings">840</span> </p>
+    </div>
+    <button onclick="calculate()">חשב</button>
+    <br>
+    <a href="https://t.me/share/url?url=https://t.me/Tax_Free_world_bot&text=%D7%97%D7%A1%D7%9B%D7%AA%D7%99%20840%20%D7%A9%22%D7%97%20%D7%91%D7%A2%D7%9E%D7%9C%D7%95%D7%AA%20%D7%A2%D7%9D%20TON!" target="_blank" id="shareBtn">📤 שלח לחבר וגם הוא יחסוך!</a>
     <script>
-        let chart;
-        const ctx = document.getElementById('chart').getContext('2d');
-
-        function createChart(bit, paybox, ton) {
-            if (chart) chart.destroy();
-            chart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['ביט', 'פייבוקס', 'TON'],
-                    datasets: [{
-                        data: [bit, paybox, ton],
-                        backgroundColor: ['#dc3545', '#fd7e14', '#28a745'],
-                        borderRadius: 8,
-                        barThickness: 40
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true, title: { display: true, text: 'עמלה ()' } } }
-                }
-            });
+        const translations = {
+            he: { headline:"💰 מחשבון TON", subhead:"גלה כמה כסף תוכל לחסוך השנה", lblAmount:"סכום להעברה ()", lblFreq:"העברות בחודש", bitFee:"7.50", boxFee:"9.50", tonFee:"0.50", savingsText:"💰 חיסכון שנתי: ", shareBtn:"📤 שלח לחבר וגם הוא יחסוך!" },
+            en: { headline:"💰 TON Calculator", subhead:"Discover how much you could save per year", lblAmount:"Amount per transfer ()", lblFreq:"Transfers per month", bitFee:"7.50", boxFee:"9.50", tonFee:"0.50", savingsText:"💰 Yearly savings: ", shareBtn:"📤 Share with a friend!" },
+            ru: { headline:"💰 Калькулятор TON", subhead:"Узнайте, сколько вы сэкономите в год", lblAmount:"Сумма перевода ()", lblFreq:"Переводов в месяц", bitFee:"7.50", boxFee:"9.50", tonFee:"0.50", savingsText:"💰 Годовая экономия: ", shareBtn:"📤 Поделиться с другом!" }
+        };
+        let currentLang = 'he';
+        function switchLang(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang==='he'? 'rtl':'ltr';
+            const t = translations[lang];
+            document.getElementById('headline').textContent = t.headline;
+            document.getElementById('subhead').textContent = t.subhead;
+            document.getElementById('lblAmount').textContent = t.lblAmount;
+            document.getElementById('lblFreq').textContent = t.lblFreq;
+            document.getElementById('bitFee').textContent = t.bitFee;
+            document.getElementById('boxFee').textContent = t.boxFee;
+            document.getElementById('tonFee').textContent = t.tonFee;
+            document.getElementById('savingsText').innerHTML = t.savingsText + '<span id="savings">0</span> ';
+            document.getElementById('shareBtn').textContent = t.shareBtn;
+            calculate();
         }
-
-        function calc() {
-            const a = parseFloat(document.getElementById('amount').value);
-            const t = parseInt(document.getElementById('txCount').value);
-            document.getElementById('amountVal').textContent = a;
-            document.getElementById('txCountVal').textContent = t;
-            const bit = a * 0.015;
-            const paybox = a * 0.018 + 0.5;
-            const ton = a * 0.001;
-            document.getElementById('bitFee').textContent = bit.toFixed(2);
-            document.getElementById('payboxFee').textContent = paybox.toFixed(2);
-            document.getElementById('tonFee').textContent = ton.toFixed(2);
-            const saveB = Math.round((bit - ton) * t * 12);
-            const saveP = Math.round((paybox - ton) * t * 12);
-            document.getElementById('saveBit').textContent = saveB.toLocaleString();
-            document.getElementById('savePaybox').textContent = saveP.toLocaleString();
-            document.getElementById('shareBtn').href = `https://t.me/share/url?url=https://t.me/Tax_Free_world_bot&text=חסכתי ${saveB.toLocaleString()} ש"ח בעמלות עם TON!`;
-            createChart(bit, paybox, ton);
+        function calculate() {
+            const amount = parseFloat(document.getElementById('amount').value) || 0;
+            const freq = parseInt(document.getElementById('freq').value) || 0;
+            const bitCost = amount * 0.015;
+            const boxCost = amount * 0.019;
+            const tonCost = amount * 0.001;
+            const yearlySaving = (bitCost - tonCost) * freq * 12;
+            document.getElementById('bitFee').textContent = bitCost.toFixed(2);
+            document.getElementById('boxFee').textContent = boxCost.toFixed(2);
+            document.getElementById('tonFee').textContent = tonCost.toFixed(2);
+            document.getElementById('savings').textContent = yearlySaving.toFixed(0);
         }
-
-        async function loadProfile() {
-            const tg = window.Telegram?.WebApp;
-            const userId = tg?.initDataUnsafe?.user?.id || new URLSearchParams(window.location.search).get('user_id') || '224223270';
-            try {
-                const resp = await fetch(`/api/profile?user_id=${userId}`);
-                const data = await resp.json();
-                if (data.monthly_income) {
-                    document.getElementById('profileBox').style.display = 'block';
-                    document.getElementById('profileIncome').textContent = data.monthly_income.toLocaleString();
-                    document.getElementById('profileSavings').textContent = data.total_savings.toLocaleString();
-                }
-                const resp2 = await fetch(`/api/last-compare?user_id=${userId}`);
-                const last = await resp2.json();
-                if (last.amount) {
-                    document.getElementById('amount').value = last.amount;
-                    document.getElementById('txCount').value = last.tx;
-                }
-                calc();
-            } catch(e) { calc(); }
-        }
-
-        function openTelegramLinkFallback(url) {
-            // מנסה WebApp, אחרת window.open
-            if (window.Telegram?.WebApp?.openTelegramLink) {
-                window.Telegram.WebApp.openTelegramLink(url);
-            } else {
-                window.open(url, '_blank');
-            }
-        }
-
-        function openBudget() {
-            openTelegramLinkFallback('https://t.me/Tax_Free_world_bot?start=budget');
-        }
-
-        function showPresets() {
-            openTelegramLinkFallback('https://t.me/Tax_Free_world_bot?start=presets');
-        }
-
-        document.getElementById('amount').addEventListener('input', calc);
-        document.getElementById('txCount').addEventListener('input', calc);
-        loadProfile();
     </script>
 </body>
 </html>
-
