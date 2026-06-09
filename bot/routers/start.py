@@ -37,4 +37,3 @@ async def open_miniapp(callback: CallbackQuery):
 @router.callback_query(F.data.startswith("go_"))
 async def quick_menu(callback: CallbackQuery):
     await callback.answer("🔄 מעביר...")
-    # כאן אפשר להוסיף קריאה לפקודות אחרות
