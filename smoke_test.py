@@ -1,4 +1,4 @@
-﻿import requests, time
+import requests, time
 
 BOT_TOKEN = "8782546867:AAFxsqjad8RHCLjRcLpJp8WJ_uQ_mQnHKJc"
 BASE_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
