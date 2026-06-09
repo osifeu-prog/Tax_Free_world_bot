@@ -54,8 +54,13 @@ async def set_language(callback: CallbackQuery):
         else:
             s.add(User(telegram_id=uid, language=lang))
         await s.commit()
-    await callback.message.answer(f'✅ שפה שונתה ל-{lang}')
-    await callback.answer()
+    try:
+        from bot.services.translation_service import translator
+        welcome = translator.t(lang, 'welcome_message')
+    except Exception:
+        welcome = f'השפה שונתה ל-{lang}'
+    await callback.message.answer(welcome, parse_mode='HTML')
+    await callback.answer(f'✅ שפה שונתה ל-{lang}')
 
 @router.callback_query(F.data.startswith('go_'))
 async def quick_actions(callback: CallbackQuery):
