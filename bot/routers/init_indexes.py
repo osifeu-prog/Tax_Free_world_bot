@@ -18,5 +18,11 @@ async def cmd_init_indexes(msg: Message):
             "CREATE INDEX IF NOT EXISTS idx_events_log_timestamp ON events_log(timestamp)",
         ]
         for q in queries:
-            await conn.run_sync(lambda c: c.execute(text(q)))
-    await msg.answer("✅ אינדקסים נוצרו")
+            try:
+                await conn.run_sync(lambda c: c.execute(text(q)))
+            except Exception as e:
+                if "no such column" in str(e):
+                    pass  # ignore missing column, will be created by create_all
+                else:
+                    raise
+    await msg.answer("✅ אינדקסים נוצרו (או דולגו אם חסרה עמודה)")

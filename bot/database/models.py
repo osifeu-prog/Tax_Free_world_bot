@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Float, DateTime, Boolean, Text, UniqueConstraint
+﻿from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Float, DateTime, Boolean, Text, UniqueConstraint
 # -*- coding: utf-8 -*-
 from sqlalchemy.orm import DeclarativeBase
 import datetime
@@ -49,6 +49,7 @@ class ShoppingListItem(Base):
     item = Column(String(200))
     bought = Column(Boolean, default=False)
 class User(Base):
+    referred_by = Column(Integer, nullable=True)
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
     telegram_id = Column(BigInteger, unique=True, index=True)
@@ -150,7 +151,7 @@ class PensionProfile(Base):
     password_hash = Column(String(200))
 
 
-# bot/database/models.py (×”×•×¡×¤×” ×œ×¡×•×£ ×”×§×•×‘×¥)
+# bot/database/models.py (Ã—â€Ã—â€¢Ã—Â¡Ã—Â¤Ã—â€ Ã—Å“Ã—Â¡Ã—â€¢Ã—Â£ Ã—â€Ã—Â§Ã—â€¢Ã—â€˜Ã—Â¥)
 class BotGroup(Base):
     __tablename__ = "bot_groups"
     id = Column(Integer, primary_key=True, index=True)
@@ -169,7 +170,7 @@ class UserRole(Base):
     role = Column(String(50), default="citizen")  # citizen, entrepreneur, leader, expert, fighter, builder
 import datetime
 
-# ... (הקיים נשאר)
+# ... (×”×§×™×™× × ×©××¨)
 
 
 
@@ -233,6 +234,7 @@ class UserKnowledgeProgress(Base):
     completed_at = Column(DateTime)
     last_accessed = Column(DateTime, default=datetime.datetime.utcnow)
     __table_args__ = (UniqueConstraint('telegram_id', 'node_id'),)
+
 
 
 

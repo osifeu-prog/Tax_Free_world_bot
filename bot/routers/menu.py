@@ -1,6 +1,6 @@
-from aiogram import Router
+﻿from aiogram import Router, F
 from aiogram.filters import Command
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from bot.services.translation_service import translator
 from bot.database.session import async_session
 from bot.database.models import User
@@ -23,7 +23,26 @@ async def get_menu_text(lang: str) -> str:
         f"💖 {translator.t(lang, 'donate_promo')}\n"
     )
 
+def get_main_keyboard(lang: str) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text=translator.t(lang, "cmd_pension"), callback_data="cmd_pension"),
+         InlineKeyboardButton(text=translator.t(lang, "cmd_academy"), callback_data="cmd_academy")],
+        [InlineKeyboardButton(text=translator.t(lang, "cmd_city"), callback_data="cmd_city"),
+         InlineKeyboardButton(text=translator.t(lang, "cmd_market"), callback_data="cmd_market")],
+        [InlineKeyboardButton(text=translator.t(lang, "cmd_donate"), callback_data="cmd_donate"),
+         InlineKeyboardButton(text=translator.t(lang, "cmd_report"), callback_data="cmd_report")],
+        [InlineKeyboardButton(text=translator.t(lang, "cmd_help"), callback_data="cmd_help")],
+    ])
+
 @router.message(Command("menu"))
 async def cmd_menu(msg: Message):
     lang = await get_lang(msg.from_user.id)
-    await msg.answer(await get_menu_text(lang), parse_mode="HTML")
+    text = await get_menu_text(lang)
+    kb = get_main_keyboard(lang)
+    await msg.answer(text, parse_mode="HTML", reply_markup=kb)
+
+@router.callback_query(F.data.startswith("cmd_"))
+async def handle_menu_click(callback: CallbackQuery):
+    command = callback.data[4:]
+    await callback.message.answer(f"/{command}")
+    await callback.answer()
