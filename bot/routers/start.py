@@ -20,7 +20,7 @@ async def cmd_start(msg: Message):
         from bot.services.translation_service import translator
         welcome = translator.t(lang, 'welcome_message', name=name)
     except:
-        welcome = f'ברוך הבא {name} ל- TON City!\n\nאנחנו פה כדי לעזור לך לחסוך אלפי שקלים בשנה.\n\n💡 טיפ: השתמש בכפתור Menu (☰) כדי לראות את כל הפקודות.'
+        welcome = f'ברוך הבא {name} ל- TON City!\n\nאנחנו פה כדי לעזור לך לחסוך אלפי שקלים בשנה.'
     kb = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text='🇮🇱 עברית', callback_data='lang_he'), InlineKeyboardButton(text='🇬🇧 English', callback_data='lang_en')],
         [InlineKeyboardButton(text='🇷🇺 Русский', callback_data='lang_ru'), InlineKeyboardButton(text='🇸🇦 العربية', callback_data='lang_ar')],
@@ -29,7 +29,7 @@ async def cmd_start(msg: Message):
         [InlineKeyboardButton(text='💰 חיסכון', callback_data='go_budget'), InlineKeyboardButton(text='📊 פנסיה', callback_data='go_pension')],
         [InlineKeyboardButton(text='🎓 אקדמיה', callback_data='go_academy'), InlineKeyboardButton(text='🏙️ TON City', callback_data='go_city')],
         [InlineKeyboardButton(text='💖 תרומה', callback_data='go_donate'), InlineKeyboardButton(text='🔗 הפניה', callback_data='go_ref')],
-        [InlineKeyboardButton(text='📱 מחשבון ויזואלי', callback_data='open_miniapp')]
+        [InlineKeyboardButton(text='📋 כל הפקודות', callback_data='show_help')]
     ])
     await msg.answer(welcome, parse_mode='HTML', reply_markup=kb)
 
@@ -39,15 +39,27 @@ async def set_language(callback: CallbackQuery):
     uid = callback.from_user.id
     async with async_session() as s:
         u = (await s.execute(select(User).where(User.telegram_id == uid))).scalar_one_or_none()
-        if u: u.language = lang
-        else: s.add(User(telegram_id=uid, language=lang))
+        if u:
+            u.language = lang
+        else:
+            s.add(User(telegram_id=uid, language=lang))
         await s.commit()
+    try:
+        from bot.services.translation_service import translator
+        welcome = translator.t(lang, 'welcome_message')
+    except:
+        welcome = f'השפה שונתה ל-{lang}'
     await callback.message.answer(welcome, parse_mode='HTML')
     await callback.answer(f'✅ שפה שונתה ל-{lang}')
-    await callback.answer()
 
 @router.callback_query(F.data.startswith('go_'))
 async def quick_actions(callback: CallbackQuery):
     cmd = callback.data[3:]
     await callback.message.answer(f'/{cmd}')
+    await callback.answer()
+
+@router.callback_query(F.data == 'show_help')
+async def show_help(callback: CallbackQuery):
+    from bot.routers.help import cmd_help
+    await cmd_help(callback.message)
     await callback.answer()
