@@ -15,4 +15,4 @@ async def cmd_menu(msg: Message):
         [InlineKeyboardButton(text="💖 תרומה", callback_data="cmd_donate")],
         [InlineKeyboardButton(text="❔ עזרה", callback_data="cmd_help")]
     ])
-    await msg.answer("📋 <b>תפריט ראשי TON Israel</b>\nבחר פעולה:", parse_mode="HTML", reply_markup=kb)
+    await msg.answer("📋 <b>תפריט ראשי TON Israel</b>", parse_mode="HTML", reply_markup=kb)
