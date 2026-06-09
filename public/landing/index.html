@@ -3,50 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TON Israel  לחסוך עמלות, לעבור ל-TON</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>TON City  העיר הכלכלית שלך</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+        .feature {
+            background: rgba(255,255,255,0.08);
+            border-radius: 14px;
+            padding: 15px;
+            font-size: 1em;
+        }
+        .cta {
+            display: inline-block;
+            background: #2ecc71;
+            color: white;
+            text-decoration: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+        .cta:hover { transform: scale(1.05); }
+        .cta.secondary {
+            background: rgba(255,255,255,0.15);
+        }
+        .lang-switcher {
+            margin-top: 25px;
+            opacity: 0.7;
+        }
+        .lang-switcher a {
+            color: white;
+            margin: 0 8px;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>💰 <span>TON</span> Israel</h1>
-        <p>מערכת תשלומים פתוחה, זולה, ומהירה  ישירות מהבוט שלך.</p>
-    </header>
-    <main>
-        <section class="calculator">
-            <h2>📊 מחשבון חיסכון בעמלות</h2>
-            <div class="input-group">
-                <label for="amount">💰 סכום להעברה ()</label>
-                <input type="range" id="amount" min="50" max="5000" value="500" step="10">
-                <span id="amountValue">500</span> 
-            </div>
-            <div class="input-group">
-                <label for="txCount">📅 מספר העברות בחודש</label>
-                <input type="range" id="txCount" min="1" max="50" value="10" step="1">
-                <span id="txCountValue">10</span>
-            </div>
-            <div id="results" class="results">
-                <div class="card bit"><span>🔴 ביט</span> <span id="bitFee">7.50</span>  להעברה</div>
-                <div class="card paybox"><span>🟠 פייבוקס</span> <span id="payboxFee">9.50</span>  להעברה</div>
-                <div class="card ton"><span>🟢 TON</span> <span id="tonFee">0.50</span>  להעברה</div>
-                <div class="savings">
-                    <span>💰 חיסכון שנתי לעומת ביט: </span><strong id="saveBit">840</strong> 
-                    <br>
-                    <span>💰 חיסכון שנתי לעומת פייבוקס: </span><strong id="savePaybox">1,080</strong> 
-                </div>
-            </div>
-            <a href="https://t.me/Tax_Free_world_bot?start=landing" class="btn">📩 שלח לי את המספרים בבוט</a>
-        </section>
-        <section class="benefits">
-            <h2>✅ למה לעבור ל-TON?</h2>
-            <ul>
-                <li>⚡ עמלות נמוכות פי 15</li>
-                <li>🌍 גלובלי  שלח וקבל מכל מקום</li>
-                <li>🔒 בטוח  מבוסס בלוקצ'יין</li>
-                <li>🤖 API פתוח  בנה כלים משלך</li>
-            </ul>
-            <p class="disclaimer">ℹ️ הבוט חינוכי, לא ייעוץ פיננסי.</p>
-        </section>
-    </main>
-    <script src="js/script.js"></script>
+    <div class="container">
+        <h1>🏙️ TON City</h1>
+        <p class="subtitle">העיר הכלכלית החכמה  פנסיה, בורסה, אקדמיה, משק בית</p>
+        
+        <div class="features">
+            <div class="feature">📊 <b>מחשבון פנסיה</b><br>גלה את הפנסיה שלך</div>
+            <div class="feature">📈 <b>בורסת TONC</b><br>מחיר, היצע וביקוש</div>
+            <div class="feature">🎓 <b>אקדמיה</b><br>קורסי קריפטו וכלכלה</div>
+            <div class="feature">🏠 <b>משק בית</b><br>נהל תקציב משפחתי</div>
+        </div>
+
+        <a class="cta" href="https://t.me/Tax_Free_world_bot" target="_blank">🚀 התחל עכשיו בטלגרם</a>
+        <br>
+        <a class="cta secondary" href="https://t.me/Tax_Free_world_bot?start=ref" target="_blank">🔗 שתף וקבל תגמולים</a>
+
+        <div class="lang-switcher">
+            <a href="#" onclick="switchLang('he')">🇮🇱 עברית</a>
+            <a href="#" onclick="switchLang('en')">🇬🇧 English</a>
+            <a href="#" onclick="switchLang('ru')">🇷🇺 Русский</a>
+        </div>
+    </div>
+    <script>
+        function switchLang(lang) {
+            // בהמשך  טעינה דינמית של תוכן לפי שפה
+            alert('Language switching coming soon!');
+        }
+    </script>
 </body>
 </html>
