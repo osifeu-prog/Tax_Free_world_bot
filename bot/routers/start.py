@@ -18,14 +18,10 @@ async def cmd_start(msg: Message):
     lang = await get_lang(msg.from_user.id)
     name = msg.from_user.first_name or "חבר"
     welcome = translator.t(lang, "welcome_message", name=name)
-
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🇮🇱 עברית", callback_data="lang_he"),
-         InlineKeyboardButton(text="🇬🇧 English", callback_data="lang_en")],
-        [InlineKeyboardButton(text="🇷🇺 Русский", callback_data="lang_ru"),
-         InlineKeyboardButton(text="🇸🇦 العربية", callback_data="lang_ar")],
-        [InlineKeyboardButton(text="🇪🇸 Español", callback_data="lang_es"),
-         InlineKeyboardButton(text="🇫🇷 Français", callback_data="lang_fr")],
+        [InlineKeyboardButton(text="🇮🇱 עברית", callback_data="lang_he"), InlineKeyboardButton(text="🇬🇧 English", callback_data="lang_en")],
+        [InlineKeyboardButton(text="🇷🇺 Русский", callback_data="lang_ru"), InlineKeyboardButton(text="🇸🇦 العربية", callback_data="lang_ar")],
+        [InlineKeyboardButton(text="🇪🇸 Español", callback_data="lang_es"), InlineKeyboardButton(text="🇫🇷 Français", callback_data="lang_fr")],
         [InlineKeyboardButton(text="🇾🇮 יידיש", callback_data="lang_yi")],
         [InlineKeyboardButton(text="📱 מחשבון ויזואלי", callback_data="open_miniapp")],
         [InlineKeyboardButton(text="📋 תפריט מלא", callback_data="show_menu")]

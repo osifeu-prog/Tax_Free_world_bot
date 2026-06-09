@@ -22,7 +22,7 @@ import bot.routers as routers_pkg
 bot = Bot(token=settings.bot_token)
 dp = Dispatcher()
 
-# ===== טעינה דינמית של כל הראוטרים (ללא כפילויות) =====
+# טעינה דינמית
 loaded_routers = []
 for _, modname, _ in pkgutil.iter_modules(routers_pkg.__path__):
     try:
@@ -34,7 +34,6 @@ for _, modname, _ in pkgutil.iter_modules(routers_pkg.__path__):
     except Exception as e:
         logger.error(f"❌ Failed to load router {modname}: {e}")
 
-# ===== פקודות בוט =====
 async def set_default_commands():
     commands = [
         BotCommand(command="start", description="🚀 דף הבית"),
@@ -51,57 +50,45 @@ async def set_default_commands():
         BotCommand(command="miniapp", description="📱 מחשבון ויזואלי"),
     ]
     await bot.set_my_commands(commands, scope=BotCommandScopeDefault())
-    await bot.set_chat_menu_button(
-        menu_button=MenuButtonDefault()
-    )
+    await bot.set_chat_menu_button(menu_button=MenuButtonDefault())
 
-# ===== אתחול מסד נתונים =====
 async def init_db():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     logger.info("✅ Database initialized")
 
-# ===== פונקציית בריאות =====
 async def health_check(request):
     return web.Response(text="OK")
 
 async def index_handler(request):
     return web.FileResponse("public/landing/index.html")
 
-# ===== שרת HTTP =====
 async def start_http():
     app = web.Application()
     app.router.add_post("/api/auth/register", register)
     app.router.add_post("/api/auth/login", login)
     app.router.add_get("/health", health_check)
     app.router.add_get("/", index_handler)
-
     static_path = Path(__file__).parent.parent / "public"
     if static_path.is_dir():
         app.router.add_static('/landing/', path=str(static_path / 'landing'), show_index=True)
         logger.info("✅ Static files served from /landing")
-
     runner = web.AppRunner(app)
     await runner.setup()
     site = web.TCPSite(runner, host="0.0.0.0", port=8080)
     await site.start()
     logger.info("🌐 HTTP Server running on 8080")
 
-# ===== Polling =====
 async def start_polling():
     await bot.delete_webhook(drop_pending_updates=True)
     await set_default_commands()
     logger.info("🤖 Starting polling...")
     await dp.start_polling(bot)
 
-# ===== Main =====
 async def main():
     await init_db()
     logger.info(f"🚀 Bot started in {time.time() - start_time:.2f}s")
-    await asyncio.gather(
-        start_polling(),
-        start_http()
-    )
+    await asyncio.gather(start_polling(), start_http())
 
 if __name__ == "__main__":
     asyncio.run(main())
