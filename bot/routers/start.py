@@ -15,58 +15,26 @@ async def get_lang(user_id: int) -> str:
 
 @router.message(Command("start"))
 async def cmd_start(msg: Message):
-    user_id = msg.from_user.id
-    lang = await get_lang(user_id)
-    
-    welcome_text = translator.t(lang, "welcome_message", name=msg.from_user.first_name or "חבר")
+    lang = await get_lang(msg.from_user.id)
+    name = msg.from_user.first_name or "חבר"
+    text = translator.t(lang, "welcome_message", name=name)
     
     kb = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="📱 מחשבון ויזואלי", callback_data="open_miniapp")],
-        [InlineKeyboardButton(text="💰 חיסכון & תקציב", callback_data="go_budget"),
+        [InlineKeyboardButton(text="💰 חיסכון", callback_data="go_budget"),
          InlineKeyboardButton(text="📊 פנסיה", callback_data="go_pension")],
         [InlineKeyboardButton(text="🎓 אקדמיה", callback_data="go_academy"),
          InlineKeyboardButton(text="🏙️ TON City", callback_data="go_city")],
-        [InlineKeyboardButton(text="🔗 הפניה + בונוס", callback_data="go_ref"),
-         InlineKeyboardButton(text="💖 תרומה", callback_data="go_donate")],
-        [InlineKeyboardButton(text="🌐 שנה שפה", callback_data="change_lang")]
+        [InlineKeyboardButton(text="🔗 הפניה", callback_data="go_ref"),
+         InlineKeyboardButton(text="💖 תרומה", callback_data="go_donate")]
     ])
-    
-    await msg.answer(welcome_text, parse_mode="HTML", reply_markup=kb)
+    await msg.answer(text, parse_mode="HTML", reply_markup=kb)
 
 @router.callback_query(F.data == "open_miniapp")
 async def open_miniapp(callback: CallbackQuery):
-    await callback.answer("📱 פותח מחשבון ויזואלי...")
+    await callback.answer("📱 פותח מחשבון...")
 
 @router.callback_query(F.data.startswith("go_"))
-async def handle_quick_menu(callback: CallbackQuery):
-    action = callback.data[3:]
-    lang = await get_lang(callback.from_user.id)
-    handlers = {
-        "budget": ("bot.routers.budget", "cmd_budget"),
-        "pension": ("bot.routers.pension", "cmd_pension"),
-        "academy": ("bot.routers.academy", "cmd_academy"),
-        "city": ("bot.routers.city", "cmd_city"),
-        "ref": ("bot.routers.ref", "cmd_ref"),
-        "donate": ("bot.routers.donate", "cmd_donate")
-    }
-    if action in handlers:
-        try:
-            module_name, func_name = handlers[action]
-            module = __import__(module_name, fromlist=[func_name])
-            func = getattr(module, func_name)
-            await func(callback.message)
-        except:
-            await callback.message.answer("⚠️ הפיצ'ר זמנית לא זמין")
-    await callback.answer()
-
-@router.callback_query(F.data == "change_lang")
-async def change_lang(callback: CallbackQuery):
-    kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🇮🇱 עברית", callback_data="lang_he"),
-         InlineKeyboardButton(text="🇬🇧 English", callback_data="lang_en")],
-        [InlineKeyboardButton(text="🇷🇺 Русский", callback_data="lang_ru"),
-         InlineKeyboardButton(text="🇪🇸 Español", callback_data="lang_es")],
-        [InlineKeyboardButton(text="🇫🇷 Français", callback_data="lang_fr")]
-    ])
-    await callback.message.edit_text("🌍 בחר שפה:", reply_markup=kb)
-    await callback.answer()
+async def quick_menu(callback: CallbackQuery):
+    await callback.answer("🔄 מעביר...")
+    # כאן אפשר להוסיף קריאה לפקודות אחרות
