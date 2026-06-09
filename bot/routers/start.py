@@ -34,11 +34,9 @@ async def set_language(callback: CallbackQuery):
             session.add(User(telegram_id=uid, language=lang))
         await session.commit()
     await callback.message.edit_text(translator.t(lang, "welcome_message"), parse_mode="HTML")
-    # שלח תפריט
     from bot.routers.menu import get_menu_text
     menu_text = await get_menu_text(lang)
     await callback.message.answer(menu_text, parse_mode="HTML")
-    # כפתור סיור
     tour_kb = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text=translator.t(lang, "tour_title"), callback_data="start_tour")]
     ])
