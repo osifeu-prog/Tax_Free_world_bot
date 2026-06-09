@@ -1,50 +1,27 @@
 ﻿from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
+from bot.command_registry import get_commands_by_category
+from bot.services.translation_service import translator
 from bot.database.session import async_session
 from bot.database.models import User
 from sqlalchemy import select
-from bot.services.translation_service import translator
 
 router = Router()
 
-async def get_user_lang(uid: int) -> str:
+async def get_lang(uid):
     async with async_session() as s:
         u = (await s.execute(select(User).where(User.telegram_id == uid))).scalar_one_or_none()
         return u.language if u and u.language else "he"
 
 @router.message(Command("help"))
 async def cmd_help(msg: Message):
-    lang = await get_user_lang(msg.from_user.id)
-    title = translator.t(lang, "help_title")
-    body = f"""
-{translator.t(lang, 'savings')}
-/start /compare /wallet /why /business /budget /profile /expenses /addexpense /setincome /delexpense
-
-{translator.t(lang, 'household')}
-/household /shopping /chore /familygroup
-
-{translator.t(lang, 'academy')}
-/crypto /cbdc /decentral /socio /anti /edu /academy_extended /academy_nft /academy_dao /vision /spark /academia
-
-{translator.t(lang, 'community')}
-/ref /qr /stats /top /tip /contact /faq /daily /mydata /gift
-
-{translator.t(lang, 'tools')}
-/miniapp /keyboard /hide /ask /feedback /help /quiz /menu /language
-
-{translator.t(lang, 'permissions')}
-/requestadmin /addadmin /login /setpassword /removeadmin
-
-{translator.t(lang, 'admin')}
-/admin /export /debug /addgroup /groups /report /setrole /seed_courses
-
-{translator.t(lang, 'profile')}
-/myrole /mydata /setwallet
-
-📊 <b>פנסיה</b>
-/pension
-💖 <b>תרומה</b>
-/donate
-"""
-    await msg.answer(f"{title}\n\n{body}", parse_mode="HTML")
+    lang = await get_lang(msg.from_user.id)
+    cats = get_commands_by_category()
+    text = f"📖 <b>{translator.t(lang, 'help_title')}</b>\n\n"
+    for cat, cmds in cats.items():
+        text += f"<b>{cat}</b>\n"
+        for c in cmds:
+            text += f"/{c} - {translator.t(lang, f'cmd_{c}')}\n"
+        text += "\n"
+    await msg.answer(text, parse_mode="HTML")

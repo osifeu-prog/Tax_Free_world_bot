@@ -12,26 +12,126 @@ from bot.database.models import Base
 from bot.database.session import engine
 from bot.migrate_i18n import add_lang_columns
 import bot.routers as routers_pkg
-from bot.routers import init_events
-from bot.routers import market
-from bot.routers import city
-from bot.routers import report_pension
-from bot.routers import course_progress
-from bot.routers import family_finance
-from bot.routers import morning
-from bot.routers import loadplan
-from bot.routers import saveplan
-from bot.routers import setwallet
-from bot.routers import familygroup
-from bot.routers import pension
-from bot.routers import seed_courses
-from bot.routers import academy
-from bot.routers import language
-from bot.routers import profile_citizen
-from bot.routers import translations_status
-from bot.routers import seed_kg
-from bot.routers import report
-from bot.routers import menu
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
+
+
+# import all routers dynamically
+import pkgutil, importlib, bot.routers
+for _, module_name, _ in pkgutil.iter_modules(bot.routers.__path__):
+    importlib.import_module(f"bot.routers.{module_name}")
 
 HEALTH_PATH = "/health"
 
@@ -196,6 +296,7 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 
 
