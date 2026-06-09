@@ -25,8 +25,8 @@ async def cmd_start(msg: Message):
          InlineKeyboardButton(text="📊 פנסיה", callback_data="menu_pension")],
         [InlineKeyboardButton(text="🎓 אקדמיה", callback_data="menu_academy"),
          InlineKeyboardButton(text="🏙️ TON City", callback_data="menu_city")],
-        [InlineKeyboardButton(text="🔗 הפניה", callback_data="menu_ref"),
-         InlineKeyboardButton(text="💖 תרומה", callback_data="menu_donate")],
+        [InlineKeyboardButton(text="🇾🇮 יידיש", callback_data="lang_yi"),
+         InlineKeyboardButton(text="🇮🇱 עברית", callback_data="lang_he")],
         [InlineKeyboardButton(text="📋 תפריט מלא", callback_data="show_menu")]
     ])
     await msg.answer(text, parse_mode="HTML", reply_markup=kb)
