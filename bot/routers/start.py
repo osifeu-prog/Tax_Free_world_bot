@@ -1,4 +1,4 @@
-﻿from aiogram import Router, F
+from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from bot.database.session import async_session
@@ -42,7 +42,8 @@ async def set_language(callback: CallbackQuery):
         if u: u.language = lang
         else: s.add(User(telegram_id=uid, language=lang))
         await s.commit()
-    await callback.message.answer(f'✅ שפה שונתה ל-{lang}')
+    await callback.message.answer(welcome, parse_mode='HTML')
+    await callback.answer(f'✅ שפה שונתה ל-{lang}')
     await callback.answer()
 
 @router.callback_query(F.data.startswith('go_'))
