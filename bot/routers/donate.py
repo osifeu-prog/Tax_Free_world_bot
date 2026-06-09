@@ -1,19 +1,41 @@
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.filters import Command
-from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
+from bot.database.session import async_session
+from bot.database.models import User
+from sqlalchemy import select
+
 router = Router()
+
+async def get_lang(uid):
+    async with async_session() as s:
+        u = (await s.execute(select(User).where(User.telegram_id == uid))).scalar_one_or_none()
+        return u.language if u and u.language else 'he'
 
 @router.message(Command('donate'))
 async def cmd_donate(msg: Message):
+    lang = await get_lang(msg.from_user.id)
+    try:
+        from bot.services.translation_service import translator
+        title = translator.t(lang, 'donate_title')
+        body = translator.t(lang, 'donate_text')
+        btn50 = translator.t(lang, 'donate_50')
+        btn100 = translator.t(lang, 'donate_100')
+        btn500 = translator.t(lang, 'donate_500')
+        btnTON = translator.t(lang, 'donate_ton')
+    except:
+        title = '💖 תמכו בנו!'
+        body = 'הקהילה חופשית  תרומתך עוזרת.'
+        btn50, btn100, btn500, btnTON = '50 ', '100 ', '500 ', 'TON'
+
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text='💚 50 ', callback_data='donate_50'), InlineKeyboardButton(text='💚 100 ', callback_data='donate_100')],
-        [InlineKeyboardButton(text='💎 500 ', callback_data='donate_500'), InlineKeyboardButton(text='💎 TON', callback_data='donate_ton')],
+        [InlineKeyboardButton(text=btn50, callback_data='donate_50'),
+         InlineKeyboardButton(text=btn100, callback_data='donate_100')],
+        [InlineKeyboardButton(text=btn500, callback_data='donate_500'),
+         InlineKeyboardButton(text=btnTON, callback_data='donate_ton')],
         [InlineKeyboardButton(text='🔗 שתף עם חברים', switch_inline_query='תרום ל-TON Israel!')]
     ])
-    await msg.answer(
-        '<b>💖 תמכו בנו!</b>\n\nTON Israel היא קהילה חופשית ללא מימון ממשלתי.\nהתרומה שלך עוזרת לנו להמשיך לפתח.\n\n👛 ארנק TON:\n<code>UQCr743gEr_nqV_0SBkSp3CtYS_15R3LDLBvLmKeEv7XdGvp</code>\n\nℹ️ איך לתרום?\n1️⃣ פתח ארנק TON (Tonkeeper, Tonhub).\n2️⃣ העבר סכום לכתובת למעלה.\n3️⃣ שלח /qr לקבלת קוד QR לשיתוף.\n\n🙏 כל תרומה עוזרת!',
-        parse_mode='HTML', reply_markup=kb
-    )
+    await msg.answer(f'<b>{title}</b>\n\n{body}', parse_mode='HTML', reply_markup=kb)
 
 @router.callback_query(F.data.startswith('donate_'))
 async def donate_handler(callback: CallbackQuery):
