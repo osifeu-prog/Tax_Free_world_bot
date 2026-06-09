@@ -1,4 +1,4 @@
-﻿import json
+import json
 # -*- coding: utf-8 -*-
 # bot/routers/admin_groups.py
 from aiogram import Router, F

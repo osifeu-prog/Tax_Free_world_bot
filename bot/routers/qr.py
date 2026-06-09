@@ -1,4 +1,4 @@
-﻿from aiogram import Router
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message, BufferedInputFile
 from bot.services.event_logger import log_event

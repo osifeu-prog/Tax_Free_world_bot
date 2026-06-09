@@ -17,7 +17,6 @@ async def get_lang(user_id: int) -> str:
 async def cmd_start(msg: Message):
     lang = await get_lang(msg.from_user.id)
     name = msg.from_user.first_name or "חבר"
-    
     text = translator.t(lang, "welcome_message", name=name)
     
     kb = InlineKeyboardMarkup(inline_keyboard=[
@@ -30,25 +29,4 @@ async def cmd_start(msg: Message):
          InlineKeyboardButton(text="💖 תרומה", callback_data="menu_donate")],
         [InlineKeyboardButton(text="📋 תפריט מלא", callback_data="show_menu")]
     ])
-    
     await msg.answer(text, parse_mode="HTML", reply_markup=kb)
-
-@router.callback_query(F.data.startswith("menu_"))
-async def handle_menu(callback: CallbackQuery):
-    action = callback.data[5:]
-    await callback.answer("🔄 מעביר...")
-    if action == "budget":
-        await callback.message.answer("💰 /budget - מחשבון תקציב")
-    elif action == "pension":
-        await callback.message.answer("📊 /pension - מחשבון פנסיה")
-    elif action == "academy":
-        await callback.message.answer("🎓 /academy - אקדמיה")
-    elif action == "city":
-        await callback.message.answer("🏙️ /city - TON City")
-    elif action == "ref":
-        await callback.message.answer("🔗 /ref - הפניה")
-    elif action == "donate":
-        await callback.message.answer("💖 /donate - תרומה")
-    elif action == "show_menu":
-        from bot.routers.menu import cmd_menu
-        await cmd_menu(callback.message)

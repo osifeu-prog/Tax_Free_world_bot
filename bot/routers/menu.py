@@ -7,7 +7,7 @@ router = Router()
 @router.message(Command("menu"))
 async def cmd_menu(msg: Message):
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="💰 חיסכון & תקציב", callback_data="cmd_budget")],
+        [InlineKeyboardButton(text="💰 חיסכון", callback_data="cmd_budget")],
         [InlineKeyboardButton(text="📊 פנסיה", callback_data="cmd_pension")],
         [InlineKeyboardButton(text="🎓 אקדמיה", callback_data="cmd_academy")],
         [InlineKeyboardButton(text="🏙️ TON City", callback_data="cmd_city")],
@@ -15,4 +15,4 @@ async def cmd_menu(msg: Message):
         [InlineKeyboardButton(text="💖 תרומה", callback_data="cmd_donate")],
         [InlineKeyboardButton(text="❔ עזרה", callback_data="cmd_help")]
     ])
-    await msg.answer("📋 <b>תפריט ראשי</b>", parse_mode="HTML", reply_markup=kb)
+    await msg.answer("📋 <b>תפריט ראשי TON Israel</b>\nבחר פעולה:", parse_mode="HTML", reply_markup=kb)
