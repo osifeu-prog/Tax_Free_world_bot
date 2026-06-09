@@ -1,17 +1,24 @@
 from aiogram import Router, F
 from aiogram.filters import Command
-from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from bot.database.session import async_session
 from bot.database.models import User
 from sqlalchemy import select
+from bot.services.translation_service import translator
 
 router = Router()
 
-LANG_MAP = {'he': '🇮🇱 עברית', 'en': '🇬🇧 English', 'ru': '🇷🇺 Русский',
-            'ar': '🇸🇦 العربية', 'es': '🇪🇸 Español', 'fr': '🇫🇷 Français',
-            'yi': '🇾🇮 יידיש'}
+LANG_MAP = {
+    'he': '🇮🇱 עברית',
+    'en': '🇬🇧 English',
+    'ru': '🇷🇺 Русский',
+    'ar': '🇸🇦 العربية',
+    'es': '🇪🇸 Español',
+    'fr': '🇫🇷 Français',
+    'yi': '🇾🇮 יידיש'
+}
 
-async def get_lang(uid):
+async def get_lang(uid: int) -> str:
     async with async_session() as s:
         u = (await s.execute(select(User).where(User.telegram_id == uid))).scalar_one_or_none()
         return u.language if u and u.language else 'he'
@@ -21,11 +28,10 @@ async def cmd_start(msg: Message):
     lang = await get_lang(msg.from_user.id)
     name = msg.from_user.first_name or 'חבר'
     try:
-        from bot.services.translation_service import translator
         welcome = translator.t(lang, 'welcome_message', name=name)
     except Exception:
-        welcome = f'ברוך הבא {name} ל- TON City!
-בחר שפה:'
+        welcome = f'ברוך הבא {name} ל- TON City!\nבחר שפה:'
+
     kb = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text=LANG_MAP['he'], callback_data='lang_he'),
          InlineKeyboardButton(text=LANG_MAP['en'], callback_data='lang_en')],
@@ -51,7 +57,6 @@ async def set_language(callback: CallbackQuery):
             session.add(User(telegram_id=uid, language=lang))
         await session.commit()
     try:
-        from bot.services.translation_service import translator
         welcome = translator.t(lang, 'welcome_message')
     except Exception:
         welcome = 'השפה שונתה בהצלחה!'
