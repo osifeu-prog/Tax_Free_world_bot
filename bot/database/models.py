@@ -1,4 +1,4 @@
-﻿from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Float, DateTime, Boolean, Text, UniqueConstraint
+from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Float, DateTime, Boolean, Text, UniqueConstraint
 # -*- coding: utf-8 -*-
 from sqlalchemy.orm import DeclarativeBase
 import datetime

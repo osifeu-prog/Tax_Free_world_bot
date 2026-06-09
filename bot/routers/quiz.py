@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import random
 from aiogram import Router
 from aiogram.filters import Command
