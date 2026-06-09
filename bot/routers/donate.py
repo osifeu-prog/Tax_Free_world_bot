@@ -1,6 +1,7 @@
 ﻿from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
+from bot.services.event_logger import log_event
 
 router = Router()
 
@@ -19,3 +20,4 @@ async def cmd_donate(msg: Message):
         "🙏 כל תרומה עוזרת לנו להמשיך לפתח!",
         parse_mode="HTML"
     )
+    await log_event(msg.from_user.id, "donate_view")

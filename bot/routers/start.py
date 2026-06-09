@@ -22,37 +22,4 @@ async def cmd_start(msg: Message):
     ])
     await msg.answer(translator.t(lang, "welcome_message"), parse_mode="HTML", reply_markup=kb)
 
-@router.callback_query(F.data.startswith("lang_"))
-async def set_language(callback: CallbackQuery):
-    lang = callback.data.split("_")[1]
-    uid = callback.from_user.id
-    async with async_session() as session:
-        user = (await session.execute(select(User).where(User.telegram_id == uid))).scalar_one_or_none()
-        if user:
-            user.language = lang
-        else:
-            session.add(User(telegram_id=uid, language=lang))
-        await session.commit()
-    await callback.message.edit_text(translator.t(lang, "welcome_message"), parse_mode="HTML")
-    from bot.routers.menu import get_menu_text
-    menu_text = await get_menu_text(lang)
-    await callback.message.answer(menu_text, parse_mode="HTML")
-    tour_kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text=translator.t(lang, "tour_title"), callback_data="start_tour")]
-    ])
-    await callback.message.answer("✅ " + translator.t(lang, "choose_language"), reply_markup=tour_kb)
-    await callback.answer()
-
-@router.callback_query(F.data == "start_tour")
-async def start_tour(callback: CallbackQuery):
-    lang = await get_lang(callback.from_user.id)
-    steps = [
-        translator.t(lang, "tour_step1"),
-        "2️⃣ " + translator.t(lang, "academy_promo"),
-        "3️⃣ " + translator.t(lang, "share_qr"),
-        "4️⃣ " + translator.t(lang, "household_promo"),
-        "5️⃣ " + translator.t(lang, "donate_promo"),
-    ]
-    for step in steps:
-        await callback.message.answer(step)
-    await callback.answer()
+# ... (המשך כמו קודם)

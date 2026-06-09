@@ -1,6 +1,7 @@
 ﻿from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message, BufferedInputFile
+from bot.services.event_logger import log_event
 import qrcode
 from io import BytesIO
 
@@ -18,3 +19,4 @@ async def cmd_qr(msg: Message):
         photo=BufferedInputFile(buf.read(), filename="qr.png"),
         caption=f"🔗 קישור ההפניה שלך:\n{deep_link}\n\nשלם ב‑TON, Bitcoin, USDT!"
     )
+    await log_event(user_id, "qr_view")
