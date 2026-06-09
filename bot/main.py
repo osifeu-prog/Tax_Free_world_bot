@@ -78,16 +78,16 @@ async def start_http():
     await site.start()
     logger.info("🌐 HTTP Server running on 8080")
 
-async def start_polling():
+async def start_webhook():
     await bot.delete_webhook(drop_pending_updates=True)
     await set_default_commands()
     logger.info("🤖 Starting polling...")
-    await dp.start_polling(bot)
+    # polling replaced by webhook
 
 async def main():
     await init_db()
     logger.info(f"🚀 Bot started in {time.time() - start_time:.2f}s")
-    await asyncio.gather(start_polling(), start_http())
+    await asyncio.gather(start_webhook(), start_http())
 
 if __name__ == "__main__":
     asyncio.run(main())
