@@ -22,7 +22,7 @@ import bot.routers as routers_pkg
 bot = Bot(token=settings.bot_token)
 dp = Dispatcher()
 
-# ===== טעינה דינמית של כל הראוטרים (ללא כפילויות) =====
+# טעינה דינמית של routers
 loaded_routers = []
 for _, modname, _ in pkgutil.iter_modules(routers_pkg.__path__):
     try:
@@ -34,7 +34,6 @@ for _, modname, _ in pkgutil.iter_modules(routers_pkg.__path__):
     except Exception as e:
         logger.error(f"❌ Failed to load router {modname}: {e}")
 
-# ===== פקודות בוט =====
 async def set_default_commands():
     commands = [
         BotCommand(command="start", description="🚀 דף הבית"),
@@ -47,7 +46,6 @@ async def set_default_commands():
         BotCommand(command="report", description="📊 דוח מערכת"),
         BotCommand(command="help", description="❔ עזרה"),
         BotCommand(command="ref", description="🔗 הפניה"),
-        BotCommand(command="qr", description="📱 QR"),
         BotCommand(command="language", description="🌐 שפה"),
         BotCommand(command="miniapp", description="📱 מחשבון ויזואלי"),
     ]
@@ -59,20 +57,17 @@ async def set_default_commands():
         )
     )
 
-# ===== אתחול מסד נתונים =====
 async def init_db():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-    logger.info("Database initialized")
+    logger.info("✅ Database initialized")
 
-# ===== פונקציית בריאות =====
 async def health_check(request):
     return web.Response(text="OK")
 
 async def index_handler(request):
     return web.FileResponse("public/landing/index.html")
 
-# ===== שרת HTTP =====
 async def start_http():
     app = web.Application()
     app.router.add_post("/api/auth/register", register)
@@ -91,15 +86,14 @@ async def start_http():
     await site.start()
     logger.info("🌐 HTTP Server running on 8080")
 
-# ===== Polling =====
 async def start_polling():
     await bot.delete_webhook(drop_pending_updates=True)
+    await set_default_commands()
+    logger.info("🤖 Starting polling...")
     await dp.start_polling(bot)
 
-# ===== Main =====
 async def main():
     await init_db()
-    await set_default_commands()
     logger.info(f"🚀 Bot started in {time.time() - start_time:.2f}s")
     await asyncio.gather(
         start_polling(),
