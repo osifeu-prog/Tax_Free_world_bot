@@ -26,8 +26,7 @@ async def pension_start(callback: CallbackQuery):
 @router.message(lambda msg: msg.text and msg.text.isdigit())
 async def pension_steps(msg: Message):
     uid = msg.from_user.id
-    if uid not in user_data:
-        return
+    if uid not in user_data: return
     step = user_data[uid]['step']
     val = int(msg.text)
     if step == 'age':
@@ -44,9 +43,6 @@ async def pension_steps(msg: Message):
         result = calc_budgetary(d) if d['emp'] == 'public' else calc_accumulating(d)
         tax = estimate_tax(result['monthly_pension'])
         await msg.answer(
-            f'<b>📊 תוצאת פנסיה</b>\n━━━━━━━━━━\n'
-            f'💰 קצבה חודשית: {result["monthly_pension"]:,.0f} \n'
-            f'🧾 מס: {tax:,.0f} \n'
-            f'💵 נטו: {result["monthly_pension"]-tax:,.0f} ',
+            f'<b>📊 תוצאת פנסיה</b>\n━━━━━━━━━━\n💰 קצבה חודשית: {result["monthly_pension"]:,.0f} \n🧾 מס: {tax:,.0f} \n💵 נטו: {result["monthly_pension"]-tax:,.0f} ',
             parse_mode='HTML'
         )

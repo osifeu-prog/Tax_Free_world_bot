@@ -1,12 +1,9 @@
 import asyncio, os, pkgutil, importlib, time
 from pathlib import Path
-
 start_time = time.time()
-
 from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand, BotCommandScopeDefault, MenuButtonCommands
 from aiohttp import web
-
 from bot.config import settings
 from bot.api.email_routes import register, login
 from bot.utils.logger import logger
@@ -17,11 +14,10 @@ import bot.routers as routers_pkg
 bot = Bot(token=settings.bot_token)
 dp = Dispatcher()
 
-# טעינת start ראשון (חייב)
+# start  טעון ראשון, חובה
 from bot.routers.start import router as start_router
 dp.include_router(start_router)
 
-# שאר הראוטרים
 for _, modname, _ in pkgutil.iter_modules(routers_pkg.__path__):
     if modname == 'start': continue
     try:

@@ -1,4 +1,4 @@
-﻿import os
+import os
 
 def write_clean(path, content):
     """כותב קובץ UTF-8 ללא BOM"""

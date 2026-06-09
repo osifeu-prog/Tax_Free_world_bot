@@ -1,4 +1,4 @@
-﻿import os
+import os
 
 def remove_bom(file_path):
     with open(file_path, 'rb') as f:

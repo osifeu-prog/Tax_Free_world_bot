@@ -1,4 +1,4 @@
-﻿import os
+import os
 import json
 from google.cloud import translate_v2 as translate
 

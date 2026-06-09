@@ -6,22 +6,12 @@ router = Router()
 @router.message(Command('donate'))
 async def cmd_donate(msg: Message):
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text='💚 50 ', callback_data='donate_50'),
-         InlineKeyboardButton(text='💚 100 ', callback_data='donate_100')],
-        [InlineKeyboardButton(text='💎 500 ', callback_data='donate_500'),
-         InlineKeyboardButton(text='💎 TON', callback_data='donate_ton')],
+        [InlineKeyboardButton(text='💚 50 ', callback_data='donate_50'), InlineKeyboardButton(text='💚 100 ', callback_data='donate_100')],
+        [InlineKeyboardButton(text='💎 500 ', callback_data='donate_500'), InlineKeyboardButton(text='💎 TON', callback_data='donate_ton')],
         [InlineKeyboardButton(text='🔗 שתף עם חברים', switch_inline_query='תרום ל-TON Israel!')]
     ])
     await msg.answer(
-        '<b>💖 תמכו בנו!</b>\n\n'
-        'TON Israel היא קהילה חופשית ללא מימון ממשלתי.\n'
-        'התרומה שלך עוזרת לנו להמשיך לפתח.\n\n'
-        '👛 ארנק TON:\n<code>UQCr743gEr_nqV_0SBkSp3CtYS_15R3LDLBvLmKeEv7XdGvp</code>\n\n'
-        'ℹ️ איך לתרום?\n'
-        '1️⃣ פתח ארנק TON (Tonkeeper, Tonhub).\n'
-        '2️⃣ העבר סכום לכתובת למעלה.\n'
-        '3️⃣ שלח /qr לקבלת קוד QR לשיתוף.\n\n'
-        '🙏 כל תרומה עוזרת!',
+        '<b>💖 תמכו בנו!</b>\n\nTON Israel היא קהילה חופשית ללא מימון ממשלתי.\nהתרומה שלך עוזרת לנו להמשיך לפתח.\n\n👛 ארנק TON:\n<code>UQCr743gEr_nqV_0SBkSp3CtYS_15R3LDLBvLmKeEv7XdGvp</code>\n\nℹ️ איך לתרום?\n1️⃣ פתח ארנק TON (Tonkeeper, Tonhub).\n2️⃣ העבר סכום לכתובת למעלה.\n3️⃣ שלח /qr לקבלת קוד QR לשיתוף.\n\n🙏 כל תרומה עוזרת!',
         parse_mode='HTML', reply_markup=kb
     )
 

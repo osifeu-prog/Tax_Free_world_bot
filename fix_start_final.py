@@ -1,4 +1,4 @@
-﻿import os
+import os
 
 def main():
     path = r"D:\PROJ\TON-Israel\bot\routers\start.py"

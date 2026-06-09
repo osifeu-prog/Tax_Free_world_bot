@@ -1,4 +1,4 @@
-﻿import json, os, sys
+import json, os, sys
 
 errors = 0
 warnings = 0  # שגיאות "מותרות" (Settings / DB מקומי)

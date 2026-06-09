@@ -1,4 +1,4 @@
-﻿import asyncio
+import asyncio
 from sqlalchemy import text
 from bot.database.session import engine, async_session
 from bot.database.models import User

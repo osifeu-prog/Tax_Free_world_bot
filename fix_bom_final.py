@@ -1,4 +1,4 @@
-﻿import os
+import os
 
 BASE = os.path.dirname(__file__)
 
