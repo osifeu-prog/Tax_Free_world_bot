@@ -1,4 +1,4 @@
-﻿import openai
+import openai
 from bot.config import settings
 import json, asyncio
 

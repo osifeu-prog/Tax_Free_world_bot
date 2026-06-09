@@ -1,4 +1,4 @@
-﻿def calc_accumulating(profile: dict) -> dict:
+def calc_accumulating(profile: dict) -> dict:
     """חישוב פנסיה צוברת"""
     years = profile["retirement_age"] - profile["age_now"]
     monthly_contrib = profile["salary_bruto"] * (

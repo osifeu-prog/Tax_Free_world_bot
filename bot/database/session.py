@@ -1,4 +1,4 @@
-﻿from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 
 # SQLite  קובץ יישמר ב-volume (תת-תיקייה data)
 DATABASE_URL = "sqlite+aiosqlite:////app/bot/database/data/bot.db"

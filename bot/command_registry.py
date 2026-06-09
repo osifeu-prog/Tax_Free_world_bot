@@ -1,4 +1,4 @@
-﻿# bot/command_registry.py
+# bot/command_registry.py
 # Registry of all bot commands, used for /help, /menu, i18n, logging.
 
 COMMANDS = {

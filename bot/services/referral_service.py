@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import random, string
 from sqlalchemy import select, func
 from bot.database.models import Referral, User, CommandLog

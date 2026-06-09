@@ -1,4 +1,4 @@
-﻿from aiohttp import web
+from aiohttp import web
 import traceback, hashlib, os
 from bot.database.session import engine
 from sqlalchemy import text

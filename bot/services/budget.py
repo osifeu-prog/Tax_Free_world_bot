@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 BUDGET_CATEGORIES = {
     "שכירות/משכנתא": 0.30,
     "חשבונות": 0.10,

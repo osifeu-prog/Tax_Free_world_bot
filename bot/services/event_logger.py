@@ -1,4 +1,4 @@
-﻿from bot.database.session import async_session
+from bot.database.session import async_session
 from sqlalchemy import text
 
 async def log_event(user_id: int, event_type: str, payload: str = None):

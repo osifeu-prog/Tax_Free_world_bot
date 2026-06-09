@@ -1,4 +1,4 @@
-﻿# family_calc.py  מנוע תקציב משפחתי
+# family_calc.py  מנוע תקציב משפחתי
 
 def add_income(profile: dict, amount: float):
     profile["monthly_income"] = amount

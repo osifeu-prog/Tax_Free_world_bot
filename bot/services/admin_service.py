@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from sqlalchemy import select, delete
 from bot.database.session import async_session
 from bot.database.models import Admin

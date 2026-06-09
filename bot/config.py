@@ -1,4 +1,4 @@
-﻿from dotenv import load_dotenv
+from dotenv import load_dotenv
 load_dotenv()
 # -*- coding: utf-8 -*-
 from pydantic_settings import BaseSettings

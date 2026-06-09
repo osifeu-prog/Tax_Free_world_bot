@@ -1,4 +1,4 @@
-﻿import json, os
+import json, os
 
 TRANSLATIONS = {}
 _locale_dir = os.path.join(os.path.dirname(__file__), '..', 'locales')

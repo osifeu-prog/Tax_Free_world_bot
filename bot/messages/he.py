@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 MESSAGES = {
     "start": '''<b>🚀 שלום {user}! כמה כסף אתה זורק לפח?</b>
 

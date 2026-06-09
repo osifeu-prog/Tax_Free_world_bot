@@ -1,4 +1,4 @@
-﻿from bot.database.session import engine
+from bot.database.session import engine
 from sqlalchemy import text
 import asyncio
 

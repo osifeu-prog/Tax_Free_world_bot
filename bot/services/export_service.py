@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import csv, io
 from sqlalchemy import select
 from bot.database.session import async_session

@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 FEES = {
     "ביט":     {"percent": 0.015, "fixed": 0.0},
     "פייבוקס": {"percent": 0.018, "fixed": 0.5},

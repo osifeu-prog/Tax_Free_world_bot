@@ -1,4 +1,4 @@
-﻿import time, platform, os, datetime
+import time, platform, os, datetime
 from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message

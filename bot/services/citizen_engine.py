@@ -1,4 +1,4 @@
-﻿import json, datetime
+import json, datetime
 from sqlalchemy import select, func
 from bot.database.session import async_session
 from bot.database.models import Event

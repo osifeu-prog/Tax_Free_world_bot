@@ -1,4 +1,4 @@
-﻿import json
+import json
 # -*- coding: utf-8 -*-
 from aiogram import Router, F
 from aiogram.filters import Command

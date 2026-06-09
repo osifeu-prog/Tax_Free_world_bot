@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from sqlalchemy import select, delete, func, func, func
 from bot.database.models import UserProfile, UserExpense
 from bot.database.session import async_session
