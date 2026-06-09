@@ -8,7 +8,7 @@ from pathlib import Path
 start_time = time.time()
 
 from aiogram import Bot, Dispatcher
-from aiogram.types import BotCommand, BotCommandScopeDefault, WebAppInfo, MenuButtonWebApp
+from aiogram.types import BotCommand, BotCommandScopeDefault, WebAppInfo, MenuButtonDefault()
 from aiohttp import web
 
 from bot.config import settings
@@ -51,7 +51,7 @@ async def set_default_commands():
     ]
     await bot.set_my_commands(commands, scope=BotCommandScopeDefault())
     await bot.set_chat_menu_button(
-        menu_button=MenuButtonWebApp(
+        menu_button=MenuButtonDefault()
             text="📱 מחשבון ויזואלי",
             web_app=WebAppInfo(url="https://taxfreeworldbot-production.up.railway.app/landing/miniapp.html")
         )
