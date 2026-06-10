@@ -22,30 +22,24 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 async def fix_missing_columns():
-    """הוסף עמודות חסרות לטבלה users (role, wallet_address, points, etc)"""
+    """הוסף עמודות חסרות לטבלה users"""
     async with engine.begin() as conn:
-        # בדיקת עמודות קיימות
         pragma = await conn.execute(text("PRAGMA table_info(users)"))
         columns = [row[1] for row in pragma.fetchall()]
-        logger.info(f"Existing columns: {columns}")
+        logger.info(f"Existing columns in users: {columns}")
         
-        # הוסף role אם חסר
         if "role" not in columns:
             await conn.execute(text("ALTER TABLE users ADD COLUMN role VARCHAR(20) DEFAULT 'user'"))
             logger.info("✅ column 'role' added")
-        # הוסף wallet_address
         if "wallet_address" not in columns:
             await conn.execute(text("ALTER TABLE users ADD COLUMN wallet_address VARCHAR(255)"))
             logger.info("✅ column 'wallet_address' added")
-        # הוסף points
         if "points" not in columns:
             await conn.execute(text("ALTER TABLE users ADD COLUMN points FLOAT DEFAULT 0"))
             logger.info("✅ column 'points' added")
-        # הוסף last_gift_date
         if "last_gift_date" not in columns:
             await conn.execute(text("ALTER TABLE users ADD COLUMN last_gift_date VARCHAR(50)"))
             logger.info("✅ column 'last_gift_date' added")
-        # הוסף gift_shares_today
         if "gift_shares_today" not in columns:
             await conn.execute(text("ALTER TABLE users ADD COLUMN gift_shares_today INTEGER DEFAULT 0"))
             logger.info("✅ column 'gift_shares_today' added")

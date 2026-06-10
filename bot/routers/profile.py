@@ -6,18 +6,22 @@ from bot.database.session import engine
 
 router = Router()
 
+def safe_format(value, default="—"):
+    """המרה בטוחה של מספר לפורמט עם פסיקים, מחזירה default אם None"""
+    return f"{value:,.0f}" if value is not None else default
+
 @router.message(Command('profile'))
 async def cmd_profile(msg: Message):
     uid = msg.from_user.id
     async with engine.begin() as conn:
-        # User basics  תיקון: קודם await ואז fetchone
+        # פרטי משתמש בסיסיים
         user_result = await conn.execute(
             sa_text("SELECT language, points, wallet_address, created_at FROM users WHERE telegram_id=:uid"),
             {"uid": uid}
         )
         user = user_result.fetchone()
 
-        # Pension
+        # נתוני פנסיה (יכולים להיות None)
         pension_result = await conn.execute(
             sa_text("SELECT result_monthly, result_capital FROM pension_profiles WHERE telegram_id=:uid ORDER BY id DESC LIMIT 1"),
             {"uid": uid}
@@ -33,7 +37,11 @@ async def cmd_profile(msg: Message):
     created = str(user[3])[:10] if user and user[3] else "לא ידוע"
 
     txt = f"👤 <b>פרופיל  {msg.from_user.first_name}</b>\n━━━━━━━━━━━━━━━━━━\n🌐 שפה: {lang}\n⭐️ נקודות: {points}\n👛 ארנק: {wallet}...\n📅 הצטרף: {created}\n\n"
-    if pension:
-        txt += f"📊 <b>פנסיה</b>\n• חודשית: {pension[0]:,.0f} \n• צבורה: {pension[1]:,.0f} \n\n"
+    
+    if pension and (pension[0] is not None or pension[1] is not None):
+        monthly = safe_format(pension[0])
+        capital = safe_format(pension[1])
+        txt += f"📊 <b>פנסיה</b>\n• חודשית: {monthly} \n• צבורה: {capital} \n\n"
+    
     txt += f"🏙️ <b>TON City</b>\n• תושבים: {total_users}\n\n/pension | /donate | /setwallet"
     await msg.answer(txt, parse_mode='HTML')
