@@ -3,10 +3,12 @@ import logging
 import os
 from sqlalchemy import text
 from aiogram import Bot, Dispatcher
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
+
 from bot.database.session import engine
 from bot.database.models import Base
 
-# ייבוא הראוטרים שלך
 from bot.routers.start import router as start_router
 from bot.routers.profile import router as profile_router
 from bot.routers.donate import router as donate_router
@@ -22,50 +24,43 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 async def fix_missing_columns():
-    """הוסף עמודות חסרות לטבלה users"""
     async with engine.begin() as conn:
         pragma = await conn.execute(text("PRAGMA table_info(users)"))
         columns = [row[1] for row in pragma.fetchall()]
-        logger.info(f"Existing columns in users: {columns}")
-        
-        if "role" not in columns:
-            await conn.execute(text("ALTER TABLE users ADD COLUMN role VARCHAR(20) DEFAULT 'user'"))
-            logger.info("✅ column 'role' added")
-        if "wallet_address" not in columns:
-            await conn.execute(text("ALTER TABLE users ADD COLUMN wallet_address VARCHAR(255)"))
-            logger.info("✅ column 'wallet_address' added")
-        if "points" not in columns:
-            await conn.execute(text("ALTER TABLE users ADD COLUMN points FLOAT DEFAULT 0"))
-            logger.info("✅ column 'points' added")
-        if "last_gift_date" not in columns:
-            await conn.execute(text("ALTER TABLE users ADD COLUMN last_gift_date VARCHAR(50)"))
-            logger.info("✅ column 'last_gift_date' added")
-        if "gift_shares_today" not in columns:
-            await conn.execute(text("ALTER TABLE users ADD COLUMN gift_shares_today INTEGER DEFAULT 0"))
-            logger.info("✅ column 'gift_shares_today' added")
+        logger.info(f"Existing columns: {columns}")
+
+        needed = {
+            "role": "VARCHAR(20) DEFAULT 'user'",
+            "wallet_address": "VARCHAR(255)",
+            "points": "FLOAT DEFAULT 0",
+            "last_gift_date": "VARCHAR(50)",
+            "gift_shares_today": "INTEGER DEFAULT 0"
+        }
+        for col, definition in needed.items():
+            if col not in columns:
+                await conn.execute(text(f"ALTER TABLE users ADD COLUMN {col} {definition}"))
+                logger.info(f"✅ Column '{col}' added")
 
 async def init_db():
     logger.info("🔧 Initializing database tables...")
     try:
         async with engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
-        logger.info("✅ All database tables initialized successfully!")
+        logger.info("✅ Tables initialized")
         await fix_missing_columns()
     except Exception as e:
-        logger.error(f"❌ Failed to init tables: {e}")
+        logger.error(f"❌ DB init error: {e}")
 
 async def main():
     await init_db()
-    bot = Bot(token=BOT_TOKEN, parse_mode="HTML")
+    bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher()
-    
     dp.include_router(start_router)
     dp.include_router(profile_router)
     dp.include_router(donate_router)
     dp.include_router(pension_router)
     dp.include_router(useless_router)
     dp.include_router(admin_router)
-    
     logger.info("🚀 Bot starting polling...")
     await dp.start_polling(bot)
 
