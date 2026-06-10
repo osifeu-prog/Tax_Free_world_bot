@@ -19,3 +19,4 @@ async def cmd_start(msg: Message):
             return
     await msg.answer("👋 ברוכים הבאים ל-Tax Free World!\n\nנתחיל בתהליך הכרות קצר...")
     await start_onboarding(msg)
+
