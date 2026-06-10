@@ -23,7 +23,7 @@ async def home(msg: Message):
 @router.message(F.text == "💰 Wealth")
 async def wealth(msg: Message):
     kb = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text="📊 תקציב"), KeyboardButton(text="📈 פנסיה")],[KeyboardButton(text="➕ הוצאה"), KeyboardButton(text="💰 הכנסה")],[KeyboardButton(text="🔙 חזור")]], resize_keyboard=True)
-    await msg.answer("💰 <b>מרכז העושר</b>\n\nבחר/י:", parse_mode="HTML", reply_markup=kb)
+    await msg.answer("💰 <b>Wealth Center</b>\n\nבחר/י:", parse_mode="HTML", reply_markup=kb)
 
 @router.message(F.text == "📊 תקציב")
 async def budget_btn(msg: Message): await msg.answer("/budget")
@@ -48,3 +48,4 @@ async def profile_short(msg: Message): await msg.answer("/profile")
 async def settings(msg: Message): await msg.answer("/language")
 @router.message(F.text == "🔙 חזור")
 async def back_home(msg: Message): await home(msg)
+

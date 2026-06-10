@@ -8,20 +8,20 @@ router = Router()
 
 def get_role_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🎓 סטודנט / מתחיל", callback_data="role_student")],
-        [InlineKeyboardButton(text="💼 עצמאי / יזם", callback_data="role_business")],
-        [InlineKeyboardButton(text="👨👩👧 משפחה", callback_data="role_family")],
-        [InlineKeyboardButton(text="📈 משקיע", callback_data="role_investor")],
-        [InlineKeyboardButton(text="🌍 אחר", callback_data="role_other")]
+        [InlineKeyboardButton(text="🎓 Student / Beginner", callback_data="role_student")],
+        [InlineKeyboardButton(text="💼 Self-employed / Entrepreneur", callback_data="role_business")],
+        [InlineKeyboardButton(text="👨👩👧 Family", callback_data="role_family")],
+        [InlineKeyboardButton(text="📈 Investor", callback_data="role_investor")],
+        [InlineKeyboardButton(text="🌍 Other", callback_data="role_other")]
     ])
 
 def get_goals_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="💰 לחסוך יותר", callback_data="goal_save")],
-        [InlineKeyboardButton(text="📚 ללמוד פיננסים", callback_data="goal_learn")],
-        [InlineKeyboardButton(text="🚀 להשקיע", callback_data="goal_invest")],
-        [InlineKeyboardButton(text="🤝 להצטרף לקהילה", callback_data="goal_community")],
-        [InlineKeyboardButton(text="🎯 הכל", callback_data="goal_all")]
+        [InlineKeyboardButton(text="💰 Save more money", callback_data="goal_save")],
+        [InlineKeyboardButton(text="📚 Learn finance", callback_data="goal_learn")],
+        [InlineKeyboardButton(text="🚀 Invest better", callback_data="goal_invest")],
+        [InlineKeyboardButton(text="🤝 Join community", callback_data="goal_community")],
+        [InlineKeyboardButton(text="🎯 All of the above", callback_data="goal_all")]
     ])
 
 @router.message(Command("start"))
@@ -40,9 +40,9 @@ async def cmd_start(msg: Message):
             return
 
     await msg.answer(
-        "🌍 <b>ברוכים הבאים ל-Tax Free World 2.0!</b>\n\n"
-        "אנחנו כאן כדי לעזור לך ללמוד, לחסוך, להשקיע ולהתקדם כלכלית.\n\n"
-        "כדי להתחיל אישית - בחר את התפקיד שלך:",
+        "🌍 <b>Welcome to Tax Free World 2.0!</b>\n\n"
+        "We're here to help you learn, save, invest, and build a better financial future.\n\n"
+        "To personalize your experience, please choose your role:",
         parse_mode="HTML",
         reply_markup=get_role_keyboard()
     )
@@ -60,7 +60,7 @@ async def process_role(callback: CallbackQuery):
         await s.commit()
     
     await callback.message.edit_text(
-        "✅ תודה! עכשיו ספר לנו מה המטרה העיקרית שלך:",
+        "✅ Thank you! Now tell us your main goal:",
         reply_markup=get_goals_keyboard()
     )
     await callback.answer()
@@ -78,9 +78,9 @@ async def process_goal(callback: CallbackQuery):
         await s.commit()
     
     await callback.message.edit_text(
-        "🎉 <b>ה-Onboarding הושלם!</b>\n\n"
-        "ברוך הבא למסע שלך לעולם כלכלי חופשי.\n\n"
-        "שלח /home כדי להיכנס לדשבורד האישי.",
+        "🎉 <b>Onboarding completed!</b>\n\n"
+        "Welcome to your journey toward financial freedom.\n\n"
+        "Send /home to enter your personal dashboard.",
         parse_mode="HTML"
     )
     await callback.answer()
