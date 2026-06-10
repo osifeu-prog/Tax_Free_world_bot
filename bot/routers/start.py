@@ -1,4 +1,5 @@
-﻿from aiogram import Router, F
+﻿from bot.routers.dashboard_simple import home_keyboard
+from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
 from bot.database.session import async_session
@@ -63,3 +64,4 @@ async def profile_short(msg: Message): await msg.answer("/profile")
 async def settings(msg: Message): await msg.answer("/language")
 @router.message(F.text == "🔙 חזור")
 async def back_home(msg: Message): await home(msg)
+
