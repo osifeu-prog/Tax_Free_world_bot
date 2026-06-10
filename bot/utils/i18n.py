@@ -11,8 +11,11 @@ class I18n:
         locales_dir = Path("bot/locales")
         for file in locales_dir.glob("*.json"):
             lang = file.stem
-            with open(file, encoding='utf-8') as f:
-                self.translations[lang] = json.load(f)
+            try:
+                with open(file, encoding='utf-8-sig') as f:  # utf-8-sig removes BOM
+                    self.translations[lang] = json.load(f)
+            except Exception as e:
+                print(f"Error loading {file}: {e}")
     
     def get(self, key: str, lang: str = "en", **kwargs) -> str:
         text = self.translations.get(lang, self.translations.get("en", {})).get(key, f"[{key}]")
