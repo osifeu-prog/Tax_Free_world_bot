@@ -3,7 +3,6 @@ from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 
 router = Router()
-
 WALLET = "UQCr743gEr_nqV_0SBkSp3CtYS_15R3LDLBvLmKeEv7XdGvp"
 
 @router.message(Command('donate'))
@@ -19,7 +18,6 @@ async def cmd_donate(msg: Message):
         "3️⃣ שלח /qr לקבלת קוד QR לשיתוף.\n\n"
         "🙏 כל תרומה עוזרת!"
     )
-
     kb = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text='💚 50 ', callback_data='donate_50'),
          InlineKeyboardButton(text='💚 100 ', callback_data='donate_100')],
@@ -27,7 +25,6 @@ async def cmd_donate(msg: Message):
          InlineKeyboardButton(text='💎 TON', callback_data='donate_ton')],
         [InlineKeyboardButton(text='🔗 שתף עם חברים', switch_inline_query='תרום ל-TON Israel!')]
     ])
-
     await msg.answer(body, parse_mode='HTML', reply_markup=kb)
 
 @router.callback_query(F.data.startswith('donate_'))
