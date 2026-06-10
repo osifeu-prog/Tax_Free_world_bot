@@ -18,8 +18,7 @@ async def cmd_pension(msg: Message):
 @router.callback_query(F.data.startswith('emp_'))
 async def emp_chosen(callback: CallbackQuery):
     emp = callback.data.split('_')[1]
-    uid = callback.from_user.id
-    user_data[uid] = {'emp': emp, 'step': 'age'}
+    user_data[callback.from_user.id] = {'emp': emp, 'step': 'age'}
     await callback.message.answer('🎂 מה גילך?')
     await callback.answer()
 
@@ -31,27 +30,17 @@ async def steps(msg: Message):
     step = d['step']
     val = int(msg.text)
     if step == 'age':
-        d['age_now'] = val
-        d['step'] = 'salary'
-        await msg.answer('💰 מה השכר שלך?')
+        d['age_now'] = val; d['step'] = 'salary'
+        await msg.answer('💰 מה השכר החודשי?')
     elif step == 'salary':
-        d['salary_bruto'] = val
-        d['step'] = 'retire'
+        d['salary_bruto'] = val; d['step'] = 'retire'
         await msg.answer('👴 באיזה גיל תפרוש?')
     elif step == 'retire':
         d['retirement_age'] = val
         profile = user_data.pop(uid)
-        # וידוא כל המפתחות
-        if 'age_now' not in profile: profile['age_now'] = 30
-        if 'retirement_age' not in profile: profile['retirement_age'] = 67
-        if 'salary_bruto' not in profile: profile['salary_bruto'] = 5000
-        
+        profile.setdefault('age_now', 30)
+        profile.setdefault('retirement_age', 67)
+        profile.setdefault('salary_bruto', 5000)
         result = calc_budgetary(profile) if profile['emp'] == 'public' else calc_accumulating(profile)
         tax = estimate_tax(result['monthly_pension'])
-        await msg.answer(
-            f'📊 <b>תוצאת פנסיה</b>\n━━━━━━━━━━\n'
-            f'💰 קצבה: {result["monthly_pension"]:,.0f} \n'
-            f'🧾 מס: {tax:,.0f} \n'
-            f'💵 נטו: {result["monthly_pension"]-tax:,.0f} ',
-            parse_mode='HTML'
-        )
+        await msg.answer(f'📊 <b>תוצאת פנסיה</b>\n━━━━━━━━━━\n💰 קצבה: {result["monthly_pension"]:,.0f} \n🧾 מס: {tax:,.0f} \n💵 נטו: {result["monthly_pension"]-tax:,.0f} ', parse_mode='HTML')

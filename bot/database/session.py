@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 
 # SQLite  קובץ יישמר ב-volume (תת-תיקייה data)
-DATABASE_URL = "sqlite+aiosqlite:////app/bot/database/data/bot.db"
+DATABASE_URL = "postgresql+asyncpg://$DATABASE_URL
 
 engine = create_async_engine(DATABASE_URL, echo=False)
 async_session = async_sessionmaker(engine, expire_on_commit=False)
