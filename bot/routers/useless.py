@@ -63,7 +63,7 @@ EXISTENTIAL = [
 def get_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
-            [KeyboardButton(text='🔴 לחץ AI'), KeyboardButton(text='📋 כל הפקודות')],
+            [KeyboardButton(text='🤖 יוסלס AI'), KeyboardButton(text='📋 כל הפקודות')],
             [KeyboardButton(text='📊 פנסיה'), KeyboardButton(text='💖 תרומה')]
         ],
         resize_keyboard=True
@@ -71,23 +71,18 @@ def get_keyboard():
 
 @router.message(Command('useless'))
 async def cmd_useless(msg: Message):
-    await msg.answer(
-        '🤖 <b>היי! אני בוט מיותר.</b>\n\nאני לא בנוי לעזור, לא בנוי לתרום, רק להגיב.',
-        parse_mode='HTML', reply_markup=get_keyboard()
-    )
+    await msg.answer('🤖 <b>היי! אני בוט מיותר.</b>\n\nאני לא בנוי לעזור, לא בנוי לתרום, רק להגיב.', parse_mode='HTML', reply_markup=get_keyboard())
 
-AI_BTNS = ['🔴 לחץ AI','🔴 Press AI','🔴 اضغط AI','🔴 Нажми AI','🔴 Presiona AI','🔴 Appuyez AI','🔴 דרוק AI']
+AI_BTNS = ['🤖 יוסלס AI','🤖 Useless AI','🤖 يوسلس AI','🤖 Бесполезный ИИ','🤖 IA Inútil','🤖 IA Inutile','🤖 ארויסגעווארפן אי']
 @router.message(F.text.in_(AI_BTNS))
 async def reply_ai(msg: Message):
     await msg.answer(random.choice(EXISTENTIAL))
 
 @router.message(F.text.in_(['📊 פנסיה','📊 Pension','📊 تقاعد','📊 Пенсия','📊 Pensión','📊 Pension','📊 פענסיע']))
-async def reply_pension(msg: Message):
-    await msg.answer('/pension')
+async def reply_pension(msg: Message): await msg.answer('/pension')
 
 @router.message(F.text.in_(['💖 תרומה','💖 Donate','💖 تبرع','💖 Пожертвовать','💖 Donar','💖 Faire un don','💖 שטיצן']))
-async def reply_donate(msg: Message):
-    await msg.answer('/donate')
+async def reply_donate(msg: Message): await msg.answer('/donate')
 
 @router.message(F.text.in_(['📋 כל הפקודות','📋 All commands','📋 جميع الأوامر','📋 Все команды','📋 Todos los comandos','📋 Toutes les commandes','📋 אלע קאמאנדעס']))
 async def reply_help(msg: Message):
