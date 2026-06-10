@@ -18,7 +18,8 @@ async def cmd_start(msg: Message):
             await home(msg)
             return
     await msg.answer("👋 ברוכים הבאים ל-Tax Free World!\n\nנתחיל בתהליך הכרות קצר...")
-    await start_onboarding(msg)
+    from bot.routers.welcome_onboarding import cmd_start as onboarding_start`n    await onboarding_start(msg)
+
 
 
 

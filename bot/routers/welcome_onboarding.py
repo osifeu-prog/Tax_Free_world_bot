@@ -58,28 +58,7 @@ async def process_role(callback: CallbackQuery):
         )
         await s.commit()
     
-    await callback.message.edit_text("✅ תודה! עכשיו בחר את המטרה העיקרית שלך:", reply_markup=get_goals_keyboard())
+    await callback.message.edit_text("✅ תודה! עכשיו בחר את המטרה העיקרית שלך:")
     await callback.answer()
 
-def get_goals_keyboard():
-    return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="💰 לחסוך יותר", callback_data="goal_save")],
-        [InlineKeyboardButton(text="📚 ללמוד פיננסים", callback_data="goal_learn")],
-        [InlineKeyboardButton(text="🚀 להשקיע", callback_data="goal_invest")],
-        [InlineKeyboardButton(text="🤝 להצטרף לקהילה", callback_data="goal_community")]
-    ])
-
-@router.callback_query(F.data.startswith("goal_"))
-async def process_goal(callback: CallbackQuery):
-    goal = callback.data.split("_")[1]
-    uid = callback.from_user.id
-    
-    async with async_session() as s:
-        await s.execute(
-            text("UPDATE user_preferences SET goal = :goal, onboarding_completed = 1 WHERE user_id = :uid"),
-            {"goal": goal, "uid": uid}
-        )
-        await s.commit()
-    
-    await callback.message.edit_text("🎉 ההרשמה הושלמה! שלח /home כדי להיכנס לדשבורד.", parse_mode="HTML")
-    await callback.answer()
+# TODO: להוסיף process_goal בהמשך
