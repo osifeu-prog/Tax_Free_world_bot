@@ -188,3 +188,30 @@ class GameStats(Base):
     slots_spins_total = Column(Integer, default=0)
     slots_daily_spins = Column(Integer, default=0)
     slots_last_spin_at = Column(DateTime, nullable=True)
+
+class Expense(Base):
+    __tablename__ = "expenses"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(BigInteger, index=True)
+    amount = Column(Float)
+    category = Column(String(50))
+    description = Column(Text)
+    created_at = Column(DateTime, server_default=func.now())
+    receipt_url = Column(String(500), nullable=True)   # URL לתמונה שמורה (עתידי)
+
+class Income(Base):
+    __tablename__ = "incomes"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(BigInteger, index=True)
+    amount = Column(Float)
+    category = Column(String(50))
+    description = Column(Text)
+    created_at = Column(DateTime, server_default=func.now())
+
+class Category(Base):
+    __tablename__ = "categories"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(BigInteger, index=True)
+    name = Column(String(50))
+    type = Column(String(10))    # 'expense' or 'income'
+    created_at = Column(DateTime, server_default=func.now())
