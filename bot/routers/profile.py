@@ -10,32 +10,30 @@ router = Router()
 async def cmd_profile(msg: Message):
     uid = msg.from_user.id
     async with engine.begin() as conn:
-        # User basics
-        user = await conn.execute(
-            sa_text("SELECT language, points, wallet_address, created_at FROM users WHERE telegram_id=:uid"), 
+        # User basics  תיקון: קודם await ואז fetchone
+        user_result = await conn.execute(
+            sa_text("SELECT language, points, wallet_address, created_at FROM users WHERE telegram_id=:uid"),
             {"uid": uid}
-        ).fetchone()
+        )
+        user = user_result.fetchone()
 
         # Pension
-        pension = await conn.execute(
-            sa_text("SELECT result_monthly, result_capital FROM pension_profiles WHERE telegram_id=:uid ORDER BY id DESC LIMIT 1"), 
+        pension_result = await conn.execute(
+            sa_text("SELECT result_monthly, result_capital FROM pension_profiles WHERE telegram_id=:uid ORDER BY id DESC LIMIT 1"),
             {"uid": uid}
-        ).fetchone()
+        )
+        pension = pension_result.fetchone()
 
-        total_users = (await conn.execute(sa_text("SELECT COUNT(*) FROM users")).fetchone())[0]
+        total_users_result = await conn.execute(sa_text("SELECT COUNT(*) FROM users"))
+        total_users = total_users_result.fetchone()[0]
 
     lang = user[0] if user else "he"
     points = user[1] if user else 0
-    wallet = (user[2] or "לא הוגדר")[:12] if user and user[2] else "לא הוגדר"
-    created = str(user[3])[:10] if user and user[3] else "חדש"
+    wallet = (user[2] or "לא הוגדר")[:12] if user else "לא הוגדר"
+    created = str(user[3])[:10] if user and user[3] else "לא ידוע"
 
-    txt = f"👤 <b>פרופיל {msg.from_user.first_name}</b>\n\n"
-    txt += f"🌐 שפה: {lang}\n💎 נקודות: {points}\n👛 ארנק: {wallet}...\n📅 הצטרף: {created}\n\n"
-
+    txt = f"👤 <b>פרופיל  {msg.from_user.first_name}</b>\n━━━━━━━━━━━━━━━━━━\n🌐 שפה: {lang}\n⭐️ נקודות: {points}\n👛 ארנק: {wallet}...\n📅 הצטרף: {created}\n\n"
     if pension:
-        txt += f"📊 פנסיה חודשית: {pension[0]:,.0f} \n💰 הון פנסיוני: {pension[1]:,.0f} \n\n"
-
-    txt += f"🏙️ TON City: {total_users} תושבים\n\n"
-    txt += "/pension | /donate | /setwallet"
-
+        txt += f"📊 <b>פנסיה</b>\n• חודשית: {pension[0]:,.0f} \n• צבורה: {pension[1]:,.0f} \n\n"
+    txt += f"🏙️ <b>TON City</b>\n• תושבים: {total_users}\n\n/pension | /donate | /setwallet"
     await msg.answer(txt, parse_mode='HTML')
