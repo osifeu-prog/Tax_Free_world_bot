@@ -20,6 +20,9 @@ from bot.routers.admin import router as admin_router
 from bot.routers.menu import router as menu_router
 from bot.routers.budget import router as budget_router
 from bot.routers.wallet import router as wallet_router
+from bot.routers.welcome_onboarding import router as onboarding_router
+from bot.routers.gamification import router as gamification_router
+from bot.routers.webapp import router as webapp_router
 from bot.routers.dashboard_simple import router as dashboard_simple_router
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -59,5 +62,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 

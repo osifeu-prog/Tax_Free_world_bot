@@ -224,3 +224,5 @@ class UserPreference(Base):
     onboarding_completed = Column(Boolean, default=False)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
+    # הרחבות Onboarding
+    # goal: 'save', 'invest', 'learn', 'community'

@@ -1,46 +1,42 @@
-from aiogram import Router
+﻿from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message
 from sqlalchemy import text
-from bot.database.session import engine, async_session
-from bot.database.models import User
-import random, datetime
+from bot.database.session import engine
+from datetime import datetime, timezone
+import json
 
 router = Router()
 
-@router.message(Command('daily'))
-async def cmd_daily(msg: Message):
-    uid = msg.from_user.id
-    async with async_session() as s:
-        u = (await s.execute(select(User).where(User.telegram_id == uid))).scalar_one_or_none()
-        if not u:
-            await msg.answer("תחילה שלח /start")
-            return
-        points = getattr(u, 'points', 0) or 0
-        u.points = points + random.randint(1, 10)
-        await s.commit()
-        await msg.answer(f"🎮 <b>סטריק יומי!</b>\n\nהרווחת {u.points - points} נקודות חסרות תועלת.\nסה\"כ: {u.points} נקודות.\n\n🤷♂️ אפשר להשתמש בהן לכלום.")
-
-@router.message(Command('top'))
-async def cmd_top(msg: Message):
+async def add_xp(user_id: int, xp_gain: int):
     async with engine.begin() as conn:
-        rows = await conn.run_sync(lambda c: c.execute(text("SELECT telegram_id, points FROM users ORDER BY points DESC LIMIT 10")).fetchall())
-    text = "🏆 <b>לוח מובילים  חסרי תועלת</b>\n━━━━━━━━━━━━━━━━\n"
-    for i, row in enumerate(rows, 1):
-        text += f"{i}. {row[0]}  {row[1]} נק'\n"
-    text += "\n💡 רוצה לעלות? שתף עם חברים."
-    await msg.answer(text, parse_mode='HTML')
-
-@router.message(Command('ref'))
-async def cmd_ref(msg: Message):
+        # עדכון XP
+        await conn.execute(text("UPDATE users SET xp = xp + :xp WHERE telegram_id = :uid"), {"xp": xp_gain, "uid": user_id})
+        # בדיקת עליית רמה (נוסחה פשוטה: level = floor( (xp / 100) ^ 0.5 ) + 1)
+        res = await conn.execute(text("SELECT xp FROM users WHERE telegram_id = :uid"), {"uid": user_id})
+        xp = res.scalar()
+        level = int((xp / 100) ** 0.5) + 1
+        await conn.execute(text("UPDATE users SET level = :lvl WHERE telegram_id = :uid"), {"lvl": level, "uid": user_id})
+        # עדכון streak (אם היה פעיל היום)
+        today = datetime.now(timezone.utc).date()
+        last_active_res = await conn.execute(text("SELECT last_active FROM users WHERE telegram_id = :uid"), {"uid": user_id})
+        last_active = last_active_res.scalar()
+        if last_active:
+            last_date = last_active.date()
+            if (today - last_date).days == 1:
+                await conn.execute(text("UPDATE users SET streak_days = streak_days + 1 WHERE telegram_id = :uid"), {"uid": user_id})
+            elif (today - last_date).days > 1:
+                await conn.execute(text("UPDATE users SET streak_days = 1 WHERE telegram_id = :uid"), {"uid": user_id})
+        else:
+            await conn.execute(text("UPDATE users SET streak_days = 1 WHERE telegram_id = :uid"), {"uid": user_id})
+        await conn.execute(text("UPDATE users SET last_active = :now WHERE telegram_id = :uid"), {"now": datetime.now(timezone.utc), "uid": user_id})
+@router.message(Command("stats"))
+async def show_stats(msg: Message):
     uid = msg.from_user.id
-    ref_link = f"https://t.me/Tax_Free_world_bot?start=ref{uid}"
     async with engine.begin() as conn:
-        count = await conn.run_sync(lambda c: c.execute(text("SELECT COUNT(*) FROM users WHERE referred_by=:uid"), {"uid": uid}).fetchone()[0])
-    await msg.answer(
-        f"🔗 <b>הקוד האישי שלך</b>\n\n"
-        f"{ref_link}\n\n"
-        f"👥 הצטרפו דרכך: {count} חסרי תועלת\n"
-        f"💡 שתף עם חברים  ממילא אין לך מה להפסיד.",
-        parse_mode='HTML'
-    )
+        res = await conn.execute(text("SELECT xp, level, streak_days FROM users WHERE telegram_id = :uid"), {"uid": uid})
+        row = res.fetchone()
+        if row:
+            await msg.answer(f"🏆 <b>הסטטיסטיקות שלך</b>\n⭐ XP: {row[0]}\n📈 רמה: {row[1]}\n🔥 רצף יומי: {row[2]}", parse_mode="HTML")
+        else:
+            await msg.answer("לא נמצאו נתונים.")

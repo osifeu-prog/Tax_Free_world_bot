@@ -1,58 +1,50 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
+﻿<!DOCTYPE html>
+<html lang="he">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TON Israel  תתחיל לחסוך היום</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Tax Free World</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f5f5f5; margin: 0; color: #222; line-height: 1.6; }
-        header { background: linear-gradient(135deg, #0088CC, #00A3E0); color: white; text-align: center; padding: 2rem; }
-        header h1 { margin: 0; font-size: 2.5rem; }
-        header span { color: #FFD700; }
-        header p { font-size: 1.2rem; margin-top: 0.5rem; }
-        .container { max-width: 700px; margin: 2rem auto; padding: 0 1rem; }
-        .card { background: white; border-radius: 16px; padding: 2rem; margin: 1.5rem 0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .btn { display: inline-block; background: #0088CC; color: white; padding: 0.8rem 2rem; border-radius: 30px; text-decoration: none; font-weight: bold; margin-top: 1rem; transition: background 0.3s; }
-        .btn:hover { background: #005f8a; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
-        .stat { text-align: center; padding: 1rem; background: #f0f4f8; border-radius: 12px; }
-        .stat .num { font-size: 2rem; font-weight: bold; color: #0088CC; }
-        footer { text-align: center; padding: 2rem; color: #666; font-size: 0.9rem; }
+        body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background: var(--tg-theme-bg-color, #ffffff); color: var(--tg-theme-text-color, #000000); margin: 0; padding: 20px; direction: rtl; text-align: right; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .card { background: var(--tg-theme-secondary-bg-color, #f5f5f5); border-radius: 16px; padding: 16px; margin-bottom: 16px; transition: transform 0.1s ease; }
+        .card:active { transform: scale(0.98); }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .btn { background: var(--tg-theme-button-color, #2481cc); color: var(--tg-theme-button-text-color, #ffffff); border: none; border-radius: 12px; padding: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: opacity 0.2s; width: 100%; }
+        .btn:active { opacity: 0.8; }
+        h1 { font-size: 1.5rem; margin-top: 0; }
+        .status { background: var(--tg-theme-destructive-bg-color, #e24c4c); color: white; padding: 10px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
     </style>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <header>
-        <h1>💰 <span>TON</span> Israel</h1>
-        <p>משפחה ישראלית חוסכת בממוצע <strong>2,500</strong> בשנה  בעזרת מערכת תשלומים חכמה.</p>
-        <a href="https://t.me/Tax_Free_world_bot" class="btn">🚀 התחילו לחסוך עכשיו</a>
-    </header>
-    <div class="container">
-        <div class="card">
-            <h2>📊 איך זה עובד?</h2>
-            <p>הבוט שלנו בטלגרם משווה עמלות בין <b>ביט, פייבוקס ו- TON</b>, ומראה לך בדיוק כמה תוכל לחסוך.</p>
-            <div class="grid">
-                <div class="stat"><div class="num">1.5%</div> עמלת ביט</div>
-                <div class="stat"><div class="num">1.8%+</div> עמלת פייבוקס</div>
-                <div class="stat" style="background:#d4edda"><div class="num">0.1%</div> עמלת TON</div>
-                <div class="stat"><div class="num">840</div> חיסכון שנתי ממוצע</div>
-            </div>
-            <a href="https://t.me/Tax_Free_world_bot" class="btn">📩 פתח את הבוט</a>
-        </div>
-        <div class="card">
-            <h2>🏠 כלים לניהול כלכלת הבית</h2>
-            <ul>
-                <li>🧮 מחשבון עמלות  גלה כמה אתה משלם</li>
-                <li>📊 מחשבון תקציב משפחתי  ראה לאן הכסף הולך</li>
-                <li>💡 טיפים יומיים לחיסכון</li>
-                <li>🏆 לוח מובילים  שתף והפץ</li>
-            </ul>
-        </div>
-        <div class="card" style="text-align: center;">
-            <p>ℹ️ <b>גילוי נאות:</b> הבוט חינוכי בלבד, לא ייעוץ פיננסי.</p>
-        </div>
+<div class="container">
+    <h1>🏠 Tax Free World</h1>
+    <div id="status" class="status" style="background: var(--tg-theme-accent-text-color, #3390ec);">טוען...</div>
+    <div class="grid">
+        <div class="card" data-cmd="wealth">💰 Wealth</div>
+        <div class="card" data-cmd="academy">🎓 Academy</div>
+        <div class="card" data-cmd="ai">🤖 AI</div>
+        <div class="card" data-cmd="community">🌍 Community</div>
+        <div class="card" data-cmd="rewards">🎁 Rewards</div>
+        <div class="card" data-cmd="profile">👤 Profile</div>
+        <div class="card" data-cmd="settings">⚙️ Settings</div>
+        <div class="card" data-cmd="home">🏠 Home</div>
     </div>
-    <footer>
-        © 2026 TON Israel  כל הזכויות שמורות. פותח ע"י <a href="https://t.me/+1ANn25HeVBoxNmRk">SPARK מערכות</a>
-    </footer>
+</div>
+<script>
+    const webApp = window.Telegram.WebApp;
+    webApp.ready();
+    webApp.expand();
+    const userId = webApp.initDataUnsafe.user?.id;
+    document.getElementById('status').innerText = `שלום ${webApp.initDataUnsafe.user?.first_name || 'אורח'}!`;
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', () => {
+            const cmd = card.dataset.cmd;
+            webApp.sendData(JSON.stringify({ command: cmd }));
+            webApp.close();
+        });
+    });
+</script>
 </body>
 </html>
