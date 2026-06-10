@@ -20,6 +20,11 @@ from bot.routers.admin import router as admin_router
 from bot.routers.menu import router as menu_router
 from bot.routers.budget import router as budget_router
 
+from bot.routers.welcome import router as welcome_router
+from bot.routers.dashboard import router as dashboard_router
+from bot.routers.help_enhanced import router as help_router
+from bot.middlewares.admin_only import AdminOnlyMiddleware
+
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 if not BOT_TOKEN:
     raise ValueError("❌ BOT_TOKEN not set")
@@ -65,6 +70,8 @@ async def main():
 
     dp = Dispatcher()
 
+    dp.message.middleware(AdminOnlyMiddleware())
+
     dp.include_router(start_router)
     dp.include_router(profile_router)
     dp.include_router(donate_router)
@@ -73,6 +80,9 @@ async def main():
     dp.include_router(admin_router)
     dp.include_router(menu_router)
     dp.include_router(budget_router)
+    dp.include_router(welcome_router)
+    dp.include_router(dashboard_router)
+    dp.include_router(help_router)
 
     logger.info("🚀 Bot starting polling...")
     await dp.start_polling(bot)
