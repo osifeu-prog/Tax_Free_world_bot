@@ -18,6 +18,8 @@ from bot.routers.pension import router as pension_router
 from bot.routers.useless import router as useless_router
 from bot.routers.admin import router as admin_router
 from bot.routers.menu import router as menu_router
+from bot.routers.admin_stats import router as admin_stats_router
+
 
 # ניסיון לייבא routers נוספים (אם קיימים)
 try:
@@ -101,6 +103,7 @@ async def main():
     dp.include_router(useless_router)
     dp.include_router(admin_router)
     dp.include_router(menu_router)
+    dp.include_router(admin_stats_router)
 
     if BUDGET_EXISTS: dp.include_router(budget_router)
     if EXPENSE_EXISTS: dp.include_router(expense_router)
@@ -113,3 +116,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
