@@ -17,13 +17,25 @@ from bot.routers.donate import router as donate_router
 from bot.routers.pension import router as pension_router
 from bot.routers.useless import router as useless_router
 from bot.routers.admin import router as admin_router
-from bot.routers.ocr import router as ocr_router
 
+# נסה לייבא routers נוספים אם הם קיימים
+try:
+    from bot.routers.budget import router as budget_router
+    BUDGET_EXISTS = True
+except ImportError:
+    BUDGET_EXISTS = False
 
-# הוסף כאן routers נוספים אם הם קיימים
-# from bot.routers.budget import router as budget_router
-# from bot.routers.expense import router as expense_router
-# from bot.routers.academy import router as academy_router
+try:
+    from bot.routers.expense import router as expense_router
+    EXPENSE_EXISTS = True
+except ImportError:
+    EXPENSE_EXISTS = False
+
+try:
+    from bot.routers.academy import router as academy_router
+    ACADEMY_EXISTS = True
+except ImportError:
+    ACADEMY_EXISTS = False
 # ========================================================
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -81,7 +93,13 @@ async def main():
     dp.include_router(pension_router)
     dp.include_router(useless_router)
     dp.include_router(admin_router)
-    dp.include_router(ocr_router)
+
+    if BUDGET_EXISTS:
+        dp.include_router(budget_router)
+    if EXPENSE_EXISTS:
+        dp.include_router(expense_router)
+    if ACADEMY_EXISTS:
+        dp.include_router(academy_router)
 
     logger.info("🚀 Bot starting polling...")
     await dp.start_polling(bot)
@@ -89,4 +107,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
