@@ -1,4 +1,5 @@
-﻿from aiogram import Router, F
+﻿from bot.routers.dashboard_simple import home
+from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -51,4 +52,5 @@ async def menu_useless(msg: Message):
 @router.message(F.text == "⭐ מובילים")
 async def menu_top(msg: Message):
     await msg.answer("/top")
+
 

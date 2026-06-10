@@ -6,7 +6,7 @@ from sqlalchemy import text
 
 router = Router()
 
-def get_reply_keyboard():
+def home_keyboard:
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="➕ הוצאה"), KeyboardButton(text="💰 הכנסה")],
@@ -24,9 +24,10 @@ async def cmd_start(msg: Message):
         prefs = await s.execute(text("SELECT onboarding_completed FROM user_preferences WHERE user_id = :uid"), {"uid": uid})
         row = prefs.fetchone()
         if row and row[0]:
-            await msg.answer("🏠 ברוך הבא! השתמש ב-/menu לתפריט ראשי.", reply_markup=get_reply_keyboard())
+            await msg.answer('🏠 <b>Tax Free World</b>\n\nשלח /home להתחלה', parse_mode='HTML'))
             return
-    await msg.answer("🌍 ברוכים הבאים ל-Tax Free World!\n\nאנו נשמח לעזור לך לנהל כספים, לחסוך ולהשקיע.\nשלח /menu להתחלה!", reply_markup=get_reply_keyboard())
+    await msg.answer('🏠 <b>Tax Free World</b>\n\nשלח /home להתחלה', parse_mode='HTML'))
     # שמירה מהירה שהמשתמש ראה את ההודעה (ללא onboarding מורכב)
     await s.execute(text("INSERT OR IGNORE INTO user_preferences (user_id, onboarding_completed) VALUES (:uid, 1)"), {"uid": uid})
     await s.commit()
+
