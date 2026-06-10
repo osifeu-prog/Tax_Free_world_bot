@@ -1,14 +1,17 @@
-﻿from sqlalchemy import text
+﻿import os
+from sqlalchemy import text
 from bot.database.session import engine
 import asyncio
-import os
 
-print("Current directory:", os.getcwd())
+print("Current working directory:", os.getcwd())
+print("bot.db full path:", os.path.abspath("bot.db"))
+print("bot.db exists?", os.path.exists("bot.db"))
 
 async def create_missing_tables():
-    print("🔧 מנסה ליצור טבלאות...")
+    print("🔧 יוצר טבלאות...")
     try:
         async with engine.begin() as conn:
+            # donations
             await conn.run_sync(lambda c: c.execute(text('''
                 CREATE TABLE IF NOT EXISTS donations (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -17,6 +20,7 @@ async def create_missing_tables():
                     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
                 )
             ''')))
+            # user_expenses
             await conn.run_sync(lambda c: c.execute(text('''
                 CREATE TABLE IF NOT EXISTS user_expenses (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,7 +33,7 @@ async def create_missing_tables():
             ''')))
             print("✅ טבלאות נוצרו בהצלחה!")
     except Exception as e:
-        print("❌ שגיאה:", e)
+        print("❌ ERROR:", str(e))
 
 asyncio.run(create_missing_tables())
 print("סיום!")
