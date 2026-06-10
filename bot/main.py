@@ -21,7 +21,7 @@ from bot.routers.menu import router as menu_router
 from bot.routers.budget import router as budget_router
 
 from bot.routers.welcome import router as welcome_router
-from bot.routers.dashboard import router as dashboard_router
+# dashboard_router הוסר זמנית
 from bot.routers.help_enhanced import router as help_router
 from bot.middlewares.admin_only import AdminOnlyMiddleware
 
@@ -81,7 +81,7 @@ async def main():
     dp.include_router(menu_router)
     dp.include_router(budget_router)
     dp.include_router(welcome_router)
-    dp.include_router(dashboard_router)
+    # dp.include_router(dashboard_router)
     dp.include_router(help_router)
 
     logger.info("🚀 Bot starting polling...")
@@ -89,3 +89,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+

@@ -25,8 +25,8 @@ async def cmd_start(msg: Message):
         prefs = await s.execute(text("SELECT onboarding_completed FROM user_preferences WHERE user_id = :uid"), {"uid": uid})
         row = prefs.fetchone()
         if row and row[0]:
-            from bot.routers.dashboard import show_dashboard
-            await show_dashboard(msg)
+            # from bot.routers.dashboard import show_dashboard (disabled)
+            await msg.answer('🏠 Dashboard זמני  /menu לפעולות')
             return
     await msg.answer("🌍 ברוכים הבאים ל-Tax Free World!\n\nנתחיל בלהכיר אותך...")
     from bot.routers.welcome import start_onboarding
@@ -39,3 +39,4 @@ async def quick_actions(callback: CallbackQuery):
     elif callback.data == "quick_expenses":
         await callback.message.answer("/expenses")
     await callback.answer()
+
