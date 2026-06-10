@@ -17,6 +17,8 @@ from bot.routers.donate import router as donate_router
 from bot.routers.pension import router as pension_router
 from bot.routers.useless import router as useless_router
 from bot.routers.admin import router as admin_router
+from bot.routers.ocr import router as ocr_router
+
 
 # הוסף כאן routers נוספים אם הם קיימים
 # from bot.routers.budget import router as budget_router
@@ -79,6 +81,7 @@ async def main():
     dp.include_router(pension_router)
     dp.include_router(useless_router)
     dp.include_router(admin_router)
+    dp.include_router(ocr_router)
 
     logger.info("🚀 Bot starting polling...")
     await dp.start_polling(bot)
@@ -86,3 +89,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
