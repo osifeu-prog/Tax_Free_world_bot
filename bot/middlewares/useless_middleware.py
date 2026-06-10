@@ -1,7 +1,12 @@
 from aiogram import BaseMiddleware
 from aiogram.types import Message
 import random, asyncio
-from bot.services.useless_share import SHARE_PROMPTS
+
+SHARE_PROMPTS = [
+    "תשלח אותי למישהו שגם הוא צריך תזכורת שאין משמעות.",
+    "שיתוף זה אשליה של תנועה. אבל אם כבר, אז הנה לינק.",
+    "תפיץ את הריקנות. לפחות היא עקבית.",
+]
 
 class UselessShareMiddleware(BaseMiddleware):
     def __init__(self):
