@@ -73,12 +73,17 @@ async def start_http():
     await site.start()
     logger.info("🌐 HTTP Server running on 8080")
 
+async def start_webhook():
+    webhook_url = 'https://taxfreeworldbot-production.up.railway.app/webhook'
+    await bot.set_webhook(webhook_url)
+    logger.info('🌐 Webhook set')
+
 async def main():
     await init_db()
     await set_default_commands()
     await bot.delete_webhook(drop_pending_updates=True)
     logger.info(f"🚀 Bot started in {time.time() - start_time:.2f}s")
-    await dp.start_polling(bot)
+    # polling replaced by webhook
 
 if __name__ == "__main__":
     asyncio.run(main())
