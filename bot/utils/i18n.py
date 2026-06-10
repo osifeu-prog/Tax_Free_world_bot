@@ -12,7 +12,7 @@ class I18n:
         for file in locales_dir.glob("*.json"):
             lang = file.stem
             try:
-                with open(file, encoding='utf-8-sig') as f:  # utf-8-sig removes BOM
+                with open(file, encoding='utf-8-sig') as f:
                     self.translations[lang] = json.load(f)
             except Exception as e:
                 print(f"Error loading {file}: {e}")
