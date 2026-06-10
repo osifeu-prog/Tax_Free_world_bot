@@ -240,3 +240,18 @@ class UserKnowledgeProgress(Base):
 
 
 
+
+class Donation(Base):
+    __tablename__ = 'donations'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, index=True)
+    amount = Column(Float)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class GameStats(Base):
+    __tablename__ = 'game_stats'
+    user_id = Column(Integer, primary_key=True)
+    slots_points = Column(Integer, default=0)
+    slots_spins_total = Column(Integer, default=0)
+    slots_daily_spins = Column(Integer, default=0)
+    slots_last_spin_at = Column(DateTime, nullable=True)
