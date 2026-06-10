@@ -52,15 +52,25 @@ async def cmd_useless(msg: Message):
         reply_markup=get_keyboard()
     )
 
-@router.message(F.text.in_(['🤖 יוסלס AI', '🤖 Useless AI']))
+# Handlers  כל השפות
+@router.message(F.text.in_([
+    '🤖 יוסלס AI', '🤖 Useless AI', '🤖 יוסלס AI',
+    '🤖 ארויסגעווארפן אי'  # יידיש
+]))
 async def reply_ai(msg: Message):
     await msg.answer(random.choice(EXISTENTIAL))
 
-@router.message(F.text.in_(['📊 פנסיה', '📊 Pension']))
+@router.message(F.text.in_([
+    '📊 פנסיה', '📊 Pension', '📊 تقاعد', '📊 Пенсия',
+    '📊 Pensión', '📊 Pension', '📊 פענסיע'  # יידיש
+]))
 async def reply_pension(msg: Message):
     await msg.answer('/pension')
 
-@router.message(F.text.in_(['💖 תרומה', '💖 Donate']))
+@router.message(F.text.in_([
+    '💖 תרומה', '💖 Donate', '💖 تبرع', '💖 Пожертвовать',
+    '💖 Donar', '💖 Faire un don', '💖 שטיצן'  # יידיש
+]))
 async def reply_donate(msg: Message):
     await msg.answer('/donate')
 
