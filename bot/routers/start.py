@@ -4,7 +4,7 @@ from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
 from bot.database.session import async_session
 from sqlalchemy import text
 from bot.routers.dashboard_simple import home
-from bot.routers.welcome_onboarding import start_onboarding
+from bot.routers.welcome_onboarding import cmd_start as onboarding_start
 
 router = Router()
 
@@ -19,5 +19,6 @@ async def cmd_start(msg: Message):
             return
     await msg.answer("👋 ברוכים הבאים ל-Tax Free World!\n\nנתחיל בתהליך הכרות קצר...")
     await start_onboarding(msg)
+
 
 
