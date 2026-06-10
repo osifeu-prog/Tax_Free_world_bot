@@ -1,4 +1,4 @@
-import asyncio, os, pkgutil, importlib, time
+﻿import asyncio, os, pkgutil, importlib, time
 from pathlib import Path
 
 start_time = time.time()
