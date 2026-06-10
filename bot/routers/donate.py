@@ -23,7 +23,6 @@ async def cmd_donate(msg: Message):
          InlineKeyboardButton(text='💚 100 ', callback_data='donate_100')],
         [InlineKeyboardButton(text='💎 500 ', callback_data='donate_500'),
          InlineKeyboardButton(text='💎 TON', callback_data='donate_ton')],
-        [InlineKeyboardButton(text='🔗 שתף עם חברים', switch_inline_query='תרום ל-TON Israel!')]
     ])
     await msg.answer(body, parse_mode='HTML', reply_markup=kb)
 

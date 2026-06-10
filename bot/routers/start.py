@@ -17,18 +17,11 @@ async def get_lang(uid):
         u = (await s.execute(select(User).where(User.telegram_id == uid))).scalar_one_or_none()
         return u.language if u and u.language else 'he'
 
-def get_reply_keyboard(lang):
-    try:
-        from bot.services.translation_service import translator
-        btn_useless = translator.t(lang, 'useless_keyboard')
-        btn_pension = translator.t(lang, 'cmd_pension')
-        btn_donate = translator.t(lang, 'cmd_donate')
-    except:
-        btn_useless, btn_pension, btn_donate = '🤖 יוסלס AI', '📊 פנסיה', '💖 תרומה'
+def get_reply_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
-            [KeyboardButton(text=btn_useless)],
-            [KeyboardButton(text=btn_pension), KeyboardButton(text=btn_donate)]
+            [KeyboardButton(text='🤖 יוסלס AI'), KeyboardButton(text='📋 כל הפקודות')],
+            [KeyboardButton(text='📊 פנסיה'), KeyboardButton(text='💖 תרומה')]
         ],
         resize_keyboard=True
     )
@@ -51,9 +44,8 @@ async def cmd_start(msg: Message):
         [InlineKeyboardButton(text='💖 תרומה', callback_data='go_donate'), InlineKeyboardButton(text='🔗 הפניה', callback_data='go_ref')],
         [InlineKeyboardButton(text='📋 כל הפקודות', callback_data='show_help')]
     ])
-    reply_kb = get_reply_keyboard(lang)
     await msg.answer(welcome, parse_mode='HTML', reply_markup=inline_kb)
-    await msg.answer('🤖 <b>הנה המקלדת שלך:</b>', parse_mode='HTML', reply_markup=reply_kb)
+    await msg.answer('🤖 <b>הנה המקלדת שלך:</b>', parse_mode='HTML', reply_markup=get_reply_keyboard())
 
 @router.callback_query(F.data.startswith('lang_'))
 async def set_language(callback: CallbackQuery):
@@ -64,9 +56,8 @@ async def set_language(callback: CallbackQuery):
         if u: u.language = lang
         else: s.add(User(telegram_id=uid, language=lang))
         await s.commit()
-    reply_kb = get_reply_keyboard(lang)
-    await callback.message.answer('✅ <b>השפה עודכנה!</b>\nהמקלדת שונתה:', parse_mode='HTML', reply_markup=reply_kb)
-    await callback.answer(f'✅ שפה שונתה ל-{lang}')
+    await callback.message.answer(f'✅ שפה שונתה ל-{lang}')
+    await callback.answer()
 
 @router.callback_query(F.data.startswith('go_'))
 async def quick_actions(callback: CallbackQuery):

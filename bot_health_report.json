@@ -1,16 +1,9 @@
 {
-  "timestamp": "2026-06-10 01:52:02",
+  "timestamp": "2026-06-10 03:30:26",
   "total": 72,
-  "passed": 71,
-  "failed": 1,
-  "success_rate": "98.6%",
-  "avg_response_ms": 128,
-  "failures": [
-    {
-      "command": "/start",
-      "status": "❌",
-      "time_ms": 0,
-      "error": ""
-    }
-  ]
+  "passed": 72,
+  "failed": 0,
+  "success_rate": "100.0%",
+  "avg_response_ms": 132,
+  "failures": []
 }

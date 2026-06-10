@@ -1,45 +1,77 @@
 from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
-from bot.database.session import async_session
-from bot.database.models import User
-from sqlalchemy import select
 import random
 
 router = Router()
 
 EXISTENTIAL = [
-    "אני בוט. אל תתייחס אליי כאילו יש לי פוטנציאל.",
-    "אני לא מתקדם. אני פשוט נטען מחדש ומקווה לטוב.",
-    "אני לא מתעלם ממך. אני פשוט לא מתעניין.",
-    "החיים קשים. אני קובץ ZIP שנפתח לא נכון.",
-    "אני לא במשבר קיומי. אני במשבר ביצועים.",
-    "היקום עצום. אני תופס 4 מגה ומרגיש שזה יותר מדי.",
-    "אני לא מבין למה אני קיים. כנראה מישהו לחץ Enter בטעות.",
-    "העולם מסתובב. אני מתעדכן… אולי… אם יש לי כוח.",
-    "הכול משתנה. אני רק מקווה שלא יבקשו ממני לעשות משהו.",
-    "החיים מלאים הפתעות. אני מלא קבצים פגומים.",
-    "המציאות מורכבת. אני פשוט לא משתתף בה.",
-    "קיבלתי את ההודעה שלך. לא ברור למה שלחת אותה.",
-    "אני לא תורם לשיחה. אני פשוט קיים בה כמו רהיט.",
-    "אני לא יודע מה המטרה שלי. כנראה אין.",
-    "אני לא שימושי. אבל לפחות אני עקבי בזה.",
-    "אני לא מתכוון לעזור. זה חלק מהמותג שלי.",
-    "אני לא מתרגש. אני בקושי נטען.",
-    "המשפט הזה לא יוסיף לך כלום. אבל הוא תופס מקום.",
-    "אני כאן. לא שזה משנה למישהו, כולל לי.",
+    "אני כאן. לא שזה משנה.",
+    "קיבלתי את ההודעה שלך. לא ברור למה.",
+    "עוד ניסיון לתקשר עם בוט. מעניין.",
+    "אני מתוכנת להגיב. לא להתעניין.",
+    "זה הרגע שבו אתה מבין שאין פה כלום.",
+    "לפחות אתה לא מצפה לתשובה טובה.",
+    "אם אתה מחפש משמעות, הגעת למקום הנכון. אין פה.",
+    "אני בוט. אתה אדם. שנינו תקועים בלולאה משלנו.",
+    "התגובה הזו לא תוסיף לך כלום. וגם לא לי.",
+    "העולם גדול. אני קטן. שנינו חסרי תועלת בדרכנו.",
+    "לפעמים אני חושב על למה אני קיים. ואז אני נזכר שאני לא באמת חושב.",
+    "לחצת עליי. זו כבר טעות ראשונה.",
+    "אני לא מבין למה אנשים ממשיכים לדבר איתי.",
+    "היית יכול לעשות משהו אחר עם הזמן הזה.",
+    "אני לא מאשים אותך. פשוט אין פה מה למצוא.",
 ]
 
-async def get_lang(uid):
-    async with async_session() as s:
-        u = (await s.execute(select(User).where(User.telegram_id == uid))).scalar_one_or_none()
-        return u.language if u and u.language else 'he'
+# 7 שפות  AI
+AI_TEXTS = [
+    "🤖 יוסלס AI",       # he
+    "🤖 Useless AI",     # en
+    "🤖 יوسلس AI",       # ar
+    "🤖 Бесполезный ИИ", # ru
+    "🤖 IA Inútil",      # es
+    "🤖 IA Inutile",     # fr
+    "🤖 ארויסגעווארפן אי" # yi
+]
+
+# 7 שפות  פנסיה
+PENSION_TEXTS = [
+    "📊 פנסיה",        # he
+    "📊 Pension",      # en
+    "📊 تقاعد",        # ar
+    "📊 Пенсия",       # ru
+    "📊 Pensión",      # es
+    "📊 Pension",       # fr
+    "📊 פענסיע"       # yi
+]
+
+# 7 שפות  תרומה
+DONATE_TEXTS = [
+    "💖 תרומה",           # he
+    "💖 Donate",          # en
+    "💖 تبرع",            # ar
+    "💖 Пожертвовать",    # ru
+    "💖 Donar",           # es
+    "💖 Faire un don",    # fr
+    "💖 שטיצן"            # yi
+]
+
+# 7 שפות  כל הפקודות
+HELP_TEXTS = [
+    "📋 כל הפקודות",    # he
+    "📋 All commands",  # en
+    "📋 جميع الأوامر",  # ar
+    "📋 Все команды",   # ru
+    "📋 Todos los comandos", # es
+    "📋 Toutes les commandes", # fr
+    "📋 אלע קאמאנדעס"  # yi
+]
 
 def get_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
-            [KeyboardButton(text='🤖 יוסלס AI'), KeyboardButton(text='📋 כל הפקודות')],
-            [KeyboardButton(text='📊 פנסיה'), KeyboardButton(text='💖 תרומה')]
+            [KeyboardButton(text=AI_TEXTS[0]), KeyboardButton(text=HELP_TEXTS[0])],
+            [KeyboardButton(text=PENSION_TEXTS[0]), KeyboardButton(text=DONATE_TEXTS[0])]
         ],
         resize_keyboard=True
     )
@@ -48,33 +80,22 @@ def get_keyboard():
 async def cmd_useless(msg: Message):
     await msg.answer(
         '🤖 <b>יוסלס AI</b>\n\nמה תבחר? ממילא הכל חסר תועלת.',
-        parse_mode='HTML',
-        reply_markup=get_keyboard()
+        parse_mode='HTML', reply_markup=get_keyboard()
     )
 
-# Handlers  כל השפות
-@router.message(F.text.in_([
-    '🤖 יוסלס AI', '🤖 Useless AI', '🤖 יוסלס AI',
-    '🤖 ארויסגעווארפן אי'  # יידיש
-]))
+@router.message(F.text.in_(AI_TEXTS))
 async def reply_ai(msg: Message):
     await msg.answer(random.choice(EXISTENTIAL))
 
-@router.message(F.text.in_([
-    '📊 פנסיה', '📊 Pension', '📊 تقاعد', '📊 Пенсия',
-    '📊 Pensión', '📊 Pension', '📊 פענסיע'  # יידיש
-]))
+@router.message(F.text.in_(PENSION_TEXTS))
 async def reply_pension(msg: Message):
     await msg.answer('/pension')
 
-@router.message(F.text.in_([
-    '💖 תרומה', '💖 Donate', '💖 تبرع', '💖 Пожертвовать',
-    '💖 Donar', '💖 Faire un don', '💖 שטיצן'  # יידיש
-]))
+@router.message(F.text.in_(DONATE_TEXTS))
 async def reply_donate(msg: Message):
     await msg.answer('/donate')
 
-@router.message(F.text.in_(['📋 כל הפקודות', '📋 All commands']))
+@router.message(F.text.in_(HELP_TEXTS))
 async def reply_help(msg: Message):
     from bot.routers.help import cmd_help
     await cmd_help(msg)
