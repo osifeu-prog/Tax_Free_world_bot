@@ -37,7 +37,7 @@ async def fix_missing_columns():
         # טבלת users
         pragma = await conn.execute(text("PRAGMA table_info(users)"))
         columns = [row[1] for row in pragma.fetchall()]
-        logger.info(f"Existing columns: {columns}")
+        logger.info(f"Existing columns in users: {columns}")
         needed = {
             "role": "VARCHAR(20) DEFAULT 'user'",
             "wallet_address": "VARCHAR(255)",
@@ -51,13 +51,16 @@ async def fix_missing_columns():
         for col, definition in needed.items():
             if col not in columns:
                 await conn.execute(text(f"ALTER TABLE users ADD COLUMN {col} {definition}"))
-                logger.info(f"✅ Added {col}")
+                logger.info(f"✅ Added {col} to users")
         # טבלת user_preferences
-        pragma2 = await conn.execute(text("PRAGMA table_info(user_preferences)"))
-        cols2 = [row[1] for row in pragma2.fetchall()]
-        if "goal" not in cols2:
-            await conn.execute(text("ALTER TABLE user_preferences ADD COLUMN goal VARCHAR(20)"))
-            logger.info("✅ Added goal to user_preferences")
+        try:
+            pragma2 = await conn.execute(text("PRAGMA table_info(user_preferences)"))
+            cols2 = [row[1] for row in pragma2.fetchall()]
+            if "goal" not in cols2:
+                await conn.execute(text("ALTER TABLE user_preferences ADD COLUMN goal VARCHAR(20)"))
+                logger.info("✅ Added goal to user_preferences")
+        except Exception as e:
+            logger.warning(f"user_preferences table not ready yet: {e}")
 
 async def init_db():
     logger.info("🔧 Initializing database...")
@@ -70,11 +73,17 @@ async def main():
     await init_db()
     bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher()
-    # Middlewares
-    from bot.middlewares.detailed_logging import DetailedLoggingMiddleware
-    from bot.middlewares.admin_only import AdminOnlyMiddleware
-    dp.message.middleware(DetailedLoggingMiddleware())
-    dp.message.middleware(AdminOnlyMiddleware())
+    # Middlewares (אם קבצי middleware קיימים)
+    try:
+        from bot.middlewares.detailed_logging import DetailedLoggingMiddleware
+        dp.message.middleware(DetailedLoggingMiddleware())
+    except ImportError:
+        logger.warning("DetailedLoggingMiddleware not found, skipping")
+    try:
+        from bot.middlewares.admin_only import AdminOnlyMiddleware
+        dp.message.middleware(AdminOnlyMiddleware())
+    except ImportError:
+        logger.warning("AdminOnlyMiddleware not found, skipping")
     # Routers
     for router in [start_router, profile_router, donate_router, pension_router,
                    useless_router, admin_router, menu_router, budget_router,
