@@ -10,10 +10,7 @@ from aiogram.enums import ParseMode
 from bot.database.session import engine
 from bot.database.models import Base
 
-# ====================== ALL ROUTERS ======================
-
-
-
+# ====================== CORE ROUTERS ======================
 from bot.routers.start import router as start_router
 from bot.routers.profile import router as profile_router
 from bot.routers.donate import router as donate_router
@@ -22,31 +19,30 @@ from bot.routers.useless import router as useless_router
 from bot.routers.admin import router as admin_router
 from bot.routers.menu import router as menu_router
 
-# ניסיון לייבא routers נוספים (אם קיימים)
+# ====================== OPTIONAL FINANCE ROUTERS ======================
+try:
+    from bot.routers.expenses import router as expenses_router
+    EXPENSES_EXISTS = True
+except ImportError:
+    EXPENSES_EXISTS = False
+
+try:
+    from bot.routers.incomes import router as incomes_router
+    INCOMES_EXISTS = True
+except ImportError:
+    INCOMES_EXISTS = False
+
+try:
+    from bot.routers.categories import router as categories_router
+    CATEGORIES_EXISTS = True
+except ImportError:
+    CATEGORIES_EXISTS = False
+
 try:
     from bot.routers.budget import router as budget_router
     BUDGET_EXISTS = True
 except ImportError:
     BUDGET_EXISTS = False
-
-try:
-    from bot.routers.expense import router as expense_router
-    EXPENSE_EXISTS = True
-except ImportError:
-    EXPENSE_EXISTS = False
-
-try:
-    from bot.routers.academy import router as academy_router
-    ACADEMY_EXISTS = True
-except ImportError:
-    ACADEMY_EXISTS = False
-
-try:
-    from bot.routers.household import router as household_router
-    HOUSEHOLD_EXISTS = True
-except ImportError:
-    HOUSEHOLD_EXISTS = False
-# ========================================================
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 if not BOT_TOKEN:
@@ -54,7 +50,6 @@ if not BOT_TOKEN:
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
 
 async def fix_missing_columns():
     async with engine.begin() as conn:
@@ -69,12 +64,10 @@ async def fix_missing_columns():
             "last_gift_date": "VARCHAR(50)",
             "gift_shares_today": "INTEGER DEFAULT 0"
         }
-
         for col, definition in needed.items():
             if col not in columns:
                 await conn.execute(text(f"ALTER TABLE users ADD COLUMN {col} {definition}"))
                 logger.info(f"✅ Column '{col}' added")
-
 
 async def init_db():
     logger.info("🔧 Initializing database tables...")
@@ -85,7 +78,6 @@ async def init_db():
         await fix_missing_columns()
     except Exception as e:
         logger.error(f"❌ Failed to init tables: {e}")
-
 
 async def main():
     await init_db()
@@ -104,24 +96,14 @@ async def main():
     dp.include_router(useless_router)
     dp.include_router(admin_router)
     dp.include_router(menu_router)
-    dp.include_router(expenses_router)
-    dp.include_router(incomes_router)
-    dp.include_router(categories_router)
 
+    if EXPENSES_EXISTS: dp.include_router(expenses_router)
+    if INCOMES_EXISTS: dp.include_router(incomes_router)
+    if CATEGORIES_EXISTS: dp.include_router(categories_router)
     if BUDGET_EXISTS: dp.include_router(budget_router)
-    if EXPENSE_EXISTS: dp.include_router(expense_router)
-    if ACADEMY_EXISTS: dp.include_router(academy_router)
-    if HOUSEHOLD_EXISTS: dp.include_router(household_router)
 
     logger.info("🚀 Bot starting polling...")
     await dp.start_polling(bot)
 
-
 if __name__ == "__main__":
     asyncio.run(main())
-
-
-
-
-
-
