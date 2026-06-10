@@ -215,3 +215,12 @@ class Category(Base):
     name = Column(String(50))
     type = Column(String(10))    # 'expense' or 'income'
     created_at = Column(DateTime, server_default=func.now())
+
+class UserPreference(Base):
+    __tablename__ = "user_preferences"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(BigInteger, unique=True, index=True)
+    role = Column(String(50), default="citizen")  # student, entrepreneur, investor, family, etc.
+    onboarding_completed = Column(Boolean, default=False)
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())

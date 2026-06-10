@@ -18,6 +18,9 @@ from bot.routers.pension import router as pension_router
 from bot.routers.useless import router as useless_router
 from bot.routers.admin import router as admin_router
 from bot.routers.menu import router as menu_router
+from bot.routers.welcome import router as welcome_router
+from bot.routers.dashboard import router as dashboard_router
+from bot.routers.help_enhanced import router as help_router
 
 # ====================== OPTIONAL FINANCE ROUTERS ======================
 try:
@@ -96,6 +99,9 @@ async def main():
     dp.include_router(useless_router)
     dp.include_router(admin_router)
     dp.include_router(menu_router)
+    dp.include_router(welcome_router)
+    dp.include_router(dashboard_router)
+    dp.include_router(help_router)
 
     if EXPENSES_EXISTS: dp.include_router(expenses_router)
     if INCOMES_EXISTS: dp.include_router(incomes_router)
@@ -107,3 +113,5 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+
