@@ -11,17 +11,27 @@ router = Router()
 
 USELESS_ANSWERS = {
     'he': ["🤷♂️ אין לי תשובה. גם לך אין שאלה.","🎉 מזל טוב! זכית בכלום.","📦 שום דבר לא קרה. תרגיש חופשי לשתף."],
-    'en': ["🤷♂️ I have no answer. You have no question.","🎉 Congrats! You won nothing.","📦 Nothing happened. Feel free to share."],
-    'ar': ["🤷♂️ ليس لدي إجابة. أنت أيضًا ليس لديك سؤال.","🎉 مبروك! لقد فزت بلا شيء.","📦 لم يحدث شيء. لا تتردد في المشاركة."],
-    'ru': ["🤷♂️ У меня нет ответа. У тебя нет вопроса.","🎉 Поздравляю! Ты выиграл ничего.","📦 Ничего не произошло. Можешь поделиться."],
-    'es': ["🤷♂️ No tengo respuesta. Tú no tienes pregunta.","🎉 ¡Felicidades! Ganaste nada.","📦 No pasó nada. Siéntete libre de compartir."],
-    'fr': ["🤷♂️ Je n'ai pas de réponse. Tu n'as pas de question.","🎉 Félicitations ! Tu as gagné rien.","📦 Rien ne s'est passé. N'hésite pas à partager."],
-    'yi': ["🤷♂️ איך האב נישט קיין ענטפער. דו האסט נישט קיין שאלה.","🎉 מזל טוב! דו האסט געווונען גארנישט.","📦 גארנישט איז געשען. פיל פר צו טיילן."]
+    'en': ["🤷♂️ I have no answer. You have no question.","🎉 Congrats! You won nothing.","📦 Nothing happened. Feel free to share."]
 }
-ROULETTE = {
-    'he': ["🎰 סובבת רולטה וזכית... בכלום!", "🎲 קובייה: 🎱. שום דבר.", "🃏 קלף: ליצן. אתה הליצן."],
-    'en': ["🎰 You spun the roulette and won... nothing!", "🎲 Dice: 🎱. Nothing.", "🃏 Card: Joker. You're the joker."]
+
+ROULETTE_START = {
+    'he': "🎰 <b>רולטה  בחר מספר בין 1 ל-6:</b>\n\n(הקלד מספר)",
+    'en': "🎰 <b>Roulette  pick a number between 1 and 6:</b>\n\n(type a number)"
 }
+ROULETTE_LOSE = {
+    'he': ["😹 המספר שלך: {user} | המספר שלי: {bot}\n\nהפסדת! אבל כבר התרגלת, נכון?",
+           "💀 {user} vs {bot}\n\nניסית. לא הצלחת. תנסה שוב, ממילא אין לך מה להפסיד.",
+           "🤡 המספר שלך: {user} | המספר שלי: {bot}\n\nכל הכבוד, הפסדת שוב. עקבי."],
+    'en': ["😹 Your number: {user} | My number: {bot}\n\nYou lost! But you're used to it, right?",
+           "💀 {user} vs {bot}\n\nYou tried. You failed. Try again, you've got nothing to lose.",
+           "🤡 Your number: {user} | My number: {bot}\n\nCongrats, you lost again. Consistent."]
+}
+ROULETTE_WIN = {
+    'he': "🎉 <b>המספר שלך: {user} | המספר שלי: {bot}</b>\n\n🤯 ניצחת! זה נס!\n\n💡 <i>רוצה לעשות עם זה משהו מועיל? תן /donate</i>",
+    'en': "🎉 <b>Your number: {user} | My number: {bot}</b>\n\n🤯 You won! It's a miracle!\n\n💡 <i>Wanna do something useful with it? /donate</i>"
+}
+
+ROULETTE_USERS = {}
 
 async def get_lang(uid):
     async with async_session() as s:
@@ -29,24 +39,13 @@ async def get_lang(uid):
         return u.language if u and u.language else 'he'
 
 def get_keyboard(lang):
-    try:
-        from bot.services.translation_service import translator
-        return ReplyKeyboardMarkup(
-            keyboard=[
-                [KeyboardButton(text='🤖 יוסלס AI'), KeyboardButton(text='🎲 רולטה')],
-                [KeyboardButton(text='🔗 QR שלי'), KeyboardButton(text='📊 סטטיסטיקות אמת')],
-                [KeyboardButton(text='💰 חיסכון'), KeyboardButton(text='📊 פנסיה')]
-            ],
-            resize_keyboard=True
-        )
-    except:
-        return ReplyKeyboardMarkup(
-            keyboard=[
-                [KeyboardButton(text='🤖 יוסלס AI'), KeyboardButton(text='🎲 רולטה')],
-                [KeyboardButton(text='🔗 QR שלי'), KeyboardButton(text='📊 סטטיסטיקות אמת')]
-            ],
-            resize_keyboard=True
-        )
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text='🤖 יוסלס AI'), KeyboardButton(text='🎲 רולטה')],
+            [KeyboardButton(text='🔗 QR שלי'), KeyboardButton(text='📊 סטטיסטיקות אמת')]
+        ],
+        resize_keyboard=True
+    )
 
 @router.message(Command('useless'))
 async def cmd_useless(msg: Message):
@@ -61,10 +60,28 @@ async def reply_ai(msg: Message):
     await msg.answer(random.choice(answers))
 
 @router.message(F.text == '🎲 רולטה')
-async def reply_roulette(msg: Message):
-    lang = await get_lang(msg.from_user.id)
-    roulette = ROULETTE.get(lang, ROULETTE['he'])
-    await msg.answer(random.choice(roulette))
+async def reply_roulette_start(msg: Message):
+    uid = msg.from_user.id
+    lang = await get_lang(uid)
+    ROULETTE_USERS[uid] = True
+    text = ROULETTE_START.get(lang, ROULETTE_START['he'])
+    await msg.answer(text, parse_mode='HTML')
+
+@router.message(F.text.regexp(r'^[1-6]$'))
+async def roulette_guess(msg: Message):
+    uid = msg.from_user.id
+    if uid not in ROULETTE_USERS:
+        return
+    del ROULETTE_USERS[uid]
+    lang = await get_lang(uid)
+    user_num = int(msg.text)
+    bot_num = random.randint(1, 6)
+    if user_num == bot_num:
+        text = ROULETTE_WIN.get(lang, ROULETTE_WIN['he']).format(user=user_num, bot=bot_num)
+    else:
+        texts = ROULETTE_LOSE.get(lang, ROULETTE_LOSE['he'])
+        text = random.choice(texts).format(user=user_num, bot=bot_num)
+    await msg.answer(text, parse_mode='HTML')
 
 @router.message(F.text == '🔗 QR שלי')
 async def reply_qr(msg: Message):
@@ -81,18 +98,5 @@ async def reply_stats(msg: Message):
         donations = await conn.run_sync(lambda c: c.execute(text("SELECT COUNT(*) FROM donations")).fetchone()[0])
         amount = await conn.run_sync(lambda c: c.execute(text("SELECT COALESCE(SUM(amount), 0) FROM donations")).fetchone()[0])
     ratio = round((donations / users * 100) if users else 0, 1)
-    try:
-        from bot.services.translation_service import translator
-        header = translator.t(lang, 'stats_header')
-        body = translator.t(lang, 'stats_body', users=users, donations=donations, amount=amount, ratio=ratio)
-    except:
-        body = f"👥 משתמשים: {users}\n💖 תרומות: {donations}\n💰 סכום: {amount} TON\n📉 יחס המרה: {ratio}%\n\n🤷♂️ אף אחד לא תורם. ואתה?"
-    await msg.answer(f"{header}\n{body}", parse_mode='HTML')
-
-@router.message(F.text == '💰 חיסכון')
-async def go_budget(msg: Message):
-    await msg.answer('/budget')
-
-@router.message(F.text == '📊 פנסיה')
-async def go_pension(msg: Message):
-    await msg.answer('/pension')
+    body = f"👥 משתמשים: {users}\n💖 תרומות: {donations}\n💰 סכום: {amount} TON\n📉 יחס המרה: {ratio}%\n\n🤷♂️ אף אחד לא תורם. ואתה?"
+    await msg.answer(f"📊 <b>האמת העגומה</b>\n━━━━━━━━━━━━━━\n{body}", parse_mode='HTML')
