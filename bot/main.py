@@ -11,9 +11,9 @@ from bot.database.session import engine
 from bot.database.models import Base
 
 # ====================== ALL ROUTERS ======================
-from bot.routers.expenses import router as expenses_router
-from bot.routers.incomes import router as incomes_router
-from bot.routers.categories import router as categories_router
+
+
+
 from bot.routers.start import router as start_router
 from bot.routers.profile import router as profile_router
 from bot.routers.donate import router as donate_router
@@ -119,6 +119,7 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 
 
