@@ -20,7 +20,7 @@ async def get_lang(uid):
 def get_reply_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
-            [KeyboardButton(text='🤖 יוסלס AI'), KeyboardButton(text='📋 כל הפקודות')],
+            [KeyboardButton(text='🔴 לחץ AI'), KeyboardButton(text='📋 כל הפקודות')],
             [KeyboardButton(text='📊 פנסיה'), KeyboardButton(text='💖 תרומה')]
         ],
         resize_keyboard=True

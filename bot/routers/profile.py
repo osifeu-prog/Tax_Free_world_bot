@@ -1,120 +1,58 @@
-# -*- coding: utf-8 -*-
-from aiogram import Router, F
-from aiogram.filters import Command, StateFilter
-from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import State, StatesGroup
-from aiogram.types import Message, CallbackQuery
-from bot.keyboards.inline import back_to_main
-from bot.services.profile_service import (
-    get_or_create_profile, update_income, add_expense,
-    get_expenses, get_total_savings, delete_expense
-)
+from aiogram import Router
+from aiogram.filters import Command
+from aiogram.types import Message
+from sqlalchemy import text as sa_text
+from bot.database.session import engine, async_session
+from bot.database.models import User
+from sqlalchemy import select
 
 router = Router()
 
-class ProfileForm(StatesGroup):
-    waiting_for_income = State()
-    waiting_for_expense_category = State()
-    waiting_for_expense_amount = State()
-    waiting_for_expense_frequency = State()
-
-@router.message(Command("profile"))
+@router.message(Command('profile'))
 async def cmd_profile(msg: Message):
-    profile = await get_or_create_profile(msg.from_user.id)
-    total = await get_total_savings(msg.from_user.id)
-    info = (
-        f"👤 <b>פרופיל כלכלי</b>\n"
-        f"💰 הכנסה חודשית: {profile.monthly_income:,.0f}\n"
-        f"🧮 חיסכון פוטנציאלי: {total:,.2f} בשנה\n\n"
-        f"/setincome  עדכן הכנסה\n"
-        f"/addexpense  הוסף הוצאה\n"
-        f"/expenses  צפה בהוצאות\n"
-        f"/delexpense  מחק הוצאה"
+    uid = msg.from_user.id
+    async with engine.begin() as conn:
+        # User basics
+        user = (await conn.run_sync(lambda c: c.execute(sa_text("SELECT language, points, wallet_address, created_at FROM users WHERE telegram_id=:uid"), {"uid": uid}).fetchone()))
+        # Income/expenses
+        income = (await conn.run_sync(lambda c: c.execute(sa_text("SELECT COALESCE(SUM(amount),0) FROM user_expenses WHERE user_id=:uid AND type='income'"), {"uid": uid}).fetchone()))[0]
+        expenses = (await conn.run_sync(lambda c: c.execute(sa_text("SELECT COALESCE(SUM(amount),0) FROM user_expenses WHERE user_id=:uid AND type='expense'"), {"uid": uid}).fetchone()))[0]
+        # Pension
+        pension = (await conn.run_sync(lambda c: c.execute(sa_text("SELECT result_monthly, result_capital FROM pension_profiles WHERE telegram_id=:uid ORDER BY id DESC LIMIT 1"), {"uid": uid}).fetchone()))
+        # TON City
+        city = (await conn.run_sync(lambda c: c.execute(sa_text("SELECT COUNT(*) FROM users")).fetchone()))[0]
+        # Courses
+        courses = (await conn.run_sync(lambda c: c.execute(sa_text("SELECT COUNT(*) FROM user_progress WHERE user_id=:uid"), {"uid": uid}).fetchone()))[0]
+        # Donations
+        donations = (await conn.run_sync(lambda c: c.execute(sa_text("SELECT COUNT(*), COALESCE(SUM(amount),0) FROM donations WHERE user_id=:uid"), {"uid": uid}).fetchone()))
+        # Household
+        household = (await conn.run_sync(lambda c: c.execute(sa_text("SELECT household_id, role FROM household_members WHERE user_id=:uid LIMIT 1"), {"uid": uid}).fetchone()))
+
+    lang = user[0] if user else "he"
+    points = user[1] if user else 0
+    wallet = user[2] if user else "לא הוגדר"
+    created = user[3] if user else "לא ידוע"
+
+    txt = (
+        f"👤 <b>פרופיל  {msg.from_user.first_name}</b>\n"
+        f"━━━━━━━━━━━━━━━━━━\n"
+        f"🌐 שפה: {lang}\n"
+        f"⭐️ נקודות: {points}\n"
+        f"👛 ארנק: {wallet[:10]}...\n"
+        f"📅 הצטרף: {created[:10]}\n\n"
+        f"💰 <b>כלכלה</b>\n"
+        f"• הכנסה: {income:,.0f} \n"
+        f"• הוצאות: {expenses:,.0f} \n"
+        f"• חיסכון: {income - expenses:,.0f} \n\n"
     )
-    await msg.answer(info, parse_mode="HTML", reply_markup=back_to_main())
-
-@router.message(Command("setincome"))
-async def cmd_setincome(msg: Message, state: FSMContext):
-    await state.set_state(ProfileForm.waiting_for_income)
-    await msg.answer("הזן את ההכנסה החודשית שלך (בש\"ח):")
-
-@router.message(ProfileForm.waiting_for_income)
-async def process_income(msg: Message, state: FSMContext):
-    try:
-        income = float(msg.text)
-    except ValueError:
-        await msg.answer("מספר לא תקין, נסה שוב.")
-        return
-    await update_income(msg.from_user.id, income)
-    await state.clear()
-    await msg.answer(f"✅ ההכנסה עודכנה ל-{income:,.0f}.", reply_markup=back_to_main())
-
-@router.message(Command("addexpense"))
-async def cmd_addexpense(msg: Message, state: FSMContext):
-    await state.set_state(ProfileForm.waiting_for_expense_category)
-    await msg.answer("איזו קטגוריה? (למשל: שכירות, חשמל, ארנונה, סלולר, ביטוח)")
-
-@router.message(ProfileForm.waiting_for_expense_category)
-async def process_category(msg: Message, state: FSMContext):
-    await state.update_data(category=msg.text)
-    await state.set_state(ProfileForm.waiting_for_expense_amount)
-    await msg.answer("כמה אתה משלם?")
-
-@router.message(ProfileForm.waiting_for_expense_amount)
-async def process_amount(msg: Message, state: FSMContext):
-    try:
-        amount = float(msg.text)
-    except ValueError:
-        await msg.answer("מספר לא תקין, נסה שוב.")
-        return
-    await state.update_data(amount=amount)
-    await state.set_state(ProfileForm.waiting_for_expense_frequency)
-    await msg.answer("תדירות: חודשי / דו-חודשי / שנתי?")
-
-@router.message(ProfileForm.waiting_for_expense_frequency)
-async def process_frequency(msg: Message, state: FSMContext):
-    freq = msg.text
-    if freq not in ["חודשי", "דו-חודשי", "שנתי"]:
-        await msg.answer("אנא הקלד: חודשי, דו-חודשי, או שנתי.")
-        return
-    data = await state.get_data()
-    exp = await add_expense(msg.from_user.id, data["category"], data["amount"], freq)
-    await state.clear()
-    await msg.answer(
-        f"✅ נוספה הוצאה:\n"
-        f"📌 {exp.category}: {exp.amount:,.0f} ({exp.frequency})\n"
-        f"💡 חיסכון פוטנציאלי: {exp.potential_ton_savings:,.2f} בשנה",
-        reply_markup=back_to_main()
+    if pension:
+        txt += f"📊 <b>פנסיה</b>\n• חודשית: {pension[0]:,.0f} \n• צבורה: {pension[1]:,.0f} \n\n"
+    if household:
+        txt += f"🏠 <b>משק בית</b>\n• קבוצה #{household[0]}\n• תפקיד: {household[1]}\n\n"
+    txt += (
+        f"🎓 <b>קורסים</b>\n• {courses} קורסים בתהליך\n\n"
+        f"💖 <b>תרומות</b>\n• {donations[0]} תרומות\n• סה\"כ: {donations[1]:,.0f} TON\n\n"
+        f"🏙️ <b>TON City</b>\n• תושבים: {city}\n\n"
+        f"/setincome | /addexpense | /pension | /donate"
     )
-
-@router.message(Command("expenses"))
-async def cmd_expenses(msg: Message):
-    exps = await get_expenses(msg.from_user.id)
-    if not exps:
-        await msg.answer("אין לך הוצאות עדיין. שלח /addexpense להוספה.")
-        return
-    total = await get_total_savings(msg.from_user.id)
-    lines = [f"📌 <b>ההוצאות שלך:</b>"]
-    for e in exps:
-        lines.append(f"• {e.category}: {e.amount:,.0f} ({e.frequency})  ID: {e.id}")
-    lines.append(f"\n💰 <b>סה\"כ חיסכון: {total:,.2f} בשנה</b>")
-    lines.append("\nלמחיקת הוצאה: /delexpense <ID>")
-    await msg.answer("\n".join(lines), parse_mode="HTML", reply_markup=back_to_main())
-
-@router.message(Command("delexpense"))
-async def cmd_delexpense(msg: Message):
-    parts = msg.text.split()
-    if len(parts) < 2:
-        await msg.answer("שימוש: /delexpense <ID>\nלדוגמה: /delexpense 3")
-        return
-    try:
-        expense_id = int(parts[1])
-    except ValueError:
-        await msg.answer("ID לא תקין.")
-        return
-    deleted = await delete_expense(msg.from_user.id, expense_id)
-    if deleted:
-        await msg.answer("✅ ההוצאה נמחקה.", reply_markup=back_to_main())
-    else:
-        await msg.answer("⛔ לא נמצאה הוצאה או שאין הרשאה.", reply_markup=back_to_main())
-
+    await msg.answer(txt, parse_mode='HTML')
