@@ -1,0 +1,8 @@
+﻿{
+  "features": {
+    "new_donate_ui": true,
+    "useless_ai_gemini": false,
+    "stats_v2": true,
+    "logging_middleware": true
+  }
+}

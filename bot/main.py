@@ -16,6 +16,9 @@ import bot.routers as routers_pkg
 
 bot = Bot(token=settings.bot_token)
 dp = Dispatcher()
+from bot.middlewares.logging_middleware import LoggingMiddleware
+dp.message.middleware(LoggingMiddleware())
+dp.callback_query.middleware(LoggingMiddleware())
 from bot.middlewares.useless_middleware import UselessShareMiddleware
 dp.message.middleware(UselessShareMiddleware())
 
