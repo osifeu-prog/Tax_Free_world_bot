@@ -38,7 +38,7 @@ async def set_default_commands():
         BotCommand(command="donate", description="💖 תרומה"),
         BotCommand(command="report", description="📊 דוח מערכת"),
         BotCommand(command="help", description="❔ עזרה"),
-        BotCommand(command="ref", description="🔗 הפניה"),
+        BotCommand(command="useless", description="🤖 יוסלס AI"),`n        BotCommand(command="ref", description="🔗 הפניה"),
     ]
     await bot.set_my_commands(commands, scope=BotCommandScopeDefault())
     await bot.set_chat_menu_button(menu_button=MenuButtonCommands())
