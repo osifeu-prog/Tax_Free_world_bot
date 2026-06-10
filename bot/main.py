@@ -52,7 +52,7 @@ async def fix_missing_columns():
             if col not in columns:
                 await conn.execute(text(f"ALTER TABLE users ADD COLUMN {col} {definition}"))
                 logger.info(f"✅ Added {col}")
-        # טבלת user_preferences (אם חסרים role/goal)
+        # טבלת user_preferences
         pragma2 = await conn.execute(text("PRAGMA table_info(user_preferences)"))
         cols2 = [row[1] for row in pragma2.fetchall()]
         if "goal" not in cols2:
@@ -70,6 +70,12 @@ async def main():
     await init_db()
     bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher()
+    # Middlewares
+    from bot.middlewares.detailed_logging import DetailedLoggingMiddleware
+    from bot.middlewares.admin_only import AdminOnlyMiddleware
+    dp.message.middleware(DetailedLoggingMiddleware())
+    dp.message.middleware(AdminOnlyMiddleware())
+    # Routers
     for router in [start_router, profile_router, donate_router, pension_router,
                    useless_router, admin_router, menu_router, budget_router,
                    wallet_router, onboarding_router, gamification_router, webapp_router,
