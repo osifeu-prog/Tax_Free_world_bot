@@ -60,5 +60,3 @@ async def process_role(callback: CallbackQuery):
     
     await callback.message.edit_text("✅ תודה! עכשיו בחר את המטרה העיקרית שלך:")
     await callback.answer()
-
-# TODO: להוסיף process_goal בהמשך
