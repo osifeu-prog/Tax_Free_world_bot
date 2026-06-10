@@ -18,34 +18,7 @@ from bot.routers.pension import router as pension_router
 from bot.routers.useless import router as useless_router
 from bot.routers.admin import router as admin_router
 from bot.routers.menu import router as menu_router
-from bot.routers.welcome import router as welcome_router
-from bot.routers.dashboard import router as dashboard_router
-from bot.routers.help_enhanced import router as help_router
-
-# ====================== OPTIONAL FINANCE ROUTERS ======================
-try:
-    from bot.routers.expenses import router as expenses_router
-    EXPENSES_EXISTS = True
-except ImportError:
-    EXPENSES_EXISTS = False
-
-try:
-    from bot.routers.incomes import router as incomes_router
-    INCOMES_EXISTS = True
-except ImportError:
-    INCOMES_EXISTS = False
-
-try:
-    from bot.routers.categories import router as categories_router
-    CATEGORIES_EXISTS = True
-except ImportError:
-    CATEGORIES_EXISTS = False
-
-try:
-    from bot.routers.budget import router as budget_router
-    BUDGET_EXISTS = True
-except ImportError:
-    BUDGET_EXISTS = False
+from bot.routers.budget import router as budget_router
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 if not BOT_TOKEN:
@@ -99,19 +72,10 @@ async def main():
     dp.include_router(useless_router)
     dp.include_router(admin_router)
     dp.include_router(menu_router)
-    dp.include_router(welcome_router)
-    dp.include_router(dashboard_router)
-    dp.include_router(help_router)
-
-    if EXPENSES_EXISTS: dp.include_router(expenses_router)
-    if INCOMES_EXISTS: dp.include_router(incomes_router)
-    if CATEGORIES_EXISTS: dp.include_router(categories_router)
-    if BUDGET_EXISTS: dp.include_router(budget_router)
+    dp.include_router(budget_router)
 
     logger.info("🚀 Bot starting polling...")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-
