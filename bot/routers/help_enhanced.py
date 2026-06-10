@@ -6,7 +6,7 @@ from aiogram.types import Message
 router = Router()
 
 COMMAND_CATEGORIES = {
-    "💰 Wealth": ["/budget", "/pension", "/report_pension", "/setincome", "/compare", "/wallet", "/mysavings"],
+    "💰 Wealth": ["/budget", "/pension", "/report_pension", "/setincome", "/compare", "/wallet", "/mysavings""💰 Wealth": ["/adde", "/expenses", "/addincome", "/incomes", "/categories", "/guide", "/budget", "/pension", "/report_pension", "/setincome", "/compare", "/wallet", "/mysavings"],
     "🎓 Learn": ["/academy", "/crypto", "/cbdc", "/decentral", "/socio", "/anti", "/edu", "/academy_extended", "/academy_nft", "/academy_dao", "/vision", "/spark", "/course_progress", "/seed_courses"],
     "🤖 AI": ["/useless", "/ask", "/ai"],
     "🌍 Community": ["/ref", "/qr", "/stats", "/top", "/tip", "/contact", "/faq", "/daily", "/mydata", "/gift", "/familygroup", "/household", "/shopping", "/chore"],
@@ -24,3 +24,4 @@ async def enhanced_help(msg: Message):
         text += " ".join(commands) + "\n\n"
     text += "➡️ /guide  מדריך מהיר\n➡️ /start  התחל מחדש"
     await msg.answer(text, parse_mode="HTML")
+

@@ -53,5 +53,17 @@ async def cmd_settings(msg: Message):
     await msg.answer("/language")
 
 @router.message(F.text == "🔙 חזור")
-async def back_to_home(msg: Message):
+
+@router.callback_query(F.data == "quick_adde")
+async def quick_adde(callback):
+    await callback.message.answer("לדוגמה: /adde 50 אוכל")
+    await callback.answer()
+
+@router.callback_query(F.data == "quick_expenses")
+async def quick_expenses(callback):
+    await callback.message.answer("/expenses")
+    await callback.answer()
+
+(msg: Message):
     await show_dashboard(msg)
+

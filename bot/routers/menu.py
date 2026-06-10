@@ -7,6 +7,7 @@ router = Router()
 # תפריט ראשי – מקלדת קבועה (Reply)
 def main_keyboard():
     buttons = [
+        [KeyboardButton(text='➕ הוצאה'), KeyboardButton(text='💰 הכנסה')],
         [KeyboardButton(text="📊 פרופיל"), KeyboardButton(text="💰 הוצאות")],
         [KeyboardButton(text="📈 פנסיה"), KeyboardButton(text="💖 תרומה")],
         [KeyboardButton(text="🎓 אקדמיה"), KeyboardButton(text="📋 עזרה")],
@@ -50,3 +51,4 @@ async def menu_useless(msg: Message):
 @router.message(F.text == "⭐ מובילים")
 async def menu_top(msg: Message):
     await msg.answer("/top")
+

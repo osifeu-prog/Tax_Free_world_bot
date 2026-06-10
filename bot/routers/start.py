@@ -16,8 +16,10 @@ async def cmd_start(msg: Message):
         row = prefs.fetchone()
         if row and row[0]:
             from bot.routers.dashboard import show_dashboard
+from bot.routers.expenses import router as expenses_router
             await show_dashboard(msg)
             return
     await msg.answer("🌍 ברוכים הבאים ל-Tax Free World!\n\nנתחיל בלהכיר אותך...")
     from bot.routers.welcome import start_onboarding
     await start_onboarding(msg)
+
