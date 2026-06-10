@@ -1,9 +1,12 @@
 import asyncio, os, pkgutil, importlib, time
 from pathlib import Path
+
 start_time = time.time()
+
 from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand, BotCommandScopeDefault, MenuButtonCommands
 from aiohttp import web
+
 from bot.config import settings
 from bot.api.email_routes import register, login
 from bot.utils.logger import logger
@@ -14,7 +17,6 @@ import bot.routers as routers_pkg
 bot = Bot(token=settings.bot_token)
 dp = Dispatcher()
 
-# start  טעון ראשון, חובה
 from bot.routers.start import router as start_router
 dp.include_router(start_router)
 
@@ -32,13 +34,14 @@ async def set_default_commands():
     commands = [
         BotCommand(command="start", description="🚀 דף הבית"),
         BotCommand(command="menu", description="📋 תפריט ראשי"),
+        BotCommand(command="useless", description="🤖 יוסלס AI"),
         BotCommand(command="pension", description="📊 פנסיה"),
         BotCommand(command="city", description="🏙️ TON City"),
         BotCommand(command="market", description="📈 בורסה"),
         BotCommand(command="donate", description="💖 תרומה"),
         BotCommand(command="report", description="📊 דוח מערכת"),
         BotCommand(command="help", description="❔ עזרה"),
-        BotCommand(command="useless", description="🤖 יוסלס AI"),`n        BotCommand(command="ref", description="🔗 הפניה"),
+        BotCommand(command="ref", description="🔗 הפניה"),
     ]
     await bot.set_my_commands(commands, scope=BotCommandScopeDefault())
     await bot.set_chat_menu_button(menu_button=MenuButtonCommands())
