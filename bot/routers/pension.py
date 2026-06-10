@@ -41,6 +41,11 @@ async def steps(msg: Message):
     elif step == 'retire':
         d['retirement_age'] = val
         profile = user_data.pop(uid)
+        # וידוא כל המפתחות
+        if 'age_now' not in profile: profile['age_now'] = 30
+        if 'retirement_age' not in profile: profile['retirement_age'] = 67
+        if 'salary_bruto' not in profile: profile['salary_bruto'] = 5000
+        
         result = calc_budgetary(profile) if profile['emp'] == 'public' else calc_accumulating(profile)
         tax = estimate_tax(result['monthly_pension'])
         await msg.answer(

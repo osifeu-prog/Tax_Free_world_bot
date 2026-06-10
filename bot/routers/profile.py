@@ -10,9 +10,13 @@ router = Router()
 async def cmd_profile(msg: Message):
     uid = msg.from_user.id
     async with engine.begin() as conn:
+        # User basics
         user = (await conn.run_sync(lambda c: c.execute(sa_text("SELECT language, points, wallet_address, created_at FROM users WHERE telegram_id=:uid"), {"uid": uid}).fetchone()))
+        # Pension
         pension = (await conn.run_sync(lambda c: c.execute(sa_text("SELECT result_monthly, result_capital FROM pension_profiles WHERE telegram_id=:uid ORDER BY id DESC LIMIT 1"), {"uid": uid}).fetchone()))
+        # TON City
         total_users = (await conn.run_sync(lambda c: c.execute(sa_text("SELECT COUNT(*) FROM users")).fetchone()))[0]
+        # Donations
         donations = (await conn.run_sync(lambda c: c.execute(sa_text("SELECT COUNT(*), COALESCE(SUM(amount),0) FROM donations WHERE user_id=:uid"), {"uid": uid}).fetchone()))
 
     lang = user[0] if user else "he"
