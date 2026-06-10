@@ -19,8 +19,7 @@ from bot.routers.useless import router as useless_router
 from bot.routers.admin import router as admin_router
 from bot.routers.menu import router as menu_router
 
-
-# נסה לייבא routers נוספים אם הם קיימים
+# ניסיון לייבא routers נוספים (אם קיימים)
 try:
     from bot.routers.budget import router as budget_router
     BUDGET_EXISTS = True
@@ -38,6 +37,12 @@ try:
     ACADEMY_EXISTS = True
 except ImportError:
     ACADEMY_EXISTS = False
+
+try:
+    from bot.routers.household import router as household_router
+    HOUSEHOLD_EXISTS = True
+except ImportError:
+    HOUSEHOLD_EXISTS = False
 # ========================================================
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -97,12 +102,10 @@ async def main():
     dp.include_router(admin_router)
     dp.include_router(menu_router)
 
-    if BUDGET_EXISTS:
-        dp.include_router(budget_router)
-    if EXPENSE_EXISTS:
-        dp.include_router(expense_router)
-    if ACADEMY_EXISTS:
-        dp.include_router(academy_router)
+    if BUDGET_EXISTS: dp.include_router(budget_router)
+    if EXPENSE_EXISTS: dp.include_router(expense_router)
+    if ACADEMY_EXISTS: dp.include_router(academy_router)
+    if HOUSEHOLD_EXISTS: dp.include_router(household_router)
 
     logger.info("🚀 Bot starting polling...")
     await dp.start_polling(bot)
@@ -110,4 +113,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
