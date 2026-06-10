@@ -34,17 +34,6 @@ logger = logging.getLogger(__name__)
 
 async def fix_missing_columns():
     async with engine.begin() as conn:
-        pragma = await conn.execute(text("PRAGMA table_info(users)"))
-        columns = [row[1] for row in pragma.fetchall()]
-        logger.info(f"Existing columns: {columns}")
-        needed = {"role": "VARCHAR(20) DEFAULT 'user'", "wallet_address": "VARCHAR(255)", "points": "FLOAT DEFAULT 0"}
-        for col, definition in needed.items():
-            if col not in columns:
-                await conn.execute(text(f"ALTER TABLE users ADD COLUMN {col} {definition}"))
-                logger.info(f"✅ Added {col}")
-
-async def fix_missing_columns():
-    async with engine.begin() as conn:
         # טבלת users
         pragma = await conn.execute(text("PRAGMA table_info(users)"))
         columns = [row[1] for row in pragma.fetchall()]
@@ -68,7 +57,9 @@ async def fix_missing_columns():
         cols2 = [row[1] for row in pragma2.fetchall()]
         if "goal" not in cols2:
             await conn.execute(text("ALTER TABLE user_preferences ADD COLUMN goal VARCHAR(20)"))
-            logger.info("✅ Added goal to user_preferences")async def init_db():
+            logger.info("✅ Added goal to user_preferences")
+
+async def init_db():
     logger.info("🔧 Initializing database...")
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
@@ -80,14 +71,12 @@ async def main():
     bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher()
     for router in [start_router, profile_router, donate_router, pension_router,
-                   useless_router, admin_router, menu_router, budget_router]:
+                   useless_router, admin_router, menu_router, budget_router,
+                   wallet_router, onboarding_router, gamification_router, webapp_router,
+                   dashboard_simple_router]:
         dp.include_router(router)
     logger.info("🚀 Bot starting...")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-
-
-
