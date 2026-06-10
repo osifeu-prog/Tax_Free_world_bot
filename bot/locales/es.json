@@ -85,5 +85,18 @@
   "shopping_title": "🛒 Compras",
   "shopping_body": "Lista de compras compartida.",
   "chore_title": "📌 Misión",
-  "chore_body": "Gestionar las tareas del hogar."
+  "chore_body": "Gestionar las tareas del hogar.",
+  "donate_50": "💚 50",
+  "donate_100": "💚 100",
+  "donate_500": "💎 500",
+  "donate_ton": "💎 TONELADA",
+  "useless_title": "🤖 IA inútil",
+  "useless_prompt": "Dime algo inútil (pero hazlo divertido):",
+  "useless_button": "🎲 Dame una respuesta torcida",
+  "useless_stats": "📊 Estadísticas reales",
+  "useless_back": "🤖 Regreso a Yosels",
+  "stats_header": "📊 <b>La cruda verdad</b>\n━━━━━━━━━━━━━━",
+  "pension_done": "✅ <b>¡Se acabó el cálculo de la pensión!</b>\n\nAquí está el resultado. No cambiará nada. Pero tienes un número.",
+  "donate_done": "🙏 <b>¡Gracias por la donación!</b>\n\n¿En serio? Nadie contribuye. ¿Estás seguro de que donaste?",
+  "useless_keyboard": "🤖 IA inútil"
 }

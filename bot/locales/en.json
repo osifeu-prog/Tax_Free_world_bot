@@ -162,5 +162,18 @@
   "shopping_title": "🛒 Shopping",
   "shopping_body": "Shared shopping list.",
   "chore_title": "📌 Mission",
-  "chore_body": "Manage household tasks."
+  "chore_body": "Manage household tasks.",
+  "donate_50": "💚 50",
+  "donate_100": "💚 100",
+  "donate_500": "💎 500",
+  "donate_ton": "💎 TON",
+  "useless_title": "🤖 Useless AI",
+  "useless_prompt": "Tell me something useless (but make it funny):",
+  "useless_button": "🎲 Give me a crooked answer",
+  "useless_stats": "📊 True statistics",
+  "useless_back": "🤖 Return to Yosels",
+  "stats_header": "📊 <b>The grim truth</b>\n━━━━━━━━━━━━━━",
+  "pension_done": "✅ <b>The pension calculation is over!</b>\n\nHere is the result. It won't change anything. But you got a number.",
+  "donate_done": "🙏 <b>Thank you for the donation!</b>\n\nReally? No one contributes. Are you sure you donated?",
+  "useless_keyboard": "🤖 Useless AI"
 }

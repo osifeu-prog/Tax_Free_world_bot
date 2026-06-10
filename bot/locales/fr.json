@@ -85,5 +85,18 @@
   "shopping_title": "🛒 Achats",
   "shopping_body": "Liste de courses partagée.",
   "chore_title": "📌Mission",
-  "chore_body": "Gérer les tâches ménagères."
+  "chore_body": "Gérer les tâches ménagères.",
+  "donate_50": "💚50",
+  "donate_100": "💚 100",
+  "donate_500": "💎 500",
+  "donate_ton": "💎TONNE",
+  "useless_title": "🤖 IA inutile",
+  "useless_prompt": "Dis-moi quelque chose d'inutile (mais rends-le drôle) :",
+  "useless_button": "🎲 Donnez-moi une réponse tordue",
+  "useless_stats": "📊 De vraies statistiques",
+  "useless_back": "🤖 Retour à Yosels",
+  "stats_header": "📊 <b>La sombre vérité</b>\n━━━━━━━━━━━━━━",
+  "pension_done": "✅ <b>Le calcul de la pension est terminé !</b>\n\nVoici le résultat. Cela ne changera rien. Mais tu as un numéro.",
+  "donate_done": "🙏 <b>Merci pour le don !</b>\n\nVraiment ? Personne ne contribue. Etes-vous sûr d'avoir fait un don ?",
+  "useless_keyboard": "🤖 IA inutile"
 }
