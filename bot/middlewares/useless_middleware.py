@@ -1,6 +1,6 @@
 from aiogram import BaseMiddleware
 from aiogram.types import Message
-import random, asyncio
+import random
 
 SHARE_PROMPTS = [
     "תשלח אותי למישהו שגם הוא צריך תזכורת שאין משמעות.",
@@ -16,7 +16,7 @@ class UselessShareMiddleware(BaseMiddleware):
 
     async def __call__(self, handler, event: Message, data):
         result = await handler(event, data)
-        if event.text and not event.text.startswith('/'):
+        if hasattr(event, 'text') and event.text and not event.text.startswith('/'):
             self.counter += 1
             if self.counter >= self.next_trigger:
                 self.counter = 0
