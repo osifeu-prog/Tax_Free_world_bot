@@ -43,7 +43,32 @@ async def fix_missing_columns():
                 await conn.execute(text(f"ALTER TABLE users ADD COLUMN {col} {definition}"))
                 logger.info(f"✅ Added {col}")
 
-async def init_db():
+async def fix_missing_columns():
+    async with engine.begin() as conn:
+        # טבלת users
+        pragma = await conn.execute(text("PRAGMA table_info(users)"))
+        columns = [row[1] for row in pragma.fetchall()]
+        logger.info(f"Existing columns: {columns}")
+        needed = {
+            "role": "VARCHAR(20) DEFAULT 'user'",
+            "wallet_address": "VARCHAR(255)",
+            "points": "FLOAT DEFAULT 0",
+            "xp": "INTEGER DEFAULT 0",
+            "level": "INTEGER DEFAULT 1",
+            "streak_days": "INTEGER DEFAULT 0",
+            "last_active": "DATETIME",
+            "achievements": "TEXT DEFAULT '[]'"
+        }
+        for col, definition in needed.items():
+            if col not in columns:
+                await conn.execute(text(f"ALTER TABLE users ADD COLUMN {col} {definition}"))
+                logger.info(f"✅ Added {col}")
+        # טבלת user_preferences (אם חסרים role/goal)
+        pragma2 = await conn.execute(text("PRAGMA table_info(user_preferences)"))
+        cols2 = [row[1] for row in pragma2.fetchall()]
+        if "goal" not in cols2:
+            await conn.execute(text("ALTER TABLE user_preferences ADD COLUMN goal VARCHAR(20)"))
+            logger.info("✅ Added goal to user_preferences")async def init_db():
     logger.info("🔧 Initializing database...")
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
@@ -62,6 +87,7 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 
 

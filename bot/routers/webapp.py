@@ -12,3 +12,4 @@ async def open_webapp(msg: Message):
         [InlineKeyboardButton(text="🚀 פתח את Tax Free World", web_app=WebAppInfo(url=web_app_url))]
     ])
     await msg.answer("לחץ לפתיחת הדשבורד הדיגיטלי:", reply_markup=kb)
+

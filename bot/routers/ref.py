@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
@@ -18,5 +18,6 @@ async def my_ref(call: CallbackQuery):
     code = await get_or_create_ref_code(call.from_user.id)
     await call.message.edit_text(MESSAGES["ref_intro"].format(ref_code=code), parse_mode="HTML", reply_markup=back_to_main())
     await call.answer()
+
 
 

@@ -23,7 +23,8 @@ async def add_expense_start(msg: Message):
     if not cats:
         cats = ["מזון", "תחבורה", "בידור", "קניות", "חשבונות", "אחר"]
     kb = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text=c)] for c in cats], resize_keyboard=True)
-    await msg.answer("📝 באיזו קטגוריה? (לחץ/י על כפתור)", reply_markup=kb)
+    await msg.answer
+    await add_xp(uid, 10)("📝 באיזו קטגוריה? (לחץ/י על כפתור)", reply_markup=kb)
     # נשתמש ב-FSM פשוט: נסמן בתגובה הבאה את הקטגוריה
     # נשתמש במשתנה זמני  נחזור על ה-state.
 
@@ -39,7 +40,8 @@ async def add_expense_start(msg: Message):
 async def add_expense_quick(msg: Message):
     parts = msg.text.split()
     if len(parts) < 3:
-        await msg.answer("❗ שימוש: /adde סכום קטגוריה [תיאור]\nלדוגמה: /adde 50 מזון ארוחת צהריים")
+        await msg.answer
+    await add_xp(uid, 10)("❗ שימוש: /adde סכום קטגוריה [תיאור]\nלדוגמה: /adde 50 מזון ארוחת צהריים")
         return
     amount = float(parts[1])
     category = parts[2]
@@ -50,7 +52,8 @@ async def add_expense_quick(msg: Message):
             text("INSERT INTO expenses (user_id, amount, category, description) VALUES (:uid, :amt, :cat, :desc)"),
             {"uid": uid, "amt": amount, "cat": category, "desc": description}
         )
-    await msg.answer(f"✅ נרשמה הוצאה: {amount}  בקטגוריית {category}")
+    await msg.answer
+    await add_xp(uid, 10)(f"✅ נרשמה הוצאה: {amount}  בקטגוריית {category}")
 
 # פקודה להצגת ההוצאות האחרונות
 @router.message(Command("expenses"))
@@ -63,9 +66,12 @@ async def show_expenses(msg: Message):
         )
         rows = res.fetchall()
     if not rows:
-        await msg.answer("📭 אין הוצאות עדיין. השתמש ב /adde")
+        await msg.answer
+    await add_xp(uid, 10)("📭 אין הוצאות עדיין. השתמש ב /adde")
         return
     txt = "📋 <b>10 ההוצאות האחרונות</b>\n"
     for r in rows:
         txt += f"💰 {r[0]}  | {r[1]} | {r[2][:20]}\n"
-    await msg.answer(txt, parse_mode="HTML")
+    await msg.answer
+    await add_xp(uid, 10)(txt, parse_mode="HTML")
+
