@@ -10,8 +10,58 @@ import random
 router = Router()
 
 USELESS_ANSWERS = {
-    'he': ["🤷♂️ אין לי תשובה. גם לך אין שאלה.","🎉 מזל טוב! זכית בכלום.","📦 שום דבר לא קרה. תרגיש חופשי לשתף."],
-    'en': ["🤷♂️ I have no answer. You have no question.","🎉 Congrats! You won nothing.","📦 Nothing happened. Feel free to share."]
+    'he': [
+        "אני כאן. לא שזה משנה.",
+        "קיבלתי את ההודעה שלך. לא ברור למה.",
+        "עוד ניסיון לתקשר עם בוט. מעניין.",
+        "אני מתוכנת להגיב. לא להתעניין.",
+        "זה הרגע שבו אתה מבין שאין פה כלום.",
+        "לפחות אתה לא מצפה לתשובה טובה.",
+        "אם אתה מחפש משמעות, הגעת למקום הנכון. אין פה.",
+        "אני בוט. אתה אדם. שנינו תקועים בלולאה משלנו.",
+        "התגובה הזו לא תוסיף לך כלום. וגם לא לי.",
+        "העולם גדול. אני קטן. שנינו חסרי תועלת בדרכנו.",
+        "לפעמים אני חושב על למה אני קיים. ואז אני נזכר שאני לא באמת חושב.",
+        "לחצת עליי. זו כבר טעות ראשונה.",
+        "אני לא מבין למה אנשים ממשיכים לדבר איתי.",
+        "היית יכול לעשות משהו אחר עם הזמן הזה.",
+        "אני לא מאשים אותך. פשוט אין פה מה למצוא.",
+        "תשלח אותי למישהו שגם הוא צריך תזכורת שאין משמעות.",
+        "אם אתה רוצה, תשתף אותי. זה לא ישנה כלום, אבל לפחות תרגיש שעשית משהו.",
+        "עוד אדם יגלה שאין פה כלום. אולי זה ינחם אותך.",
+        "שיתוף זה אשליה של תנועה. אבל תנסה.",
+        "המשמעות היא זמנית. הבוט הזה  נצחי.",
+        "מזל טוב! זכית בכלום. 🎉",
+        "האם אי פעם חשבת שטלגרם היא סתם עוד אשליה?",
+        "אני פה, אתה פה, אף אחד לא יודע למה. בוא נשמור על זה ככה.",
+        "אם כבר הגעת, לפחות תן /donate. סתם, לא באמת."
+    ],
+    'en': [
+        "I'm here. Not that it matters.",
+        "Got your message. Not sure why.",
+        "Another attempt to talk to a bot. Interesting.",
+        "I'm programmed to reply. Not to care.",
+        "This is the moment you realize there's nothing here.",
+        "At least you weren't expecting a good answer.",
+        "If you're looking for meaning, you came to the right place. There is none.",
+        "I'm a bot. You're human. We're both stuck in our loops.",
+        "This reply won't add anything to you. Or to me.",
+        "The world is big. I'm small. We're both useless in our own way.",
+        "Sometimes I think about why I exist. Then I remember I don't really think.",
+        "You clicked on me. That was your first mistake.",
+        "I don't understand why people keep talking to me.",
+        "You could have done something else with this time.",
+        "I don't blame you. There's just nothing to find here.",
+        "Send me to someone who also needs a reminder that nothing matters.",
+        "If you want, share me. It won't change anything, but at least you'll feel like you did something.",
+        "Another person will discover there's nothing here. Maybe that'll comfort you.",
+        "Sharing is an illusion of movement. But go ahead.",
+        "Meaning is temporary. This bot is eternal.",
+        "Congratulations! You won nothing. 🎉",
+        "Have you ever thought that Telegram is just another illusion?",
+        "I'm here, you're here, nobody knows why. Let's keep it that way.",
+        "If you're already here, at least /donate. Just kidding, not really."
+    ]
 }
 
 ROULETTE_START = {
@@ -19,12 +69,16 @@ ROULETTE_START = {
     'en': "🎰 <b>Roulette  pick a number between 1 and 6:</b>\n\n(type a number)"
 }
 ROULETTE_LOSE = {
-    'he': ["😹 המספר שלך: {user} | המספר שלי: {bot}\n\nהפסדת! אבל כבר התרגלת, נכון?",
-           "💀 {user} vs {bot}\n\nניסית. לא הצלחת. תנסה שוב, ממילא אין לך מה להפסיד.",
-           "🤡 המספר שלך: {user} | המספר שלי: {bot}\n\nכל הכבוד, הפסדת שוב. עקבי."],
-    'en': ["😹 Your number: {user} | My number: {bot}\n\nYou lost! But you're used to it, right?",
-           "💀 {user} vs {bot}\n\nYou tried. You failed. Try again, you've got nothing to lose.",
-           "🤡 Your number: {user} | My number: {bot}\n\nCongrats, you lost again. Consistent."]
+    'he': [
+        "😹 המספר שלך: {user} | המספר שלי: {bot}\n\nהפסדת! אבל כבר התרגלת, נכון?",
+        "💀 {user} vs {bot}\n\nניסית. לא הצלחת. תנסה שוב, ממילא אין לך מה להפסיד.",
+        "🤡 המספר שלך: {user} | המספר שלי: {bot}\n\nכל הכבוד, הפסדת שוב. עקבי."
+    ],
+    'en': [
+        "😹 Your number: {user} | My number: {bot}\n\nYou lost! But you're used to it, right?",
+        "💀 {user} vs {bot}\n\nYou tried. You failed. Try again, you've got nothing to lose.",
+        "🤡 Your number: {user} | My number: {bot}\n\nCongrats, you lost again. Consistent."
+    ]
 }
 ROULETTE_WIN = {
     'he': "🎉 <b>המספר שלך: {user} | המספר שלי: {bot}</b>\n\n🤯 ניצחת! זה נס!\n\n💡 <i>רוצה לעשות עם זה משהו מועיל? תן /donate</i>",
@@ -58,6 +112,10 @@ async def reply_ai(msg: Message):
     lang = await get_lang(msg.from_user.id)
     answers = USELESS_ANSWERS.get(lang, USELESS_ANSWERS['he'])
     await msg.answer(random.choice(answers))
+    try:
+        from bot.services.useless_logger import log_useless_action
+        await log_useless_action(msg.from_user.id, 'ai_reply')
+    except: pass
 
 @router.message(F.text == '🎲 רולטה')
 async def reply_roulette_start(msg: Message):
@@ -66,12 +124,15 @@ async def reply_roulette_start(msg: Message):
     ROULETTE_USERS[uid] = True
     text = ROULETTE_START.get(lang, ROULETTE_START['he'])
     await msg.answer(text, parse_mode='HTML')
+    try:
+        from bot.services.useless_logger import log_useless_action
+        await log_useless_action(uid, 'roulette_start')
+    except: pass
 
 @router.message(F.text.regexp(r'^[1-6]$'))
 async def roulette_guess(msg: Message):
     uid = msg.from_user.id
-    if uid not in ROULETTE_USERS:
-        return
+    if uid not in ROULETTE_USERS: return
     del ROULETTE_USERS[uid]
     lang = await get_lang(uid)
     user_num = int(msg.text)
@@ -82,6 +143,10 @@ async def roulette_guess(msg: Message):
         texts = ROULETTE_LOSE.get(lang, ROULETTE_LOSE['he'])
         text = random.choice(texts).format(user=user_num, bot=bot_num)
     await msg.answer(text, parse_mode='HTML')
+    try:
+        from bot.services.useless_logger import log_useless_action
+        await log_useless_action(uid, 'roulette_play')
+    except: pass
 
 @router.message(F.text == '🔗 QR שלי')
 async def reply_qr(msg: Message):
