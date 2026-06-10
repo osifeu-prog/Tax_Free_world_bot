@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Float, DateTime, Boolean, Text, UniqueConstraint
+﻿from sqlalchemy import Column, ForeignKey, Integer, BigInteger, String, Float, DateTime, Boolean, Text, UniqueConstraint
 # -*- coding: utf-8 -*-
 from sqlalchemy.orm import DeclarativeBase
 import datetime
@@ -12,7 +12,7 @@ class Household(Base):
     id = Column(Integer, primary_key=True)
     code = Column(String(20), unique=True)
     creator_id = Column(BigInteger)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.datetime.datetime.utcnow)
     email = Column(String(255), nullable=True, unique=True)
     google_id = Column(String(255), nullable=True, unique=True)
     password_hash = Column(String(255), nullable=True)
@@ -31,7 +31,7 @@ class SharedExpense(Base):
     category = Column(String(50))
     amount = Column(Float)
     frequency = Column(String(20))
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.datetime.datetime.utcnow)
 
 class Chore(Base):
     __tablename__ = "chores"
@@ -63,7 +63,7 @@ class User(Base):
     wallet_address = Column(String(255), nullable=True)
     last_gift_date = Column(String)
     gift_shares_today = Column(Integer, default=0)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.datetime.datetime.utcnow)
 
 class CommandLog(Base):
     __tablename__ = "command_logs"
@@ -71,7 +71,7 @@ class CommandLog(Base):
     user_id = Column(BigInteger)
     command = Column(String)
     params = Column(String)
-    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+    timestamp = Column(DateTime, default=datetime.datetime.datetime.utcnow)
 
 class Referral(Base):
     __tablename__ = "referrals"
@@ -102,7 +102,7 @@ class UserExpense(Base):
     frequency = Column(String(20))
     potential_ton_savings = Column(Float, default=0.0)
     notes = Column(String(200))
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.datetime.datetime.utcnow)
 
 class UserMemory(Base):
     __tablename__ = "user_memory"
@@ -111,7 +111,7 @@ class UserMemory(Base):
     last_command = Column(String(50))
     last_params = Column(String(200))
     last_result = Column(String(500))
-    updated_at = Column(DateTime, default=datetime.datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.datetime.datetime.utcnow)
 
 
 class AdminRequest(Base):
@@ -119,7 +119,7 @@ class AdminRequest(Base):
     id = Column(Integer, primary_key=True)
     telegram_id = Column(BigInteger)
     status = Column(String(20), default="pending")  # pending/approved/rejected
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.datetime.datetime.utcnow)
 class Admin(Base):
     __tablename__ = "admins"
     id = Column(Integer, primary_key=True)
@@ -141,7 +141,7 @@ class PensionProfile(Base):
     management_fees = Column(Float)
     result_capital = Column(Float)
     result_monthly = Column(Float)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.datetime.datetime.utcnow)
     telegram_id = Column(BigInteger, unique=True, index=True)
     language = Column(String(5), default="he")
     country = Column(String(5), default="IL")
@@ -151,7 +151,7 @@ class PensionProfile(Base):
     password_hash = Column(String(200))
 
 
-# bot/database/models.py (Ã—â€Ã—â€¢Ã—Â¡Ã—Â¤Ã—â€ Ã—Å“Ã—Â¡Ã—â€¢Ã—Â£ Ã—â€Ã—Â§Ã—â€¢Ã—â€˜Ã—Â¥)
+# bot/database/models.py (Ãƒâ€”Ã¢â‚¬ÂÃƒâ€”Ã¢â‚¬Â¢Ãƒâ€”Ã‚Â¡Ãƒâ€”Ã‚Â¤Ãƒâ€”Ã¢â‚¬Â Ãƒâ€”Ã…â€œÃƒâ€”Ã‚Â¡Ãƒâ€”Ã¢â‚¬Â¢Ãƒâ€”Ã‚Â£ Ãƒâ€”Ã¢â‚¬ÂÃƒâ€”Ã‚Â§Ãƒâ€”Ã¢â‚¬Â¢Ãƒâ€”Ã¢â‚¬ËœÃƒâ€”Ã‚Â¥)
 class BotGroup(Base):
     __tablename__ = "bot_groups"
     id = Column(Integer, primary_key=True, index=True)
@@ -170,7 +170,7 @@ class UserRole(Base):
     role = Column(String(50), default="citizen")  # citizen, entrepreneur, leader, expert, fighter, builder
 import datetime
 
-# ... (×”×§×™×™× × ×©××¨)
+# ... (Ã—â€Ã—Â§Ã—â„¢Ã—â„¢Ã—Â Ã—Â Ã—Â©Ã—ÂÃ—Â¨)
 
 
 
@@ -185,7 +185,7 @@ class Course(Base):
     required_role = Column(String(50), default="citizen")
     order_num = Column(Integer, default=0)
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.datetime.datetime.utcnow)
 
 class UserProgress(Base):
     __tablename__ = "user_progress"
@@ -194,14 +194,14 @@ class UserProgress(Base):
     course_id = Column(Integer, ForeignKey("courses.id"))
     completed_lessons = Column(Text, default="[]")
     score = Column(Integer, default=0)
-    last_accessed = Column(DateTime, default=datetime.datetime.utcnow)
+    last_accessed = Column(DateTime, default=datetime.datetime.datetime.utcnow)
 class Event(Base):
     __tablename__ = "events"
     id = Column(Integer, primary_key=True)
     telegram_id = Column(BigInteger, index=True)
     type = Column(String(50))
     payload = Column(Text)  # JSON
-    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+    timestamp = Column(DateTime, default=datetime.datetime.datetime.utcnow)
 
 class KnowledgeNode(Base):
     __tablename__ = "knowledge_nodes"
@@ -212,7 +212,7 @@ class KnowledgeNode(Base):
     description = Column(Text)
     difficulty = Column(Integer, default=1)
     estimated_minutes = Column(Integer)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.datetime.datetime.utcnow)
 
 class KnowledgeEdge(Base):
     __tablename__ = "knowledge_edges"
@@ -221,7 +221,7 @@ class KnowledgeEdge(Base):
     to_node_id = Column(Integer, ForeignKey("knowledge_nodes.id"))
     relation_type = Column(String(50), nullable=False)
     weight = Column(Integer, default=1)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.datetime.datetime.utcnow)
     __table_args__ = (UniqueConstraint('from_node_id', 'to_node_id', 'relation_type'),)
 
 class UserKnowledgeProgress(Base):
@@ -232,7 +232,7 @@ class UserKnowledgeProgress(Base):
     status = Column(String(20), default="not_started")
     score = Column(Integer, default=0)
     completed_at = Column(DateTime)
-    last_accessed = Column(DateTime, default=datetime.datetime.utcnow)
+    last_accessed = Column(DateTime, default=datetime.datetime.datetime.utcnow)
     __table_args__ = (UniqueConstraint('telegram_id', 'node_id'),)
 
 
@@ -246,7 +246,7 @@ class Donation(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, index=True)
     amount = Column(Float)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.datetime.datetime.utcnow)
 
 class GameStats(Base):
     __tablename__ = 'game_stats'
@@ -255,3 +255,6 @@ class GameStats(Base):
     slots_spins_total = Column(Integer, default=0)
     slots_daily_spins = Column(Integer, default=0)
     slots_last_spin_at = Column(DateTime, nullable=True)
+
+
+
