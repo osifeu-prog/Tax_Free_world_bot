@@ -16,6 +16,8 @@ import bot.routers as routers_pkg
 
 bot = Bot(token=settings.bot_token)
 dp = Dispatcher()
+from bot.middlewares.useless_middleware import UselessShareMiddleware
+dp.message.middleware(UselessShareMiddleware())
 
 from bot.routers.start import router as start_router
 dp.include_router(start_router)
