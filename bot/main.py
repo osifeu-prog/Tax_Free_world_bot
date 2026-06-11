@@ -1,17 +1,25 @@
 ﻿import asyncio
 import logging
 import os
-from sqlalchemy import text
 
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
-from bot.database.session import engine
-from bot.database.models import Base
-from bot.middlewares.language_middleware import LanguageMiddleware
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+if not BOT_TOKEN:
+    raise ValueError("BOT_TOKEN not set")
 
-# ====================== ALL HEALTHY ROUTERS ======================
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+async def main():
+    bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    dp = Dispatcher()
+    dp.message.middleware(LanguageMiddleware())
+    dp.callback_query.middleware(LanguageMiddleware())
+
+    # ====================== HEALTHY ROUTERS ======================
 from bot.routers.academy import router as router_academy
 from bot.routers.academy_extended import router as router_academy_extended
 from bot.routers.admin import router as router_admin
@@ -22,7 +30,6 @@ from bot.routers.anti import router as router_anti
 from bot.routers.ask import router as router_ask
 from bot.routers.backup import router as router_backup
 from bot.routers.broadcast import router as router_broadcast
-from bot.routers.budget import router as router_budget
 from bot.routers.business import router as router_business
 from bot.routers.categories import router as router_categories
 from bot.routers.cbdc import router as router_cbdc
@@ -45,7 +52,6 @@ from bot.routers.generator_handler import router as router_generator_handler
 from bot.routers.gift import router as router_gift
 from bot.routers.health import router as router_health
 from bot.routers.help import router as router_help
-from bot.routers.household import router as router_household
 from bot.routers.id import router as router_id
 from bot.routers.import_users import router as router_import_users
 from bot.routers.incomes import router as router_incomes
@@ -62,7 +68,6 @@ from bot.routers.miniapp import router as router_miniapp
 from bot.routers.morning import router as router_morning
 from bot.routers.mydata import router as router_mydata
 from bot.routers.ocr import router as router_ocr
-from bot.routers.pension import router as router_pension
 from bot.routers.profile import router as router_profile
 from bot.routers.profile_citizen import router as router_profile_citizen
 from bot.routers.qr import router as router_qr
@@ -85,21 +90,7 @@ from bot.routers.webapp import router as router_webapp
 from bot.routers.welcome_onboarding import router as router_welcome_onboarding
 from bot.routers.why import router as router_why
 
-BOT_TOKEN = os.getenv("BOT_TOKEN")
-if not BOT_TOKEN:
-    raise ValueError("BOT_TOKEN not set")
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-async def main():
-    bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-    dp = Dispatcher()
-    dp.message.middleware(LanguageMiddleware())
-    dp.callback_query.middleware(LanguageMiddleware())
-    
-    
-    # Include all routers
+    # Include routers
     dp.include_router(router_academy)
     dp.include_router(router_academy_extended)
     dp.include_router(router_admin)
@@ -110,7 +101,6 @@ async def main():
     dp.include_router(router_ask)
     dp.include_router(router_backup)
     dp.include_router(router_broadcast)
-    dp.include_router(router_budget)
     dp.include_router(router_business)
     dp.include_router(router_categories)
     dp.include_router(router_cbdc)
@@ -133,7 +123,6 @@ async def main():
     dp.include_router(router_gift)
     dp.include_router(router_health)
     dp.include_router(router_help)
-    dp.include_router(router_household)
     dp.include_router(router_id)
     dp.include_router(router_import_users)
     dp.include_router(router_incomes)
@@ -150,7 +139,6 @@ async def main():
     dp.include_router(router_morning)
     dp.include_router(router_mydata)
     dp.include_router(router_ocr)
-    dp.include_router(router_pension)
     dp.include_router(router_profile)
     dp.include_router(router_profile_citizen)
     dp.include_router(router_qr)
@@ -172,12 +160,9 @@ async def main():
     dp.include_router(router_webapp)
     dp.include_router(router_welcome_onboarding)
     dp.include_router(router_why)
-    
-    logger.info("🚀 Bot starting...")
+
+    logger.info(f"🚀 Bot started with 69 healthy routers")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-
-
