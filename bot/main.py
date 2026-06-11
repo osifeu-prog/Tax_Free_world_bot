@@ -6,6 +6,8 @@ from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
+from bot.middlewares.language_middleware import LanguageMiddleware
+
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 if not BOT_TOKEN:
     raise ValueError("BOT_TOKEN not set")
@@ -13,13 +15,6 @@ if not BOT_TOKEN:
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-async def main():
-    bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-    dp = Dispatcher()
-    dp.message.middleware(LanguageMiddleware())
-    dp.callback_query.middleware(LanguageMiddleware())
-
-    # ====================== HEALTHY ROUTERS ======================
 from bot.routers.academy import router as router_academy
 from bot.routers.academy_extended import router as router_academy_extended
 from bot.routers.admin import router as router_admin
@@ -90,7 +85,12 @@ from bot.routers.webapp import router as router_webapp
 from bot.routers.welcome_onboarding import router as router_welcome_onboarding
 from bot.routers.why import router as router_why
 
-    # Include routers
+async def main():
+    bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    dp = Dispatcher()
+    dp.message.middleware(LanguageMiddleware())
+    dp.callback_query.middleware(LanguageMiddleware())
+
     dp.include_router(router_academy)
     dp.include_router(router_academy_extended)
     dp.include_router(router_admin)
