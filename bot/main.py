@@ -36,7 +36,6 @@ from bot.routers.dbstats import router as router_dbstats
 from bot.routers.decentral import router as router_decentral
 from bot.routers.donate import router as router_donate
 from bot.routers.edu import router as router_edu
-from bot.routers.expenses import router as router_expenses
 from bot.routers.family_finance import router as router_family_finance
 from bot.routers.familygroup import router as router_familygroup
 from bot.routers.faq import router as router_faq
@@ -123,7 +122,6 @@ async def main():
     dp.include_router(router_decentral)
     dp.include_router(router_donate)
     dp.include_router(router_edu)
-    dp.include_router(router_expenses)
     dp.include_router(router_family_finance)
     dp.include_router(router_familygroup)
     dp.include_router(router_faq)
@@ -178,4 +176,5 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
