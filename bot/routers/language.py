@@ -2,37 +2,38 @@
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from bot.database.session import async_session
-from bot.database.models import User
-from sqlalchemy import select
+from sqlalchemy import text
+from bot.utils.i18n import i18n
 
 router = Router()
 
-@router.message(Command("language"))
-async def cmd_language(msg: Message):
-    kb = InlineKeyboardMarkup(inline_keyboard=[
-        [
-            InlineKeyboardButton(text="🇮🇱 עברית", callback_data="lang_he"),
-            InlineKeyboardButton(text="🇺🇸 English", callback_data="lang_en"),
-            InlineKeyboardButton(text="🇪🇸 Español", callback_data="lang_es"),
-            InlineKeyboardButton(text="🇫🇷 Français", callback_data="lang_fr"),
-            InlineKeyboardButton(text="🇷🇺 Русский", callback_data="lang_ru"),
-            InlineKeyboardButton(text="🇸🇦 العربية", callback_data="lang_ar")
-        ]
+def get_language_keyboard():
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="🇮🇱 עברית", callback_data="set_lang_he")],
+        [InlineKeyboardButton(text="🇬🇧 English", callback_data="set_lang_en")],
     ])
-    await msg.answer("🌐 בחר/י שפה:", reply_markup=kb)
 
-@router.callback_query(F.data.startswith("lang_"))
-async def lang_callback(callback: CallbackQuery):
-    lang = callback.data.split("_")[1]
+@router.message(Command("language"))
+@router.message(Command("lang"))
+async def cmd_language(msg: Message):
+    await msg.answer(
+        "🌍 <b>בחר שפה / Choose language</b>",
+        parse_mode="HTML",
+        reply_markup=get_language_keyboard()
+    )
+
+@router.callback_query(F.data.startswith("set_lang_"))
+async def set_language(callback: CallbackQuery):
+    lang = callback.data.split("_")[2]
+    uid = callback.from_user.id
+    
     async with async_session() as s:
-        u = (await s.execute(select(User).where(User.telegram_id == callback.from_user.id))).scalar_one_or_none()
-        if u:
-            u.language = lang
-        else:
-            u = User(telegram_id=callback.from_user.id, language=lang)
-            s.add(u)
+        await s.execute(
+            text("UPDATE user_preferences SET language = :lang WHERE user_id = :uid"),
+            {"lang": lang, "uid": uid}
+        )
         await s.commit()
-    names = {"he":"עברית","en":"English","es":"Español","fr":"Français","ru":"Русский","ar":"العربية"}
-    await callback.answer(f"✅ {names.get(lang, lang)}", show_alert=True)
-    await callback.message.edit_reply_markup()
-
+    
+    text = "✅ השפה שונתה לעברית!" if lang == "he" else "✅ Language changed to English!"
+    await callback.message.edit_text(text)
+    await callback.answer()
