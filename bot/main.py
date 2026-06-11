@@ -15,8 +15,6 @@ from bot.routers.academy import router as router_academy
 from bot.routers.academy_extended import router as router_academy_extended
 from bot.routers.admin import router as router_admin
 from bot.routers.admin_groups import router as router_admin_groups
-from bot.routers.admin_rbac import router as router_admin_rbac
-from bot.routers.admin_requests import router as router_admin_requests
 from bot.routers.admin_stats import router as router_admin_stats
 from bot.routers.ai_router import router as router_ai_router
 from bot.routers.anti import router as router_anti
@@ -32,19 +30,14 @@ from bot.routers.compare import router as router_compare
 from bot.routers.contact import router as router_contact
 from bot.routers.course_progress import router as router_course_progress
 from bot.routers.crypto import router as router_crypto
-from bot.routers.daily import router as router_daily
 from bot.routers.dashboard_simple import router as router_dashboard_simple
 from bot.routers.db_test import router as router_db_test
 from bot.routers.dbstats import router as router_dbstats
-from bot.routers.debug import router as router_debug
 from bot.routers.decentral import router as router_decentral
 from bot.routers.donate import router as router_donate
 from bot.routers.edu import router as router_edu
-from bot.routers.expenses import router as router_expenses
-from bot.routers.export import router as router_export
 from bot.routers.familygroup import router as router_familygroup
 from bot.routers.faq import router as router_faq
-from bot.routers.feedback import router as router_feedback
 from bot.routers.fix_users import router as router_fix_users
 from bot.routers.gamification import router as router_gamification
 from bot.routers.generator_handler import router as router_generator_handler
@@ -77,9 +70,7 @@ from bot.routers.receipt import router as router_receipt
 from bot.routers.ref import router as router_ref
 from bot.routers.report import router as router_report
 from bot.routers.report_pension import router as router_report_pension
-from bot.routers.request_admin import router as router_request_admin
 from bot.routers.saveplan import router as router_saveplan
-from bot.routers.seed_courses import router as router_seed_courses
 from bot.routers.seed_kg import router as router_seed_kg
 from bot.routers.setwallet import router as router_setwallet
 from bot.routers.socio import router as router_socio
@@ -109,8 +100,6 @@ async def main():
     dp.include_router(router_academy_extended)
     dp.include_router(router_admin)
     dp.include_router(router_admin_groups)
-    dp.include_router(router_admin_rbac)
-    dp.include_router(router_admin_requests)
     dp.include_router(router_admin_stats)
     dp.include_router(router_ai_router)
     dp.include_router(router_anti)
@@ -126,19 +115,14 @@ async def main():
     dp.include_router(router_contact)
     dp.include_router(router_course_progress)
     dp.include_router(router_crypto)
-    dp.include_router(router_daily)
     dp.include_router(router_dashboard_simple)
     dp.include_router(router_db_test)
     dp.include_router(router_dbstats)
-    dp.include_router(router_debug)
     dp.include_router(router_decentral)
     dp.include_router(router_donate)
     dp.include_router(router_edu)
-    dp.include_router(router_expenses)
-    dp.include_router(router_export)
     dp.include_router(router_familygroup)
     dp.include_router(router_faq)
-    dp.include_router(router_feedback)
     dp.include_router(router_fix_users)
     dp.include_router(router_gamification)
     dp.include_router(router_generator_handler)
@@ -171,9 +155,7 @@ async def main():
     dp.include_router(router_ref)
     dp.include_router(router_report)
     dp.include_router(router_report_pension)
-    dp.include_router(router_request_admin)
     dp.include_router(router_saveplan)
-    dp.include_router(router_seed_courses)
     dp.include_router(router_seed_kg)
     dp.include_router(router_setwallet)
     dp.include_router(router_socio)
