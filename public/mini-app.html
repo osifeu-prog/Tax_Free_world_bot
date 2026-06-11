@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Free World Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background: #0f172a; color: #f8fafc; padding: 1rem; }
+        .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+        .tab { padding: 0.5rem 1rem; background: #334155; border-radius: 6px; cursor: pointer; }
+        .tab.active { background: #38bdf8; color: #0f172a; }
+        .card { background: #1e293b; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+        .btn { display: inline-block; padding: 0.75rem 1.5rem; background: #38bdf8; color: #0f172a; border-radius: 8px; text-decoration: none; font-weight: bold; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2 id="user-greeting">שלום, אורח</h2>
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('home')">🏠 Home</div>
+        <div class="tab" onclick="showTab('wealth')">💰 Wealth</div>
+        <div class="tab" onclick="showTab('academy')">🎓 Academy</div>
+        <div class="tab" onclick="showTab('profile')">👤 Profile</div>
+    </div>
+    <div id="content">
+        <div class="card">
+            <h3>ברוכים הבאים!</h3>
+            <p>זהו ה-Mini App של Tax Free World.</p>
+            <button class="btn" onclick="connectTON()">🔗 חיבור ארנק TON</button>
+        </div>
+    </div>
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        const user = tg.initDataUnsafe?.user;
+        if (user) {
+            document.getElementById('user-greeting').textContent = `שלום, ${user.first_name || 'אורח'}`;
+        }
+
+        function connectTON() {
+            tg.showAlert('TON Connect יהיה זמין בקרוב!');
+        }
+
+        function showTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            const content = document.getElementById('content');
+            switch(tab) {
+                case 'home':
+                    content.innerHTML = '<div class="card"><h3>ברוכים הבאים!</h3><p>זהו ה-Mini App של Tax Free World.</p><button class="btn" onclick="connectTON()">🔗 חיבור ארנק TON</button></div>';
+                    break;
+                case 'wealth':
+                    content.innerHTML = '<div class="card"><h3>💰 מרכז העושר</h3><p>תקציב, חיסכון, פנסיה.</p></div>';
+                    break;
+                case 'academy':
+                    content.innerHTML = '<div class="card"><h3>🎓 אקדמיה</h3><p>קורסים פיננסיים.</p></div>';
+                    break;
+                case 'profile':
+                    content.innerHTML = '<div class="card"><h3>👤 פרופיל</h3><p>הנתונים שלך.</p></div>';
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>

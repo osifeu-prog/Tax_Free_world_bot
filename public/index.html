@@ -1,50 +1,44 @@
 ﻿<!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tax Free World</title>
     <style>
-        body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background: var(--tg-theme-bg-color, #ffffff); color: var(--tg-theme-text-color, #000000); margin: 0; padding: 20px; direction: rtl; text-align: right; }
-        .container { max-width: 600px; margin: 0 auto; }
-        .card { background: var(--tg-theme-secondary-bg-color, #f5f5f5); border-radius: 16px; padding: 16px; margin-bottom: 16px; transition: transform 0.1s ease; }
-        .card:active { transform: scale(0.98); }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .btn { background: var(--tg-theme-button-color, #2481cc); color: var(--tg-theme-button-text-color, #ffffff); border: none; border-radius: 12px; padding: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: opacity 0.2s; width: 100%; }
-        .btn:active { opacity: 0.8; }
-        h1 { font-size: 1.5rem; margin-top: 0; }
-        .status { background: var(--tg-theme-destructive-bg-color, #e24c4c); color: white; padding: 10px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
+        body { font-family: Arial, sans-serif; background: #0f172a; color: #f8fafc; text-align: center; padding: 2rem; }
+        .logo { font-size: 3rem; margin-bottom: 1rem; }
+        h1 { color: #38bdf8; }
+        .btn { display: inline-block; padding: 1rem 2rem; background: #38bdf8; color: #0f172a; border-radius: 8px; text-decoration: none; font-weight: bold; margin: 1rem; }
+        .btn:hover { background: #7dd3fc; }
+        .lang-switch { position: absolute; top: 1rem; left: 1rem; }
+        .lang-switch a { color: #f8fafc; margin: 0 0.5rem; }
     </style>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-<div class="container">
-    <h1>🏠 Tax Free World</h1>
-    <div id="status" class="status" style="background: var(--tg-theme-accent-text-color, #3390ec);">טוען...</div>
-    <div class="grid">
-        <div class="card" data-cmd="wealth">💰 Wealth</div>
-        <div class="card" data-cmd="academy">🎓 Academy</div>
-        <div class="card" data-cmd="ai">🤖 AI</div>
-        <div class="card" data-cmd="community">🌍 Community</div>
-        <div class="card" data-cmd="rewards">🎁 Rewards</div>
-        <div class="card" data-cmd="profile">👤 Profile</div>
-        <div class="card" data-cmd="settings">⚙️ Settings</div>
-        <div class="card" data-cmd="home">🏠 Home</div>
+    <div class="lang-switch">
+        <a href="#" onclick="switchLang('he')">🇮🇱 עברית</a> | 
+        <a href="#" onclick="switchLang('en')">🇬🇧 English</a>
     </div>
-</div>
-<script>
-    const webApp = window.Telegram.WebApp;
-    webApp.ready();
-    webApp.expand();
-    const userId = webApp.initDataUnsafe.user?.id;
-    document.getElementById('status').innerText = `שלום ${webApp.initDataUnsafe.user?.first_name || 'אורח'}!`;
-    document.querySelectorAll('.card').forEach(card => {
-        card.addEventListener('click', () => {
-            const cmd = card.dataset.cmd;
-            webApp.sendData(JSON.stringify({ command: cmd }));
-            webApp.close();
-        });
-    });
-</script>
+    <div class="logo">🌍</div>
+    <h1 id="title">Tax Free World</h1>
+    <p id="subtitle">למד, חסוך, השקע  עולם כלכלי חופשי</p>
+    <a class="btn" href="https://t.me/Tax_Free_world_bot" target="_blank" id="cta">🚀 התחבר לבוט</a>
+    <p style="margin-top: 2rem; opacity: 0.7;">Powered by TON & Israel</p>
+
+    <script>
+        const texts = {
+            he: { title: 'Tax Free World', subtitle: 'למד, חסוך, השקע  עולם כלכלי חופשי', cta: '🚀 התחבר לבוט' },
+            en: { title: 'Tax Free World', subtitle: 'Learn, Save, Invest  A Free Financial World', cta: '🚀 Join the Bot' }
+        };
+        function switchLang(lang) {
+            document.getElementById('title').textContent = texts[lang].title;
+            document.getElementById('subtitle').textContent = texts[lang].subtitle;
+            document.getElementById('cta').textContent = texts[lang].cta;
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+        }
+        // ברירת מחדל  עברית
+        switchLang('he');
+    </script>
 </body>
 </html>

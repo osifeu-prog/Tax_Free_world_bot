@@ -9,6 +9,7 @@ from aiogram.enums import ParseMode
 
 from bot.database.session import engine
 from bot.database.models import Base
+from bot.middlewares.language_middleware import LanguageMiddleware
 
 # ====================== ALL HEALTHY ROUTERS ======================
 from bot.routers.academy import router as router_academy
@@ -94,6 +95,7 @@ logger = logging.getLogger(__name__)
 async def main():
     bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher()
+    dp.message.middleware(LanguageMiddleware())\n    dp.callback_query.middleware(LanguageMiddleware())
     
     # Include all routers
     dp.include_router(router_academy)
@@ -174,3 +176,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
