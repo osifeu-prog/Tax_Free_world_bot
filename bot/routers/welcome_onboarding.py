@@ -57,3 +57,4 @@ async def process_role(callback: CallbackQuery):
     )
     await callback.answer()
 
+

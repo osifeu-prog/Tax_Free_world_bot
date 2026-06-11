@@ -1,10 +1,10 @@
 ﻿from aiogram import Router, F
 from aiogram.filters import Command
-from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 
 router = Router()
 
-def home_keyboard():
+def get_main_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="🏠 Home"), KeyboardButton(text="💰 Wealth")],
@@ -18,35 +18,58 @@ def home_keyboard():
 @router.message(Command("home"))
 @router.message(F.text == "🏠 Home")
 async def home(msg: Message):
-    await msg.answer("🏠 <b>Tax Free World  מסך ראשי</b>\n\nבחר/י קטגוריה:", parse_mode="HTML", reply_markup=home_keyboard())
+    await msg.answer("🏠 Tax Free World  Dashboard", reply_markup=get_main_keyboard())
 
+# ---- Wealth תת‑תפריט ----
 @router.message(F.text == "💰 Wealth")
 async def wealth(msg: Message):
-    kb = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text="📊 תקציב"), KeyboardButton(text="📈 פנסיה")],[KeyboardButton(text="➕ הוצאה"), KeyboardButton(text="💰 הכנסה")],[KeyboardButton(text="🔙 חזור")]], resize_keyboard=True)
-    await msg.answer("💰 <b>Wealth Center</b>\n\nבחר/י:", parse_mode="HTML", reply_markup=kb)
+    kb = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="📊 תקציב", callback_data="cmd_budget"),
+         InlineKeyboardButton(text="➕ הוצאה", callback_data="cmd_adde")],
+        [InlineKeyboardButton(text="📈 פנסיה", callback_data="cmd_pension")]
+    ])
+    await msg.answer("💰 מרכז העושר  בחר פעולה:", reply_markup=kb)
 
-@router.message(F.text == "📊 תקציב")
-async def budget_btn(msg: Message): await msg.answer("/budget")
-@router.message(F.text == "📈 פנסיה")
-async def pension_btn(msg: Message): await msg.answer("/pension")
-@router.message(F.text == "➕ הוצאה")
-async def expense_btn(msg: Message): await msg.answer("/adde")
-@router.message(F.text == "💰 הכנסה")
-async def income_btn(msg: Message): await msg.answer("/addincome")
+@router.callback_query(F.data == "cmd_budget")
+async def go_budget(callback): 
+    await callback.message.answer("/budget")
+    await callback.answer()
 
+@router.callback_query(F.data == "cmd_adde")
+async def go_adde(callback):
+    await callback.message.answer("/adde 0")
+    await callback.answer()
+
+@router.callback_query(F.data == "cmd_pension")
+async def go_pension(callback):
+    await callback.message.answer("/pension")
+    await callback.answer()
+
+# ---- Learn תת‑תפריט ----
 @router.message(F.text == "🎓 Learn")
-async def learn(msg: Message): await msg.answer("/academy")
-@router.message(F.text == "🤖 AI")
-async def ai(msg: Message): await msg.answer("/useless")
+async def learn(msg: Message):
+    kb = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="📚 אקדמיה", callback_data="cmd_academy"),
+         InlineKeyboardButton(text="🤖 AI", callback_data="cmd_useless")]
+    ])
+    await msg.answer("🎓 למידה  בחר:", reply_markup=kb)
+
+@router.callback_query(F.data == "cmd_academy")
+async def go_academy(callback):
+    await callback.message.answer("/academy")
+    await callback.answer()
+
+@router.callback_query(F.data == "cmd_useless")
+async def go_useless(callback):
+    await callback.message.answer("/useless")
+    await callback.answer()
+
+# ---- Community / Rewards / Profile / Settings ----
 @router.message(F.text == "🌍 Community")
-async def community(msg: Message): await msg.answer("/familygroup")
+async def community(msg): await msg.answer("/familygroup")
 @router.message(F.text == "🎁 Rewards")
-async def rewards(msg: Message): await msg.answer("/top")
+async def rewards(msg): await msg.answer("/top")
 @router.message(F.text == "👤 Profile")
-async def profile_short(msg: Message): await msg.answer("/profile")
+async def profile_short(msg): await msg.answer("/profile")
 @router.message(F.text == "⚙️ Settings")
-async def settings(msg: Message): await msg.answer("/language")
-@router.message(F.text == "🔙 חזור")
-async def back_home(msg: Message): await home(msg)
-
-
+async def settings(msg): await msg.answer("/language")
