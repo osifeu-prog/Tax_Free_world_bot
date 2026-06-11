@@ -7,27 +7,18 @@ from bot.utils.i18n import i18n
 
 router = Router()
 
-def get_role_keyboard(lang="he"):
-    if lang == "en":
-        return InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="🎓 Student / Beginner", callback_data="role_student")],
-            [InlineKeyboardButton(text="💼 Entrepreneur", callback_data="role_business")],
-            [InlineKeyboardButton(text="👨👩👧 Family", callback_data="role_family")],
-            [InlineKeyboardButton(text="📈 Investor", callback_data="role_investor")]
-        ])
-    else:
-        return InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="🎓 סטודנט / מתחיל", callback_data="role_student")],
-            [InlineKeyboardButton(text="💼 עצמאי / יזם", callback_data="role_business")],
-            [InlineKeyboardButton(text="👨👩👧 משפחה", callback_data="role_family")],
-            [InlineKeyboardButton(text="📈 משקיע", callback_data="role_investor")]
-        ])
+def get_role_keyboard():
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="🎓 סטודנט / מתחיל", callback_data="role_student")],
+        [InlineKeyboardButton(text="💼 עצמאי / יזם", callback_data="role_business")],
+        [InlineKeyboardButton(text="👨👩👧 משפחה", callback_data="role_family")],
+        [InlineKeyboardButton(text="📈 משקיע", callback_data="role_investor")]
+    ])
 
 @router.message(Command("start"))
 async def cmd_start(msg: Message):
     uid = msg.from_user.id
-    lang = "he"
-
+    
     async with async_session() as s:
         result = await s.execute(
             text("SELECT onboarding_completed FROM user_preferences WHERE user_id = :uid"),
@@ -40,10 +31,12 @@ async def cmd_start(msg: Message):
             await home(msg)
             return
 
+    # Onboarding חדש
     await msg.answer(
-        i18n.get("welcome", lang),
+        "🌍 <b>ברוכים הבאים ל-Tax Free World 2.0!</b>\n\n"
+        "כדי להתאים לך את החוויה, בחר את התפקיד שלך:",
         parse_mode="HTML",
-        reply_markup=get_role_keyboard(lang)
+        reply_markup=get_role_keyboard()
     )
 
 @router.callback_query(F.data.startswith("role_"))
@@ -53,10 +46,13 @@ async def process_role(callback: CallbackQuery):
     
     async with async_session() as s:
         await s.execute(
-            text("INSERT OR REPLACE INTO user_preferences (user_id, role, onboarding_completed) VALUES (:uid, :role, 0)"),
+            text("INSERT OR REPLACE INTO user_preferences (user_id, role, onboarding_completed) VALUES (:uid, :role, 1)"),
             {"uid": uid, "role": role}
         )
         await s.commit()
     
-    await callback.message.edit_text("✅ תודה! עכשיו בחר את המטרה העיקרית שלך:")
+    await callback.message.edit_text(
+        "✅ תודה! ההרשמה הושלמה.\n\nשלח /home כדי להיכנס לדשבורד האישי.",
+        parse_mode="HTML"
+    )
     await callback.answer()
