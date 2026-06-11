@@ -30,7 +30,6 @@ from bot.routers.compare import router as router_compare
 from bot.routers.contact import router as router_contact
 from bot.routers.course_progress import router as router_course_progress
 from bot.routers.crypto import router as router_crypto
-from bot.routers.daily import router as router_daily
 from bot.routers.dashboard_simple import router as router_dashboard_simple
 from bot.routers.db_test import router as router_db_test
 from bot.routers.dbstats import router as router_dbstats
@@ -118,7 +117,6 @@ async def main():
     dp.include_router(router_contact)
     dp.include_router(router_course_progress)
     dp.include_router(router_crypto)
-    dp.include_router(router_daily)
     dp.include_router(router_dashboard_simple)
     dp.include_router(router_db_test)
     dp.include_router(router_dbstats)
@@ -180,3 +178,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
