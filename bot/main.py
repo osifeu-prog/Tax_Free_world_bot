@@ -54,7 +54,6 @@ from bot.routers.init_donations import router as router_init_donations
 from bot.routers.init_events import router as router_init_events
 from bot.routers.init_indexes import router as router_init_indexes
 from bot.routers.init_useless_log import router as router_init_useless_log
-from bot.routers.keyboard import router as router_keyboard
 from bot.routers.language import router as router_language
 from bot.routers.loadplan import router as router_loadplan
 from bot.routers.market import router as router_market
@@ -130,7 +129,6 @@ async def main():
     dp.include_router(router_init_events)
     dp.include_router(router_init_indexes)
     dp.include_router(router_init_useless_log)
-    dp.include_router(router_keyboard)
     dp.include_router(router_language)
     dp.include_router(router_loadplan)
     dp.include_router(router_market)
@@ -161,7 +159,7 @@ async def main():
     dp.include_router(router_welcome_onboarding)
     dp.include_router(router_why)
 
-    logger.info(f"🚀 Bot started with 69 healthy routers")
+    logger.info(f"🚀 Bot started with 68 healthy routers")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
