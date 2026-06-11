@@ -21,3 +21,4 @@ def get_main_keyboard():
 async def cmd_start(msg: Message):
     from bot.routers.welcome_onboarding import cmd_start as onboarding_start
     await onboarding_start(msg)
+

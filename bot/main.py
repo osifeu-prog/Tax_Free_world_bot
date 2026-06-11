@@ -21,6 +21,8 @@ from bot.routers.donate import router as donate_router
 from bot.routers.pension import router as pension_router
 from bot.routers.gamification import router as gamification_router
 from bot.routers.webapp import router as webapp_router
+from bot.routers.import_users import router as import_router
+from bot.routers.help import router as help_router
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 if not BOT_TOKEN:
@@ -43,3 +45,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+

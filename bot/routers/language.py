@@ -1,4 +1,4 @@
-from aiogram import Router, F
+﻿from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from bot.database.session import async_session
@@ -35,3 +35,4 @@ async def lang_callback(callback: CallbackQuery):
     names = {"he":"עברית","en":"English","es":"Español","fr":"Français","ru":"Русский","ar":"العربية"}
     await callback.answer(f"✅ {names.get(lang, lang)}", show_alert=True)
     await callback.message.edit_reply_markup()
+

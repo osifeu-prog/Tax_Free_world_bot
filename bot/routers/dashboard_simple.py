@@ -49,3 +49,4 @@ async def settings(msg: Message): await msg.answer("/language")
 @router.message(F.text == "🔙 חזור")
 async def back_home(msg: Message): await home(msg)
 
+

@@ -39,3 +39,4 @@ async def save_wallet(msg: Message):
         )
         await s.commit()
     await msg.answer(f"✅ ארנק נשמר:\n`{address}`", parse_mode="Markdown")
+

@@ -36,3 +36,4 @@ async def cmd_profile(msg: Message):
         txt += f"📊 <b>פנסיה</b>\n• חודשית: {safe_format(pension[0])} \n• צבורה: {safe_format(pension[1])} \n\n"
     txt += f"🏙️ <b>TON City</b>\n• תושבים: {total_users}\n\n/pension | /donate | /setwallet"
     await msg.answer(txt)
+
