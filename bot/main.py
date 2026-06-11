@@ -95,7 +95,9 @@ logger = logging.getLogger(__name__)
 async def main():
     bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher()
-    dp.message.middleware(LanguageMiddleware())\n    dp.callback_query.middleware(LanguageMiddleware())
+    dp.message.middleware(LanguageMiddleware())
+    dp.callback_query.middleware(LanguageMiddleware())
+    
     
     # Include all routers
     dp.include_router(router_academy)
@@ -176,5 +178,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 
