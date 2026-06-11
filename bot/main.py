@@ -15,7 +15,6 @@ from bot.routers.academy import router as router_academy
 from bot.routers.academy_extended import router as router_academy_extended
 from bot.routers.admin import router as router_admin
 from bot.routers.admin_groups import router as router_admin_groups
-from bot.routers.admin_rbac import router as router_admin_rbac
 from bot.routers.admin_requests import router as router_admin_requests
 from bot.routers.admin_stats import router as router_admin_stats
 from bot.routers.ai_router import router as router_ai_router
@@ -109,7 +108,6 @@ async def main():
     dp.include_router(router_academy_extended)
     dp.include_router(router_admin)
     dp.include_router(router_admin_groups)
-    dp.include_router(router_admin_rbac)
     dp.include_router(router_admin_requests)
     dp.include_router(router_admin_stats)
     dp.include_router(router_ai_router)
@@ -192,5 +190,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-
