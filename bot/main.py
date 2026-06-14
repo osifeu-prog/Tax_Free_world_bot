@@ -19,7 +19,9 @@ logger = logging.getLogger(__name__)
 
 llm = LLMRouter()
 
-async def ai_handler(message: Message, user_language: str, user_data: dict):
+async def ai_handler(message: Message, user_language: str = "he", user_data: dict = None):
+    if user_data is None:
+        user_data = {}
     response = await llm.get_response(message, user_data)
     await message.reply(response)
 
@@ -30,13 +32,12 @@ async def main():
     dp.message.middleware(LanguageMiddleware())
     dp.callback_query.middleware(LanguageMiddleware())
 
-    # AI Handler - יותר רגיש
+    # AI Handler - רגיש יותר
     dp.message(lambda m: m.text and (
-        m.text.startswith(('/ai', 'יוסלס', 'שאל', 'יש?')) or 
-        len(m.text.strip()) > 8
+        m.text.startswith(('/ai', 'יוסלס', 'שאל')) or len(m.text.strip()) > 10
     ))(ai_handler)
 
-    logger.info("🚀 @Tax_Free_world_bot with improved AI")
+    logger.info("🚀 @Tax_Free_world_bot עם AI מלא (Gemini)")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
