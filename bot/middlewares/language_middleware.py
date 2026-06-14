@@ -11,7 +11,6 @@ class LanguageMiddleware(BaseMiddleware):
         event: TelegramObject,
         data: Dict[str, Any]
     ) -> Any:
-        
         text = ""
         if isinstance(event, Message):
             text = event.text or event.caption or ""
