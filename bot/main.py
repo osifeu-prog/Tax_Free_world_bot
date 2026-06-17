@@ -27,26 +27,27 @@ async def main():
     bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher()
 
-    # Middleware
     dp.message.middleware(LanguageMiddleware())
     dp.callback_query.middleware(LanguageMiddleware())
 
     # AI Handler
     dp.message(lambda m: m.text and (
-        m.text.startswith(('/ai', 'יוסלס', 'שאל')) or len(m.text.strip()) > 12
+        m.text.startswith(('/ai', 'יוסלס', 'שאל')) or len(m.text.strip()) > 10
     ))(ai_handler)
 
-    # Routers חשובים
-    routers = ['start', 'help', 'profile', 'menu', 'language', 'top', 'whyus', 'pension', 'academy']
+    # Routers - נטען מה שיש, לא קורס אם חסר
+    routers = ['start', 'help', 'profile', 'menu', 'language', 'top', 'whyus', 'pension', 'academy', 'donate', 'setwallet']
+    loaded = 0
     for r in routers:
         try:
             module = __import__(f"bot.routers.{r}", fromlist=["router"])
             dp.include_router(module.router)
-            logger.info(f"✅ Loaded: {r}")
-        except Exception as e:
+            logger.info(f"✅ Loaded router: {r}")
+            loaded += 1
+        except Exception:
             logger.warning(f"⚠️ Missing router: {r}")
 
-    logger.info("🚀 @Tax_Free_world_bot - Full Restore Complete")
+    logger.info(f"🚀 @Tax_Free_world_bot started successfully ({loaded} routers + AI)")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
