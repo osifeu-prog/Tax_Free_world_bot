@@ -20,7 +20,6 @@ logger = logging.getLogger(__name__)
 llm = LLMRouter()
 
 async def ai_handler(message: Message):
-    """AI Handler פשוט ובטוח"""
     response = await llm.get_response(message)
     await message.reply(response)
 
@@ -28,15 +27,26 @@ async def main():
     bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher()
 
+    # Middleware
     dp.message.middleware(LanguageMiddleware())
     dp.callback_query.middleware(LanguageMiddleware())
 
     # AI Handler
     dp.message(lambda m: m.text and (
-        m.text.startswith(('/ai', 'יוסלס', 'שאל')) or len(m.text.strip()) > 10
+        m.text.startswith(('/ai', 'יוסלס', 'שאל')) or len(m.text.strip()) > 12
     ))(ai_handler)
 
-    logger.info("🚀 @Tax_Free_world_bot עם AI (Gemini) - מוכן!")
+    # Routers חשובים
+    routers = ['start', 'help', 'profile', 'menu', 'language', 'top', 'whyus', 'pension', 'academy']
+    for r in routers:
+        try:
+            module = __import__(f"bot.routers.{r}", fromlist=["router"])
+            dp.include_router(module.router)
+            logger.info(f"✅ Loaded: {r}")
+        except Exception as e:
+            logger.warning(f"⚠️ Missing router: {r}")
+
+    logger.info("🚀 @Tax_Free_world_bot - Full Restore Complete")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
