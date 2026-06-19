@@ -35,7 +35,7 @@ async def main():
         m.text.startswith(('/ai', 'יוסלס', 'שאל')) or len(m.text.strip()) > 10
     ))(ai_handler)
 
-    # ניסיון לטעון routers - לא קורס אם חסר
+    # Routers
     routers = ['start', 'help', 'profile', 'menu', 'language', 'top', 'whyus', 'pension', 'academy', 'donate', 'setwallet']
     loaded = 0
     for r in routers:
@@ -47,7 +47,7 @@ async def main():
         except:
             logger.warning(f"⚠️ Missing: {r}")
 
-    logger.info(f"🚀 Bot started with {loaded} routers + AI")
+    logger.info(f"🚀 Bot restarted with {loaded} routers + AI")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
