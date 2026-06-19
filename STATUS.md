@@ -1,20 +1,21 @@
-﻿# STATUS - מה המצב עכשיו (19/06/2026)
+﻿# STATUS - מה המצב עכשיו (19/06/2026 - 14:50)
 
 **Phase:** Stabilization + AI Enhancement
-**Progress:** 55%
+**Progress:** 68% ↑
 
 **עובד:**
 - AI (Gemini) - עובד טוב
 - Polling + Language Middleware
-- Command Center + Backup System
-- כמה routers (menu, help, pension, academy, donate)
+- Command Center + Backup System + dir משופר
+- 7 routers (help, menu, pension, academy, donate, top, whyus)
+- מערכת ניהול פרויקט מסודרת (רמת NASA Lite)
 
 **שבור / חסר:**
-- /start, /profile, /top, /language, /setwallet
+- /start, /profile, /language, /setwallet (בעיות DB)
 
 **Next 3 Tasks (Priority High):**
-1. שחזור מלא של routers חשובים
-2. שיפור AI Prompt + Context Awareness
-3. בדיקות מלאות + Webhook
+1. שיפור AI System Prompt + Context Awareness
+2. חיבור AI לנתוני משתמש (profile, savings)
+3. הוספת Project Brain מודול ראשוני
 
-**מצב כללי:** יציב אבל לא שלם
+**מצב כללי:** יציב, מתקדם, עם תהליך עבודה ברור
