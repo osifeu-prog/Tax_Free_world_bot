@@ -35,7 +35,7 @@ async def main():
         m.text.startswith(('/ai', 'יוסלס', 'שאל')) or len(m.text.strip()) > 10
     ))(ai_handler)
 
-    # Routers
+    # Routers מרכזיים
     routers = ['start', 'help', 'profile', 'menu', 'language', 'top', 'whyus', 'pension', 'academy', 'donate', 'setwallet']
     loaded = 0
     for r in routers:
@@ -44,10 +44,10 @@ async def main():
             dp.include_router(module.router)
             logger.info(f"✅ Loaded: {r}")
             loaded += 1
-        except:
-            logger.warning(f"⚠️ Missing: {r}")
+        except Exception as e:
+            logger.warning(f"⚠️ Missing router: {r} - {str(e)[:80]}...")
 
-    logger.info(f"🚀 Bot restarted with {loaded} routers + AI")
+    logger.info(f"🚀 @Tax_Free_world_bot started with {loaded} routers + AI")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
